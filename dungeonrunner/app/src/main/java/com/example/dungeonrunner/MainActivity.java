@@ -9,17 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "MainActivityLog";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "HERE1");
+        Log.d(TAG, "Initializing Main Activity");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.start_screen);
-        Button startButton = findViewById(R.id.startButton);
-        startButton.setOnClickListener(v -> {
-            Log.d(TAG, "HERE");
-        });
-
+        setContentView(R.layout.activity_main);
     }
 }
