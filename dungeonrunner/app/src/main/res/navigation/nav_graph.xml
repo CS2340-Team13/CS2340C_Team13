@@ -21,6 +21,12 @@
         android:name="com.example.dungeonrunner.configScreen"
         android:label="fragment_config"
         tools:layout="@layout/fragment_config_screen">
+
+        <action
+            android:id="@+id/action_configScreen_to_startScreen"
+            app:destination="@id/startScreen" />
+
+
     </fragment>
 
     <!-- You can add other fragments or actions below as needed -->
