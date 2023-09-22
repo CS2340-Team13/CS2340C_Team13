@@ -23,7 +23,33 @@
         tools:layout="@layout/fragment_config_screen">
 
         <action
-            android:id="@+id/action_configScreen_to_startScreen"
+            android:id="@+id/action_configScreen_to_gameScreen"
+            app:destination="@id/gameScreen" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/gameScreen"
+        android:name="com.example.dungeonrunner.gameScreen"
+        android:label="fragment_game"
+        tools:layout="@layout/fragment_game_screen">
+
+        <action
+            android:id="@+id/action_gameScreen_to_endScreen"
+            app:destination="@id/endScreen" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/endScreen"
+        android:name="com.example.dungeonrunner.endScreen"
+        android:label="fragment_end"
+        tools:layout="@layout/fragment_game_screen">
+
+        <action
+            android:id="@+id/action_endScreen_to_startScreen"
             app:destination="@id/startScreen" />
 
 
