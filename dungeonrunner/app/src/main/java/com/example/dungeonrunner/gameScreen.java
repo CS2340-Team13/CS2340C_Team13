@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+
 public class gameScreen extends Fragment {
     private GameScreenViewModel mViewModel;
 
@@ -52,6 +55,15 @@ public class gameScreen extends Fragment {
         }
 
         playerCharacterImageView.setImageResource(characterImageResource);
+
+        // Set the click listener for the endButton
+        endButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = NavHostFragment.findNavController(gameScreen.this);
+                navController.navigate(R.id.action_gameScreen_to_endScreen);
+            }
+        });
 
         return view;
     }
