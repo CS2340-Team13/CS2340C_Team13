@@ -15,53 +15,56 @@ import android.widget.TextView;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-public class gameScreen extends Fragment {
+public class GameScreen extends Fragment {
     private GameScreenViewModel mViewModel;
 
-    public static gameScreen newInstance() {
-        return new gameScreen();
+    public static GameScreen newInstance() {
+        return new GameScreen();
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_screen, container, false);
 
         String playerName = getArguments().getString("playerName");
         String gameDifficulty = getArguments().getString("gameDifficulty");
         String selectedCharacter = getArguments().getString("selectedCharacter");
 
-        // Find UI elements and set their values or click listeners as needed
         TextView playerNameTextView = view.findViewById(R.id.playerNameTextView);
         TextView gameDifficultyTextView = view.findViewById(R.id.gameDifficultyTextView);
-        Button endButton = view.findViewById(R.id.endButton);  // You can set a click listener for this button if needed
+        TextView playerHealthTextView = view.findViewById(R.id.playerHealthTextView);
+        ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
 
-        // Setting the values
+        int health = 100;
+        if (gameDifficulty.equals("Medium")) {
+            health = 75;
+        } else if (gameDifficulty.equals("Hard")) {
+            health = 50;
+        }
         playerNameTextView.setText("Player Name: " + playerName);
         gameDifficultyTextView.setText("Difficulty: " + gameDifficulty);
+        playerHealthTextView.setText("Health: " + health);
 
-        ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
-        // Determine the correct image based on the selectedCharacter string
+
         int characterImageResource = 0;
-        switch (selectedCharacter) {
-            case "character1":
-                characterImageResource = R.drawable.character1_image;
-                break;
-            case "character2":
-                characterImageResource = R.drawable.character2_image;
-                break;
-            case "character3":
-                characterImageResource = R.drawable.character3_image;
-                break;
+        if (selectedCharacter.equals("character1")) {
+            characterImageResource = R.drawable.character1_image;
+        } else if (selectedCharacter.equals("character2")) {
+            characterImageResource = R.drawable.character2_image;
+        } else if (selectedCharacter.equals("character3")) {
+            characterImageResource = R.drawable.character3_image;
         }
 
         playerCharacterImageView.setImageResource(characterImageResource);
 
-        // Set the click listener for the endButton
+
+        Button endButton = view.findViewById(R.id.endButton);
         endButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavController navController = NavHostFragment.findNavController(gameScreen.this);
-                navController.navigate(R.id.action_gameScreen_to_endScreen);
+                NavController navController = NavHostFragment.findNavController(GameScreen.this);
+                navController.navigate(R.id.action_GameScreen_to_EndScreen);
             }
         });
 
@@ -72,7 +75,7 @@ public class gameScreen extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(GameScreenViewModel.class);
-        // TODO: Use the ViewModel
+        // TO-DO: Use the ViewModel
     }
 
 }

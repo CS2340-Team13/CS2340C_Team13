@@ -16,13 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class startScreen extends Fragment {
+public class StartScreen extends Fragment {
 
     private StartScreenViewModel mViewModel;
     private static final String TAG = "startScreenLog";
 
-    public static startScreen newInstance() {
-        return new startScreen();
+    public static StartScreen newInstance() {
+        return new StartScreen();
     }
 
     @Override
@@ -30,7 +30,6 @@ public class startScreen extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start_screen, container, false);
 
-        // Setting up the Start button
         Button startButton = view.findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +38,6 @@ public class startScreen extends Fragment {
             }
         });
 
-        // Setting up the Exit button
         Button exitButton = view.findViewById(R.id.exitButton);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,12 +53,12 @@ public class startScreen extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(StartScreenViewModel.class);
-        // TODO: Use the ViewModel
+        // TO-DO: Use the ViewModel
     }
 
     private void onStartButtonClicked() {
         Log.d(TAG, "Start Button Clicked");
-        NavHostFragment.findNavController(this).navigate(R.id.action_startScreen_to_configScreen);
+        NavHostFragment.findNavController(this).navigate(R.id.action_StartScreen_to_ConfigScreen);
     }
 
     private void onExitButtonClicked() {

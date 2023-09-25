@@ -18,13 +18,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 
-public class configScreen extends Fragment {
+public class ConfigScreen extends Fragment {
 
     private ConfigScreenViewModel mViewModel;
     private static final String TAG = "configScreenLog";
 
-    public static configScreen newInstance() {
-        return new configScreen();
+    public static ConfigScreen newInstance() {
+        return new ConfigScreen();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class configScreen extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(ConfigScreenViewModel.class);
-        // TODO: Use the ViewModel
+        // TO-DO: Use the ViewModel
     }
 
     @Override
@@ -48,17 +48,15 @@ public class configScreen extends Fragment {
         setUpNameInput(view);
         setUpDifficultySelection(view);
         setUpCharacterSelection(view);
-        setUpStartButton(view);
+        setUpPlayButton(view);
     }
 
     private void setUpNameInput(View view) {
-        // Setup for name input, if any special logic is required
-        // Currently, we are just retrieving the name on the button click
+
     }
 
     private void setUpDifficultySelection(View view) {
         RadioGroup radioGroupDifficulty = view.findViewById(R.id.radioGroupDifficulty);
-        // Any additional setup for difficulty RadioGroup, if required
     }
 
     private void setUpCharacterSelection(View view) {
@@ -88,25 +86,23 @@ public class configScreen extends Fragment {
         character3ImageView.setOnClickListener(characterClickListener);
     }
 
-    private void setUpStartButton(View view) {
+    private void setUpPlayButton(View view) {
         EditText editTextName = view.findViewById(R.id.editTextName);
         RadioGroup radioGroupDifficulty = view.findViewById(R.id.radioGroupDifficulty);
         ImageView character1ImageView = view.findViewById(R.id.imageViewCharacter1);
         ImageView character2ImageView = view.findViewById(R.id.imageViewCharacter2);
         ImageView character3ImageView = view.findViewById(R.id.imageViewCharacter3);
 
-        Button startButton = view.findViewById(R.id.startButton);
-        startButton.setOnClickListener(new View.OnClickListener() {
+        Button playButton = view.findViewById(R.id.playButton);
+        playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ... Logic to handle the button click, gather data, and navigate
                 String name = editTextName.getText().toString().trim();
                 if (name.isEmpty() || name.equals("null")) {
                     editTextName.setError("Invalid name. Can't be empty or null");
                     return;
                 }
-                // move to next screen;
-                Log.d(TAG, "Start Button Clicked - Config Screen");
+                Log.d(TAG, "Play Button Clicked - Config Screen");
 
                 // creating bundle to pass data to next screen
                 Bundle bundle = new Bundle();
@@ -137,8 +133,8 @@ public class configScreen extends Fragment {
                 }
                 bundle.putString("gameDifficulty", difficulty);
 
-                NavHostFragment.findNavController(configScreen.this).navigate(R.id.action_configScreen_to_gameScreen, bundle);
-
+                NavHostFragment.findNavController(ConfigScreen.this).navigate(
+                        R.id.action_ConfigScreen_to_GameScreen, bundle);
 
             }
         });
