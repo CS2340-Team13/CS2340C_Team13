@@ -1,13 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".gameScreen">
+    android:layout_height="match_parent">
+
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:id="@+id/playerNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Player Name: John Doe" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/playerCharacterImageView"
+        android:layout_width="72dp"
+        android:layout_height="70dp"
+        android:layout_below="@id/playerNameTextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="23dp"
+        android:src="@drawable/character1_image" />
+
+
+    <TextView
+        android:id="@+id/playerHealthTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/playerCharacterImageView"
+        android:layout_marginStart="16dp"
+        android:text="Health: 100%" />
+
+    <TextView
+        android:id="@+id/gameDifficultyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/playerHealthTextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="-60dp"
+        android:text="Difficulty: Easy" />
+
+    <Button
+        android:id="@+id/endButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End Game"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp" />
+
+</RelativeLayout>
