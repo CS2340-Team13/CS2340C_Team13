@@ -2,58 +2,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/startScreen">
+    app:startDestination="@id/StartScreen">
 
     <fragment
-        android:id="@+id/startScreen"
-        android:name="com.example.dungeonrunner.startScreen"
+        android:id="@+id/StartScreen"
+        android:name="com.example.dungeonrunner.StartScreen"
         android:label="fragment_start"
         tools:layout="@layout/fragment_start_screen">
 
         <action
-            android:id="@+id/action_startScreen_to_configScreen"
-            app:destination="@id/configScreen" />
+            android:id="@+id/action_StartScreen_to_ConfigScreen"
+            app:destination="@id/ConfigScreen" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/configScreen"
-        android:name="com.example.dungeonrunner.configScreen"
+        android:id="@+id/ConfigScreen"
+        android:name="com.example.dungeonrunner.ConfigScreen"
         android:label="fragment_config"
         tools:layout="@layout/fragment_config_screen">
 
         <action
-            android:id="@+id/action_configScreen_to_gameScreen"
-            app:destination="@id/gameScreen" />
+            android:id="@+id/action_ConfigScreen_to_GameScreen"
+            app:destination="@id/GameScreen" />
 
 
     </fragment>
 
     <fragment
-        android:id="@+id/gameScreen"
-        android:name="com.example.dungeonrunner.gameScreen"
+        android:id="@+id/GameScreen"
+        android:name="com.example.dungeonrunner.GameScreen"
         android:label="fragment_game"
         tools:layout="@layout/fragment_game_screen">
 
         <action
-            android:id="@+id/action_gameScreen_to_endScreen"
-            app:destination="@id/endScreen" />
+            android:id="@+id/action_GameScreen_to_EndScreen"
+            app:destination="@id/EndScreen" />
 
 
     </fragment>
 
     <fragment
-        android:id="@+id/endScreen"
-        android:name="com.example.dungeonrunner.endScreen"
+        android:id="@+id/EndScreen"
+        android:name="com.example.dungeonrunner.EndScreen"
         android:label="fragment_end"
         tools:layout="@layout/fragment_game_screen">
 
         <action
-            android:id="@+id/action_endScreen_to_startScreen"
-            app:destination="@id/startScreen" />
+            android:id="@+id/action_EndScreen_to_StartScreen"
+            app:destination="@id/StartScreen" />
 
 
     </fragment>
 
-    <!-- You can add other fragments or actions below as needed -->
 </navigation>

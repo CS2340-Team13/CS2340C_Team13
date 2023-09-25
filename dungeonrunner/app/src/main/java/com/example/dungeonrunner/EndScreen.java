@@ -12,12 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class endScreen extends Fragment {
+public class EndScreen extends Fragment {
 
     private EndScreenViewModel mViewModel;
 
-    public static endScreen newInstance() {
-        return new endScreen();
+    public static EndScreen newInstance() {
+        return new EndScreen();
     }
 
     @Override
@@ -30,7 +30,7 @@ public class endScreen extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(EndScreenViewModel.class);
-        // TODO: Use the ViewModel
+        // TO-DO: Use the ViewModel
     }
 
 }
