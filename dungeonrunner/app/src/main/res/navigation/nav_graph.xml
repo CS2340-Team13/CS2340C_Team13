@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/StartScreen"
-        android:name="com.example.dungeonrunner.StartScreen"
+        android:name="com.example.dungeonrunner.views.StartScreen"
         android:label="fragment_start"
         tools:layout="@layout/fragment_start_screen">
 
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/ConfigScreen"
-        android:name="com.example.dungeonrunner.ConfigScreen"
+        android:name="com.example.dungeonrunner.views.ConfigScreen"
         android:label="fragment_config"
         tools:layout="@layout/fragment_config_screen">
 
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/GameScreen"
-        android:name="com.example.dungeonrunner.GameScreen"
+        android:name="com.example.dungeonrunner.views.GameScreen"
         android:label="fragment_game"
         tools:layout="@layout/fragment_game_screen">
 
@@ -44,7 +44,7 @@
 
     <fragment
         android:id="@+id/EndScreen"
-        android:name="com.example.dungeonrunner.EndScreen"
+        android:name="com.example.dungeonrunner.views.EndScreen"
         android:label="fragment_end"
         tools:layout="@layout/fragment_game_screen">
 
