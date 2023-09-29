@@ -1,4 +1,5 @@
-package com.example.dungeonrunner;
+package com.example.dungeonrunner.views;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,10 @@ import android.widget.TextView;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.dungeonrunner.viewModels.GameScreenViewModel;
+import com.example.dungeonrunner.R;
+import com.example.dungeonrunner.model.Player;
+
 public class GameScreen extends Fragment {
     private GameScreenViewModel mViewModel;
 
@@ -25,37 +30,28 @@ public class GameScreen extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_game_screen, container, false);
+        mViewModel = new ViewModelProvider(this).get(GameScreenViewModel.class);
+        return inflater.inflate(R.layout.fragment_game_screen, container, false);
+    }
 
-        String playerName = getArguments().getString("playerName");
-        String gameDifficulty = getArguments().getString("gameDifficulty");
-        String selectedCharacter = getArguments().getString("selectedCharacter");
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         TextView playerNameTextView = view.findViewById(R.id.playerNameTextView);
         TextView gameDifficultyTextView = view.findViewById(R.id.gameDifficultyTextView);
         TextView playerHealthTextView = view.findViewById(R.id.playerHealthTextView);
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
 
-        int health = 100;
-        if (gameDifficulty.equals("Medium")) {
-            health = 75;
-        } else if (gameDifficulty.equals("Hard")) {
-            health = 50;
-        }
+        int health = mViewModel.getHealth();
+        int characterImageResource = mViewModel.getCharacterImageResource();
+        String playerName = mViewModel.getPlayerName();
+        String gameDifficulty = mViewModel.getGameDifficulty();
+
         playerNameTextView.setText("Player Name: " + playerName);
         gameDifficultyTextView.setText("Difficulty: " + gameDifficulty);
         playerHealthTextView.setText("Health: " + health);
-
-
-        int characterImageResource = 0;
-        if (selectedCharacter.equals("character1")) {
-            characterImageResource = R.drawable.character1_image;
-        } else if (selectedCharacter.equals("character2")) {
-            characterImageResource = R.drawable.character2_image;
-        } else if (selectedCharacter.equals("character3")) {
-            characterImageResource = R.drawable.character3_image;
-        }
-
         playerCharacterImageView.setImageResource(characterImageResource);
 
 
@@ -63,19 +59,10 @@ public class GameScreen extends Fragment {
         endButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavController navController = NavHostFragment.findNavController(GameScreen.this);
-                navController.navigate(R.id.action_GameScreen_to_EndScreen);
+                NavHostFragment.findNavController(GameScreen.this).navigate(
+                        R.id.action_GameScreen_to_EndScreen);
             }
         });
-
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(GameScreenViewModel.class);
-        // TO-DO: Use the ViewModel
     }
 
 }

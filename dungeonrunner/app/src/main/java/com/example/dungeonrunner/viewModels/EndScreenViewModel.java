@@ -1,4 +1,4 @@
-package com.example.dungeonrunner;
+package com.example.dungeonrunner.viewModels;
 
 import androidx.lifecycle.ViewModel;
 

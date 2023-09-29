@@ -1,4 +1,4 @@
-package com.example.dungeonrunner;
+package com.example.dungeonrunner.views;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -16,6 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.dungeonrunner.R;
+import com.example.dungeonrunner.viewModels.StartScreenViewModel;
+
 public class StartScreen extends Fragment {
 
     private StartScreenViewModel mViewModel;
@@ -28,6 +31,7 @@ public class StartScreen extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        mViewModel = new ViewModelProvider(this).get(StartScreenViewModel.class);
         View view = inflater.inflate(R.layout.fragment_start_screen, container, false);
 
         Button startButton = view.findViewById(R.id.startButton);
@@ -49,12 +53,6 @@ public class StartScreen extends Fragment {
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(StartScreenViewModel.class);
-        // TO-DO: Use the ViewModel
-    }
 
     private void onStartButtonClicked() {
         Log.d(TAG, "Start Button Clicked");

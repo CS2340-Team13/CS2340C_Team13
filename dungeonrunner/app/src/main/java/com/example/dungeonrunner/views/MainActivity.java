@@ -1,10 +1,12 @@
-package com.example.dungeonrunner;
+package com.example.dungeonrunner.views;
 
 
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.dungeonrunner.R;
 
 public class MainActivity extends AppCompatActivity {
 

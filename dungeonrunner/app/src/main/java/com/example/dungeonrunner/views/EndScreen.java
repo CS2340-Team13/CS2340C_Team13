@@ -1,4 +1,4 @@
-package com.example.dungeonrunner;
+package com.example.dungeonrunner.views;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,6 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.dungeonrunner.viewModels.EndScreenViewModel;
+import com.example.dungeonrunner.R;
+
 public class EndScreen extends Fragment {
 
     private EndScreenViewModel mViewModel;
@@ -23,14 +26,7 @@ public class EndScreen extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        mViewModel = new ViewModelProvider(this).get(EndScreenViewModel.class);
         return inflater.inflate(R.layout.fragment_end_screen, container, false);
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(EndScreenViewModel.class);
-        // TO-DO: Use the ViewModel
-    }
-
 }
