@@ -1,4 +1,4 @@
-package com.example.dungeonrunner;
+package com.example.dungeonrunner.views;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.dungeonrunner.viewModels.EndScreenViewModel;
+import com.example.dungeonrunner.R;
 public class EndScreen extends Fragment {
 
     private EndScreenViewModel mViewModel;
