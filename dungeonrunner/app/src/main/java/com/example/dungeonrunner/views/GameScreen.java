@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.fragment.app.Fragment;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,12 @@ import com.example.dungeonrunner.model.Player;
 
 public class GameScreen extends Fragment {
     private GameScreenViewModel mViewModel;
+    private int currentRoomIndex = 0; // Index of the current room
+    private Fragment[] roomFragments = {new Room1(), new Room2(), new Room3()};
+
+
+
+
 
     public static GameScreen newInstance() {
         return new GameScreen();
@@ -31,13 +39,20 @@ public class GameScreen extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mViewModel = new ViewModelProvider(this).get(GameScreenViewModel.class);
-        return inflater.inflate(R.layout.fragment_game_screen, container, false);
+        View view = inflater.inflate(R.layout.fragment_game_screen, container, false);
+
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.action_GameScreen_to_Room1);
+
+        return view;
     }
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
 
         TextView playerNameTextView = view.findViewById(R.id.playerNameTextView);
         TextView gameDifficultyTextView = view.findViewById(R.id.gameDifficultyTextView);
@@ -55,14 +70,27 @@ public class GameScreen extends Fragment {
         playerCharacterImageView.setImageResource(characterImageResource);
 
 
-        Button endButton = view.findViewById(R.id.endButton);
-        endButton.setOnClickListener(new View.OnClickListener() {
+        Button nextButton = view.findViewById(R.id.gameScreenNextButton);
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(GameScreen.this).navigate(
-                        R.id.action_GameScreen_to_EndScreen);
+
+
+                while (currentRoomIndex < roomFragments.length) {
+                    currentRoomIndex++;
+                    getChildFragmentManager().beginTransaction()
+                            .replace(R.id.roomContainer, roomFragments[currentRoomIndex])
+                            .commit();
+                }
             }
         });
+
+
+
+
+
     }
+
+
 
 }
