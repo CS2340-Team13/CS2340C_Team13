@@ -17,11 +17,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.dungeonrunner.R;
-import com.example.dungeonrunner.viewModels.StartScreenViewModel;
 
 public class StartScreen extends Fragment {
 
-    private StartScreenViewModel mViewModel;
     private static final String TAG = "startScreenLog";
 
     public static StartScreen newInstance() {
@@ -31,8 +29,11 @@ public class StartScreen extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mViewModel = new ViewModelProvider(this).get(StartScreenViewModel.class);
-        View view = inflater.inflate(R.layout.fragment_start_screen, container, false);
+        return inflater.inflate(R.layout.fragment_start_screen, container, false);
+    }
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         Button startButton = view.findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +50,6 @@ public class StartScreen extends Fragment {
                 onExitButtonClicked();
             }
         });
-
-        return view;
     }
 
 

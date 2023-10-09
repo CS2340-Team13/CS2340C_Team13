@@ -1,5 +1,10 @@
 package com.example.dungeonrunner.viewModels;
 
+import android.util.Log;
+import android.widget.ImageView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dungeonrunner.R;
@@ -40,5 +45,15 @@ public class GameScreenViewModel extends ViewModel {
 
     public String getGameDifficulty() {
         return player.getGameDifficulty();
+    }
+
+    public void setPosition(ImageView imageView, int x, int y) {
+        int characterImageResource = getCharacterImageResource();
+        imageView.setImageResource(characterImageResource);
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone((ConstraintLayout) imageView.getParent());
+        constraintSet.connect(imageView.getId(), ConstraintSet.START, ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.START, x);
+        constraintSet.connect(imageView.getId(), ConstraintSet.TOP, ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.TOP, y);
+        constraintSet.applyTo((ConstraintLayout) imageView.getParent());
     }
 }

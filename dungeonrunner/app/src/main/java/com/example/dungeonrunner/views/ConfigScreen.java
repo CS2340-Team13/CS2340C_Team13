@@ -87,7 +87,7 @@ public class ConfigScreen extends Fragment {
                 String error = mViewModel.submit(name, selectedCharacter, difficulty);
                 if (error.equals("")) {
                     NavHostFragment.findNavController(ConfigScreen.this).navigate(
-                        R.id.action_ConfigScreen_to_GameScreen);
+                        R.id.action_ConfigScreen_to_Room1);
                 } else {
                     editTextName.setError(error);
                 }

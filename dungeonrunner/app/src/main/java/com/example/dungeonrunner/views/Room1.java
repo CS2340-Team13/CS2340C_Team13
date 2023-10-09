@@ -3,19 +3,25 @@ package com.example.dungeonrunner.views;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.example.dungeonrunner.R;
+import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 
 
 public class Room1 extends Fragment {
 
-
+    private GameScreenViewModel mViewModel;
     public int getNavigationAction() {
         return R.id.action_Room1_to_Room2;
     }
@@ -23,7 +29,18 @@ public class Room1 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_room1, container, false);
+        mViewModel = new ViewModelProvider(this).get(GameScreenViewModel.class);
+        return inflater.inflate(R.layout.fragment_room1, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
+        int startXValue = getResources().getInteger(R.integer.start_x);
+        int startYValue = getResources().getInteger(R.integer.start_y);
+        mViewModel.setPosition(playerCharacterImageView, startXValue, startYValue);
 
         Button nextButton = view.findViewById(R.id.room1NextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -34,9 +51,6 @@ public class Room1 extends Fragment {
                         R.id.action_Room1_to_Room2);
             }
         });
-
-
-
-        return view;
     }
+
 }

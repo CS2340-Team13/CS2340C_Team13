@@ -28,4 +28,6 @@ public class ConfigScreenViewModel extends ViewModel {
         player.setGameDifficulty(gameDifficulty);
         return "";
     }
+
+
 }
