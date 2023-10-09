@@ -84,7 +84,10 @@ public class ConfigScreen extends Fragment {
             public void onClick(View v) {
                 String name = editTextName.getText().toString().trim();
                 int difficulty = radioGroupDifficulty.getCheckedRadioButtonId();
-                String error = mViewModel.submit(name, selectedCharacter, difficulty);
+                int startX = getResources().getInteger(R.integer.start_x);
+                int startY = getResources().getInteger(R.integer.start_y);
+                String error = mViewModel.submit(name, selectedCharacter, difficulty,
+                        startX, startY);
                 if (error.equals("")) {
                     NavHostFragment.findNavController(ConfigScreen.this).navigate(
                         R.id.action_ConfigScreen_to_Room1);

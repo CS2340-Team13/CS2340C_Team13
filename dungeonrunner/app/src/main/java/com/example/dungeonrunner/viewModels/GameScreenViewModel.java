@@ -47,13 +47,16 @@ public class GameScreenViewModel extends ViewModel {
         return player.getGameDifficulty();
     }
 
-    public void setPosition(ImageView imageView, int x, int y) {
+    public void setPosition(ImageView imageView) {
+
         int characterImageResource = getCharacterImageResource();
         imageView.setImageResource(characterImageResource);
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone((ConstraintLayout) imageView.getParent());
-        constraintSet.connect(imageView.getId(), ConstraintSet.START, ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.START, x);
-        constraintSet.connect(imageView.getId(), ConstraintSet.TOP, ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.TOP, y);
+        constraintSet.connect(imageView.getId(), ConstraintSet.START,
+                ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.START, player.getX());
+        constraintSet.connect(imageView.getId(), ConstraintSet.TOP,
+                ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.TOP, player.getY());
         constraintSet.applyTo((ConstraintLayout) imageView.getParent());
     }
 }

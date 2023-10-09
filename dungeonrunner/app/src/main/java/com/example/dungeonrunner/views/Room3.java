@@ -33,9 +33,7 @@ public class Room3 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
-        int startXValue = getResources().getInteger(R.integer.start_x);
-        int startYValue = getResources().getInteger(R.integer.start_y);
-        mViewModel.setPosition(playerCharacterImageView, startXValue, startYValue);
+        mViewModel.setPosition(playerCharacterImageView);
 
         Button prevButton = view.findViewById(R.id.room3PrevButton);
         prevButton.setOnClickListener(new View.OnClickListener() {

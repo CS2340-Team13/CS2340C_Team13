@@ -9,7 +9,8 @@ import com.example.dungeonrunner.model.Player;
 public class ConfigScreenViewModel extends ViewModel {
 
     private Player player = Player.getPlayer();
-    public String submit(String playerName, String selectedCharacter, int difficultyId) {
+    public String submit(String playerName, String selectedCharacter, int difficultyId,
+                         int startX, int startY) {
         if (playerName.isEmpty() || playerName.equals("null")) {
             return "Name can't be empty or null";
         }
@@ -26,6 +27,8 @@ public class ConfigScreenViewModel extends ViewModel {
         player.setPlayerName(playerName);
         player.setSelectedCharater(selectedCharacter);
         player.setGameDifficulty(gameDifficulty);
+        player.setX(startX);
+        player.setY(startY);
         return "";
     }
 
