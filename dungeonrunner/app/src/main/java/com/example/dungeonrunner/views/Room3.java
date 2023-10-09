@@ -3,6 +3,7 @@ package com.example.dungeonrunner.views;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Bundle;
@@ -10,30 +11,31 @@ import android.widget.Button;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
 import com.example.dungeonrunner.R;
+import com.example.dungeonrunner.viewModels.ConfigScreenViewModel;
+import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 
 
 public class Room3 extends Fragment {
 
-    public int getNavigationAction() {
-        return R.id.action_Room3_to_EndScreen;
-    }
+    private GameScreenViewModel mViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for Room 1.
-        View view = inflater.inflate(R.layout.fragment_room3, container, false);
+        mViewModel = new ViewModelProvider(this).get(GameScreenViewModel.class);
+        return inflater.inflate(R.layout.fragment_room3, container, false);
+    }
 
-//        Button nextButton = view.findViewById(R.id.room3NextButton);
-//        nextButton.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                NavHostFragment.findNavController(Room3.this).navigate(
-//                        R.id.action_Room3_to_EndScreen);
-//            }
-//        });
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
+        int startXValue = getResources().getInteger(R.integer.start_x);
+        int startYValue = getResources().getInteger(R.integer.start_y);
+        mViewModel.setPosition(playerCharacterImageView, startXValue, startYValue);
 
         Button prevButton = view.findViewById(R.id.room3PrevButton);
         prevButton.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +55,5 @@ public class Room3 extends Fragment {
                         R.id.action_Room3_to_EndScreen);
             }
         });
-
-        return view;
     }
 }

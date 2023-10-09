@@ -16,11 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.dungeonrunner.viewModels.EndScreenViewModel;
 import com.example.dungeonrunner.R;
 public class EndScreen extends Fragment {
-
-    private EndScreenViewModel mViewModel;
 
     private static final String TAG = "endScreenLog";
 
@@ -31,16 +28,17 @@ public class EndScreen extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_end_screen, container, false);
+        return inflater.inflate(R.layout.fragment_end_screen, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         Button restartButton = view.findViewById(R.id.restartButton);
         restartButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                NavController navController = NavHostFragment.findNavController(EndScreen.this);
-                navController.navigate(R.id.action_EndScreen_to_StartScreen);
-            }
+            public void onClick(View v) { onRestartButtonClicked(); }
         });
-        return view;
     }
 
     private void onRestartButtonClicked() {
@@ -48,12 +46,4 @@ public class EndScreen extends Fragment {
         NavController navController = NavHostFragment.findNavController(EndScreen.this);
         navController.navigate(R.id.action_EndScreen_to_StartScreen);
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(EndScreenViewModel.class);
-        // TO-DO: Use the ViewModel
-    }
-
 }
