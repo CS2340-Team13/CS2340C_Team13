@@ -19,18 +19,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.dungeonrunner.R;
+import com.example.dungeonrunner.model.ScoreUnit;
 import com.example.dungeonrunner.viewModels.EndScreenViewModel;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 
+import java.util.ArrayList;
+
 public class EndScreen extends Fragment {
 
-    private EndScreenViewModel mViewModel;
+    private EndScreenViewModel endScreenViewModel;
 
     private GameScreenViewModel gmViewModel;
 
     private static final String TAG = "endScreenLog";
 
     private TextView curScoreTextView;
+
+    private String[] scoreIDs = {"score1", "score2", "score3", "score4", "score5"};
+    private String packageName;
 
     public static EndScreen newInstance() {
         return new EndScreen();
@@ -39,11 +45,13 @@ public class EndScreen extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        gmViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
+        endScreenViewModel = new ViewModelProvider(requireActivity()).get(EndScreenViewModel.class);
+        packageName = getContext().getPackageName();
         return inflater.inflate(R.layout.fragment_end_screen, container, false);
     }
 
     @Override
-    //add score to the leaderboard, then display.
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Button restartButton = view.findViewById(R.id.restartButton);
@@ -52,8 +60,15 @@ public class EndScreen extends Fragment {
             public void onClick(View v) { onRestartButtonClicked(); }
         });
 
+        int score = gmViewModel.getScoreLiveData().getValue();
         curScoreTextView = view.findViewById(R.id.curScore);
-        curScoreTextView.setText("Your score was " + gmViewModel.getScoreLiveData());
+        curScoreTextView.setText("Your score was " + score);
+        ArrayList<ScoreUnit> results = endScreenViewModel.getResults(score);
+        for (int i = 0; i<results.size(); i++) {
+            int resID = getContext().getResources().getIdentifier(scoreIDs[i], "id", packageName);
+            TextView scoreRowView = view.findViewById(resID);
+            scoreRowView.setText(results.get(i).toString());
+        }
 
     }
 
