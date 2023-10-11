@@ -15,11 +15,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.dungeonrunner.R;
+import com.example.dungeonrunner.viewModels.EndScreenViewModel;
+import com.example.dungeonrunner.viewModels.GameScreenViewModel;
+
 public class EndScreen extends Fragment {
 
+    private EndScreenViewModel mViewModel;
+
+    private GameScreenViewModel gmViewModel;
+
     private static final String TAG = "endScreenLog";
+
+    private TextView curScoreTextView;
 
     public static EndScreen newInstance() {
         return new EndScreen();
@@ -32,6 +43,7 @@ public class EndScreen extends Fragment {
     }
 
     @Override
+    //add score to the leaderboard, then display.
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Button restartButton = view.findViewById(R.id.restartButton);
@@ -39,6 +51,10 @@ public class EndScreen extends Fragment {
             @Override
             public void onClick(View v) { onRestartButtonClicked(); }
         });
+
+        curScoreTextView = view.findViewById(R.id.curScore);
+        curScoreTextView.setText("Your score was " + gmViewModel.getScoreLiveData());
+
     }
 
     private void onRestartButtonClicked() {

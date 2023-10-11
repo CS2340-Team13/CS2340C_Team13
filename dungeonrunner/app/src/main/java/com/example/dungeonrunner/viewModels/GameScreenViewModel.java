@@ -20,7 +20,7 @@ public class GameScreenViewModel extends ViewModel {
     private CountDownTimer timer;
 
     // used for updating timer easily among fragments
-    private MutableLiveData<Integer> scoreLiveData = new MutableLiveData<>();
+    private static MutableLiveData<Integer> scoreLiveData = new MutableLiveData<>();
 
     public int getCharacterImageResource() {
         String selectedCharacter = player.getSelectedCharacter();
