@@ -1,9 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.EndScreen">
+    android:orientation="vertical"
+    tools:context=".EndScreen">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GAME OVER"
+        android:gravity="center"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/curScore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Score"
+        android:gravity="center"
+        android:textSize="24sp" />
+
+    <!-- Scoreboard framework with 5 lines -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/score1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Score Recorded" />
+
+        <TextView
+            android:id="@+id/score2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Score Recorded" />
+
+        <TextView
+            android:id="@+id/score3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Score Recorded" />
+
+        <TextView
+            android:id="@+id/score4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Score Recorded" />
+
+        <TextView
+            android:id="@+id/score5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Score Recorded" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/restartButton"
@@ -11,10 +64,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Restart" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="GAME OVER" />
-
-</FrameLayout>
+</LinearLayout>
