@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -22,14 +23,21 @@ import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 public class Room1 extends Fragment {
 
     private GameScreenViewModel mViewModel;
+    private TextView scoreTextView;
     public int getNavigationAction() {
         return R.id.action_Room1_to_Room2;
     }
 
+    // method is used to ensure multiple fragments (room 1,2,3) all reference the same gameScreen ViewModel
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mViewModel = new ViewModelProvider(this).get(GameScreenViewModel.class);
+        //mViewModel = new ViewModelProvider(this).get(GameScreenViewModel.class);
         return inflater.inflate(R.layout.fragment_room1, container, false);
     }
 
@@ -49,6 +57,15 @@ public class Room1 extends Fragment {
                         R.id.action_Room1_to_Room2);
             }
         });
+
+        scoreTextView = view.findViewById(R.id.scoreTextView);
+        mViewModel.getScoreLiveData().observe(getViewLifecycleOwner(), newScore -> {
+            scoreTextView.setText("Score: " + newScore);
+        });
+
+        if (!mViewModel.isTimerRunning()) {
+            mViewModel.startTimer();
+        }
     }
 
 }
