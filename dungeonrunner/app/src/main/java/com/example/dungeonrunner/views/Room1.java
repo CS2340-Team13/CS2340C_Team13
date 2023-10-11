@@ -22,22 +22,21 @@ import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 
 public class Room1 extends Fragment {
 
-    private GameScreenViewModel mViewModel;
+    private GameScreenViewModel gameScreenViewModel;
     private TextView scoreTextView;
     public int getNavigationAction() {
         return R.id.action_Room1_to_Room2;
     }
 
-    // method is used to ensure multiple fragments (room 1,2,3) all reference the same gameScreen ViewModel
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
+        gameScreenViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
     }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //mViewModel = new ViewModelProvider(this).get(GameScreenViewModel.class);
+        //gameScreenViewModel = new ViewModelProvider(this).get(GameScreenViewModel.class);
         return inflater.inflate(R.layout.fragment_room1, container, false);
     }
 
@@ -45,8 +44,12 @@ public class Room1 extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (!gameScreenViewModel.isTimerRunning()) {
+            gameScreenViewModel.startTimer();
+        }
+
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
-        mViewModel.setPosition(playerCharacterImageView);
+        gameScreenViewModel.setPosition(playerCharacterImageView);
 
         Button nextButton = view.findViewById(R.id.room1NextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -59,13 +62,8 @@ public class Room1 extends Fragment {
         });
 
         scoreTextView = view.findViewById(R.id.scoreTextView);
-        mViewModel.getScoreLiveData().observe(getViewLifecycleOwner(), newScore -> {
+        gameScreenViewModel.getScoreLiveData().observe(getViewLifecycleOwner(), newScore -> {
             scoreTextView.setText("Score: " + newScore);
         });
-
-        if (!mViewModel.isTimerRunning()) {
-            mViewModel.startTimer();
-        }
     }
-
 }

@@ -70,12 +70,17 @@ public class GameScreenViewModel extends ViewModel {
     }
 
     public void startTimer() {
+        score = 100;
         timerRunning = true;
         timer = new CountDownTimer(100000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                score--;
-                scoreLiveData.setValue(score);
+                if (timerRunning) {
+                    score--;
+                    scoreLiveData.setValue(score);
+                } else {
+                    timer.cancel();
+                }
             }
             @Override
             public void onFinish() {
@@ -86,6 +91,11 @@ public class GameScreenViewModel extends ViewModel {
 
     public boolean isTimerRunning() {
         return timerRunning;
+    }
+
+
+    public void stopTimer() {
+        timerRunning = false;
     }
 
     public MutableLiveData<Integer> getScoreLiveData() {

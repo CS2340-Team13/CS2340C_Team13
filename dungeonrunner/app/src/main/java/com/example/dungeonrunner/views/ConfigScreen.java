@@ -23,7 +23,7 @@ import com.example.dungeonrunner.R;
 
 public class ConfigScreen extends Fragment {
 
-    private ConfigScreenViewModel mViewModel;
+    private ConfigScreenViewModel configScreenViewModel;
     private static final String TAG = "configScreenLog";
     private String selectedCharacter = "character1";
 
@@ -34,7 +34,7 @@ public class ConfigScreen extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mViewModel = new ViewModelProvider(this).get(ConfigScreenViewModel.class);
+        configScreenViewModel = new ViewModelProvider(this).get(ConfigScreenViewModel.class);
         return inflater.inflate(R.layout.fragment_config_screen, container, false);
     }
 
@@ -86,7 +86,7 @@ public class ConfigScreen extends Fragment {
                 int difficulty = radioGroupDifficulty.getCheckedRadioButtonId();
                 int startX = getResources().getInteger(R.integer.start_x);
                 int startY = getResources().getInteger(R.integer.start_y);
-                String error = mViewModel.submit(name, selectedCharacter, difficulty,
+                String error = configScreenViewModel.submit(name, selectedCharacter, difficulty,
                         startX, startY);
                 if (error.equals("")) {
                     NavHostFragment.findNavController(ConfigScreen.this).navigate(

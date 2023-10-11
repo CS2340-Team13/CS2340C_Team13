@@ -16,17 +16,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dungeonrunner.R;
-import com.example.dungeonrunner.viewModels.ConfigScreenViewModel;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 
 
 public class Room3 extends Fragment {
 
-    private GameScreenViewModel mViewModel;
+    private GameScreenViewModel gameScreenViewModel;
     private TextView scoreTextView;
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
+        gameScreenViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
     }
     @Nullable
     @Override
@@ -38,7 +37,7 @@ public class Room3 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
-        mViewModel.setPosition(playerCharacterImageView);
+        gameScreenViewModel.setPosition(playerCharacterImageView);
 
         Button prevButton = view.findViewById(R.id.room3PrevButton);
         prevButton.setOnClickListener(new View.OnClickListener() {
@@ -54,13 +53,14 @@ public class Room3 extends Fragment {
         endButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                gameScreenViewModel.stopTimer();
                 NavHostFragment.findNavController(Room3.this).navigate(
                         R.id.action_Room3_to_EndScreen);
             }
         });
 
         scoreTextView = view.findViewById(R.id.scoreTextView);
-        mViewModel.getScoreLiveData().observe(getViewLifecycleOwner(), newScore -> {
+        gameScreenViewModel.getScoreLiveData().observe(getViewLifecycleOwner(), newScore -> {
             scoreTextView.setText("Score: " + newScore);
         });
     }

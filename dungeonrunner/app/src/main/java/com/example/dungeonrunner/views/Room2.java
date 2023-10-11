@@ -21,11 +21,11 @@ import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 
 public class Room2 extends Fragment {
 
-    private GameScreenViewModel mViewModel;
+    private GameScreenViewModel gameScreenViewModel;
     private TextView scoreTextView;
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
+        gameScreenViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
     }
     @Nullable
     @Override
@@ -36,7 +36,7 @@ public class Room2 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
-        mViewModel.setPosition(playerCharacterImageView);
+        gameScreenViewModel.setPosition(playerCharacterImageView);
 
         Button nextButton = view.findViewById(R.id.room2NextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +59,7 @@ public class Room2 extends Fragment {
         });
 
         scoreTextView = view.findViewById(R.id.scoreTextView);
-        mViewModel.getScoreLiveData().observe(getViewLifecycleOwner(), newScore -> {
+        gameScreenViewModel.getScoreLiveData().observe(getViewLifecycleOwner(), newScore -> {
             scoreTextView.setText("Score: " + newScore);
         });
     }
