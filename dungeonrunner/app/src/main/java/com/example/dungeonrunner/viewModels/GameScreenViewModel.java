@@ -79,7 +79,7 @@ public class GameScreenViewModel extends ViewModel {
             }
             @Override
             public void onFinish() {
-                scoreLiveData.setValue(-1);
+                scoreLiveData.setValue(0);
             }
         }.start();
     }
