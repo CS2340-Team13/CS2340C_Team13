@@ -2,6 +2,8 @@ package com.example.dungeonrunner.viewModels;
 
 import android.util.Log;
 import android.widget.ImageView;
+import android.os.CountDownTimer;
+import androidx.lifecycle.MutableLiveData;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -13,6 +15,13 @@ import com.example.dungeonrunner.model.Player;
 public class GameScreenViewModel extends ViewModel {
 
     private Player player = Player.getPlayer();
+    private int score = 100;
+    private boolean timerRunning = false;
+    private CountDownTimer timer;
+
+    // used for updating timer easily among fragments
+    private MutableLiveData<Integer> scoreLiveData = new MutableLiveData<>();
+
     public int getCharacterImageResource() {
         String selectedCharacter = player.getSelectedCharacter();
         int characterImageResource = 0;
@@ -58,5 +67,28 @@ public class GameScreenViewModel extends ViewModel {
         constraintSet.connect(imageView.getId(), ConstraintSet.TOP,
                 ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.TOP, player.getY());
         constraintSet.applyTo((ConstraintLayout) imageView.getParent());
+    }
+
+    public void startTimer() {
+        timerRunning = true;
+        timer = new CountDownTimer(100000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                score--;
+                scoreLiveData.setValue(score);
+            }
+            @Override
+            public void onFinish() {
+                scoreLiveData.setValue(-1);
+            }
+        }.start();
+    }
+
+    public boolean isTimerRunning() {
+        return timerRunning;
+    }
+
+    public MutableLiveData<Integer> getScoreLiveData() {
+        return scoreLiveData;
     }
 }

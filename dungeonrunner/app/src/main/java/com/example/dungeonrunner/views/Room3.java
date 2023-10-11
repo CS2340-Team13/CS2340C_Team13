@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.Button;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.dungeonrunner.R;
 import com.example.dungeonrunner.viewModels.ConfigScreenViewModel;
@@ -21,11 +23,14 @@ import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 public class Room3 extends Fragment {
 
     private GameScreenViewModel mViewModel;
-
+    private TextView scoreTextView;
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mViewModel = new ViewModelProvider(this).get(GameScreenViewModel.class);
         return inflater.inflate(R.layout.fragment_room3, container, false);
     }
 
@@ -52,6 +57,11 @@ public class Room3 extends Fragment {
                 NavHostFragment.findNavController(Room3.this).navigate(
                         R.id.action_Room3_to_EndScreen);
             }
+        });
+
+        scoreTextView = view.findViewById(R.id.scoreTextView);
+        mViewModel.getScoreLiveData().observe(getViewLifecycleOwner(), newScore -> {
+            scoreTextView.setText("Score: " + newScore);
         });
     }
 }
