@@ -59,7 +59,7 @@ public class Sprint2Tests {
 
     @Test
     public void correctTopScorer() {
-        Leaderboard tf = new Leaderboard();
+        Leaderboard tf = Leaderboard.getLeaderboard();
         tf.addToList("ted", 15);
         tf.addToList("dave", 19);
         tf.addToList("ned", 17);
@@ -79,7 +79,7 @@ public class Sprint2Tests {
 
     @Test
     public void populatesArray_isCorrect() {
-        Leaderboard tf = new Leaderboard();
+        Leaderboard tf = Leaderboard.getLeaderboard();
         tf.addToList("ted", 15);
         tf.addToList("dave", 19);
         tf.addToList("ned", 17);
@@ -91,7 +91,7 @@ public class Sprint2Tests {
 
     @Test
     public void sortArrayTrimsToFive_isCorrect() {
-        Leaderboard tf = new Leaderboard();
+        Leaderboard tf = Leaderboard.getLeaderboard();
         tf.addToList("ted", 15);
         tf.addToList("dave", 19);
         tf.addToList("ned", 17);
