@@ -1,6 +1,5 @@
 package com.example.dungeonrunner.viewModels;
 
-import android.util.Log;
 import android.widget.ImageView;
 import android.os.CountDownTimer;
 import androidx.lifecycle.MutableLiveData;
@@ -40,7 +39,7 @@ public class GameScreenViewModel extends ViewModel {
         int health = 100;
         if (gameDifficulty.equals("Easy")) {
             health = 100;
-        }else if (gameDifficulty.equals("Medium")) {
+        } else if (gameDifficulty.equals("Medium")) {
             health = 75;
         } else if (gameDifficulty.equals("Hard")) {
             health = 50;

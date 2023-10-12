@@ -5,8 +5,6 @@ import com.example.dungeonrunner.model.*;
 import com.example.dungeonrunner.viewModels.*;
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-
 public class Sprint2Tests {
     @Test
     public void correctEasyHealth() {
@@ -56,7 +54,7 @@ public class Sprint2Tests {
     public void submissionValid() {
         ConfigScreenViewModel mViewModel = new ConfigScreenViewModel();
         String result = mViewModel.submit("", "selectedCharacter", 0, 0, 0);
-        assertFalse(result.equals(""));
+        assertNotEquals(result, "");
     }
 
     @Test

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Leaderboard {
     private ArrayList<ScoreUnit> results;
-    private volatile static Leaderboard leaderboard;
+    private static volatile Leaderboard leaderboard;
 
     //creates new Leaderboard
     public Leaderboard() {
@@ -22,9 +22,13 @@ public class Leaderboard {
         return leaderboard;
     }
 
-    public ScoreUnit getScoreUnit(int index) {return results.get(index);}
+    public ScoreUnit getScoreUnit(int index) {
+        return results.get(index);
+    }
 
-    public ArrayList<ScoreUnit> getResults() {return results;}
+    public ArrayList<ScoreUnit> getResults() {
+        return results;
+    }
 
     public void addToList(String s, int i) {
         ScoreUnit scoreunit = new ScoreUnit(s, i);
@@ -37,7 +41,7 @@ public class Leaderboard {
             ScoreUnit temp = results.get(i);
             int j = i;
 
-            while(j > 0 && results.get(j- 1).getScore() < temp.getScore()) {
+            while (j > 0 && results.get(j - 1).getScore() < temp.getScore()) {
                 results.set(j, results.get(j - 1));
                 j--;
             }

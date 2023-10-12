@@ -33,7 +33,9 @@ public class ScoreUnit {
         return "Player: " + this.name + " | Score: " + this.score + " | Time: " + this.date;
     }
 
-    public int getScore() {return this.score;}
+    public int getScore() {
+        return this.score;
+    }
 
     public boolean isBigger(ScoreUnit s1, ScoreUnit s2) {
         return s1.score >= s2.score;
