@@ -7,8 +7,8 @@ public class Leaderboard {
     private static volatile Leaderboard leaderboard;
 
     //creates new Leaderboard
-    public Leaderboard() {
-        results = new ArrayList<ScoreUnit>();
+    private Leaderboard() {
+        this.results = new ArrayList<ScoreUnit>();
     }
 
     public static Leaderboard getLeaderboard() {
