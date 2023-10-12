@@ -8,7 +8,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,11 +30,13 @@ public class Room1 extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        gameScreenViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
+        gameScreenViewModel = new ViewModelProvider(
+                requireActivity()).get(GameScreenViewModel.class);
     }
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //gameScreenViewModel = new ViewModelProvider(this).get(GameScreenViewModel.class);
         return inflater.inflate(R.layout.fragment_room1, container, false);
     }

@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.dungeonrunner.R;
@@ -57,14 +56,16 @@ public class EndScreen extends Fragment {
         Button restartButton = view.findViewById(R.id.restartButton);
         restartButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { onRestartButtonClicked(); }
+            public void onClick(View v) {
+                onRestartButtonClicked();
+            }
         });
 
         int score = gmViewModel.getScoreLiveData().getValue();
         curScoreTextView = view.findViewById(R.id.curScore);
         curScoreTextView.setText("Your score was " + score);
         ArrayList<ScoreUnit> results = endScreenViewModel.getResults(score);
-        for (int i = 0; i<results.size(); i++) {
+        for (int i = 0; i < results.size(); i++) {
             int resID = getContext().getResources().getIdentifier(scoreIDs[i], "id", packageName);
             TextView scoreRowView = view.findViewById(resID);
             scoreRowView.setText(results.get(i).toString());

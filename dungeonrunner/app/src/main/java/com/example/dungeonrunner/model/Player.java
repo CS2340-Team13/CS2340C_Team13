@@ -1,8 +1,5 @@
 package com.example.dungeonrunner.model;
 
-import android.widget.ImageView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 
 public class Player {
     private String playerName;
@@ -10,7 +7,7 @@ public class Player {
     private String gameDifficulty;
     private int x;
     private int y;
-    private volatile static Player player;
+    private static volatile Player player;
 
 
     private Player() {
@@ -52,12 +49,20 @@ public class Player {
         this.gameDifficulty = gameDifficulty;
     }
 
-    public int getX() { return x; }
+    public int getX() {
+        return x;
+    }
 
-    public void setX(int x) { this.x = x; }
+    public void setX(int x) {
+        this.x = x;
+    }
 
-    public int getY() { return y; }
+    public int getY() {
+        return y;
+    }
 
-    public void setY(int y) { this.y = y; }
+    public void setY(int y) {
+        this.y = y;
+    }
 
 }
