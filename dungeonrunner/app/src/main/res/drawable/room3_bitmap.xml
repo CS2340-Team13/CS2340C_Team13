@@ -3,7 +3,7 @@
 
 <bitmap
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/floor_4"
+    android:src="@drawable/floor_3_new"
     android:tileModeX="repeat"
     android:tileModeY="repeat">
 </bitmap>
