@@ -45,13 +45,18 @@ public class Room1 extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         if (!gameScreenViewModel.isTimerRunning()) {
             gameScreenViewModel.startTimer();
         }
 
+        // need to set the view in focus so that the key presses are captured.
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
         gameScreenViewModel.setPosition(playerCharacterImageView);
-
+        PlayerMoveHelper.handleKeyEvent(view, gameScreenViewModel, playerCharacterImageView);
         Button nextButton = view.findViewById(R.id.room1NextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
 

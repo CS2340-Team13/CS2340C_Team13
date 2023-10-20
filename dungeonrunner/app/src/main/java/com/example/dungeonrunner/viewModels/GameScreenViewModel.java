@@ -55,6 +55,31 @@ public class GameScreenViewModel extends ViewModel {
         return player.getGameDifficulty();
     }
 
+
+    public void movePlayerUp() {
+        player.moveUp();
+    }
+
+    public void movePlayerDown() {
+        player.moveDown();
+    }
+
+    public void movePlayerLeft() {
+        player.moveLeft();
+    }
+
+    public void movePlayerRight() {
+        player.moveRight();
+    }
+
+    public int getPlayerX() {
+        return player.getX();
+    }
+
+    public int getPlayerY() {
+        return player.getY();
+    }
+
     public void setPosition(ImageView imageView) {
 
         int characterImageResource = getCharacterImageResource();
