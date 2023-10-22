@@ -65,22 +65,4 @@ public class Player {
         this.y = y;
     }
 
-    private final int MOVE_DISTANCE = 50;
-    public void moveUp() {
-        y -= MOVE_DISTANCE;
-    }
-
-    public void moveDown() {
-        y += MOVE_DISTANCE;
-    }
-
-    public void moveLeft() {
-        x -= MOVE_DISTANCE;
-    }
-
-    public void moveRight() {
-        x += MOVE_DISTANCE;
-    }
-
-
 }
