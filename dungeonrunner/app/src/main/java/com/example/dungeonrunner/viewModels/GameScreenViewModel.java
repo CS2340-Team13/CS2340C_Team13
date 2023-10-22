@@ -1,5 +1,6 @@
 package com.example.dungeonrunner.viewModels;
 
+import android.graphics.Point;
 import android.widget.ImageView;
 import android.os.CountDownTimer;
 import androidx.lifecycle.MutableLiveData;
@@ -20,6 +21,9 @@ public class GameScreenViewModel extends ViewModel {
 
     // used for updating timer easily among fragments
     private static MutableLiveData<Integer> scoreLiveData = new MutableLiveData<>();
+
+    private MutableLiveData<Point> playerPositionLiveData = new MutableLiveData<>(new Point(player.getX(), player.getY()));
+
 
     public int getCharacterImageResource() {
         String selectedCharacter = player.getSelectedCharacter();
@@ -56,20 +60,28 @@ public class GameScreenViewModel extends ViewModel {
     }
 
 
+    public void resetPlayerPosition() {
+        player.setX(50);
+        player.setY(50);
+    }
     public void movePlayerUp() {
         player.moveUp();
+        playerPositionLiveData.postValue(new Point(player.getX(), player.getY()));
     }
 
     public void movePlayerDown() {
         player.moveDown();
+        playerPositionLiveData.postValue(new Point(player.getX(), player.getY()));
     }
 
     public void movePlayerLeft() {
         player.moveLeft();
+        playerPositionLiveData.postValue(new Point(player.getX(), player.getY()));
     }
 
     public void movePlayerRight() {
         player.moveRight();
+        playerPositionLiveData.postValue(new Point(player.getX(), player.getY()));
     }
 
     public int getPlayerX() {
@@ -124,5 +136,9 @@ public class GameScreenViewModel extends ViewModel {
 
     public MutableLiveData<Integer> getScoreLiveData() {
         return scoreLiveData;
+    }
+
+    public MutableLiveData<Point> getPlayerPositionLiveData() {
+        return playerPositionLiveData;
     }
 }

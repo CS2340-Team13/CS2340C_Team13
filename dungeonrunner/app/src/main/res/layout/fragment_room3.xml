@@ -6,27 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/room3_bitmap">
 
-
-    <Button
-        android:id="@+id/room3EndButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="End Game"
-        android:layout_centerVertical="true"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="0dp"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/room3PrevButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Previous"
-        android:layout_centerVertical="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="0dp"
-        tools:ignore="MissingConstraints" />
-
     <ImageView
         android:id="@+id/playerCharacterImageView"
         android:layout_width="72dp"
@@ -36,8 +15,8 @@
 
     <ImageView
         android:id="@+id/portalImageView"
-        android:layout_width="512dp"
-        android:layout_height="1028dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="end|bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

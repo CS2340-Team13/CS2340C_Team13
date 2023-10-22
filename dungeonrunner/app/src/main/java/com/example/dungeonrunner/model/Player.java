@@ -65,7 +65,7 @@ public class Player {
         this.y = y;
     }
 
-    private final int MOVE_DISTANCE = 30;
+    private final int MOVE_DISTANCE = 50;
     public void moveUp() {
         y -= MOVE_DISTANCE;
     }

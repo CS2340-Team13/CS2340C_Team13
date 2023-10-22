@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.widget.Button;
 import android.view.LayoutInflater;
@@ -42,33 +43,44 @@ public class Room3 extends Fragment {
         view.setFocusableInTouchMode(true);
         view.requestFocus();
 
+        gameScreenViewModel.resetPlayerPosition();
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
         gameScreenViewModel.setPosition(playerCharacterImageView);
         PlayerMoveHelper.handleKeyEvent(view, gameScreenViewModel, playerCharacterImageView);
-
-        Button prevButton = view.findViewById(R.id.room3PrevButton);
-        prevButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(Room3.this).navigate(
-                        R.id.action_Room3_to_Room2);
-            }
-        });
-
-        Button endButton = view.findViewById(R.id.room3EndButton);
-        endButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gameScreenViewModel.stopTimer();
-                NavHostFragment.findNavController(Room3.this).navigate(
-                        R.id.action_Room3_to_EndScreen);
-            }
-        });
 
         scoreTextView = view.findViewById(R.id.scoreTextView);
         gameScreenViewModel.getScoreLiveData().observe(getViewLifecycleOwner(), newScore -> {
             scoreTextView.setText("Score: " + newScore);
         });
+
+        gameScreenViewModel.getPlayerPositionLiveData().observe(getViewLifecycleOwner(), newPosition -> {
+            checkForRoomTransition();
+        });
+    }
+
+    private void checkForRoomTransition() {
+        ImageView portalImageView = getView().findViewById(R.id.portalImageView);
+        ImageView playerCharacterImageView = getView().findViewById(R.id.playerCharacterImageView);
+
+        // if overlap of player and portal, switch room.
+        if (viewsOverlap(playerCharacterImageView, portalImageView)) {
+            NavHostFragment.findNavController(Room3.this).navigate(R.id.action_Room3_to_EndScreen);
+        }
+    }
+    private static boolean viewsOverlap(View view1, View view2) {
+        Rect rect1 = new Rect();
+        view1.getHitRect(rect1);
+
+        Rect rect2 = new Rect();
+        view2.getHitRect(rect2);
+
+        // Check for sufficient overlap
+        if (rect1.intersect(rect2)) {
+            int overlapArea = rect1.width() * rect1.height();
+            int halfView1Area = (view1.getWidth() * view1.getHeight()) / 2;
+            return overlapArea >= halfView1Area;
+        }
+
+        return false;
     }
 }
