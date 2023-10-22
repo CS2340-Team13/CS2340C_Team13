@@ -15,25 +15,17 @@
 
     <ImageView
         android:id="@+id/portalImageView"
-        android:layout_width="512dp"
-        android:layout_height="1028dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="end|bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
         android:src="@drawable/portal"
-        tools:ignore="MissingConstraints" />
+        android:visibility="visible"
 
-    <Button
-        android:id="@+id/room1NextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Next"
-        android:layout_centerVertical="true"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="0dp"
-        tools:ignore="MissingConstraints" />
+        />
 
     <TextView
         android:id="@+id/scoreTextView"
