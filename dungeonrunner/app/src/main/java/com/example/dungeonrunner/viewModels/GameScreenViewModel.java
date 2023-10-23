@@ -199,7 +199,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         notifyObserver();
     }
 
-    public  ArrayList<Wall> GetWalls() {
-      return this.walls;
+    public  ArrayList<Wall> getWalls() {
+        return this.walls;
     }
 }
