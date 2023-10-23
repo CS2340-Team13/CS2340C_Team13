@@ -1,21 +1,17 @@
 package com.example.dungeonrunner;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.example.dungeonrunner.model.Leaderboard;
 import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.model.PlayerMovementStrategy;
-import com.example.dungeonrunner.model.ScoreUnit;
 import com.example.dungeonrunner.model.Wall;
-import com.example.dungeonrunner.viewModels.ConfigScreenViewModel;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
-import com.example.dungeonrunner.views.EndScreen;
-import com.example.dungeonrunner.views.Room;
+
 
 import org.junit.Test;
 
@@ -100,13 +96,6 @@ public class Sprint3Tests {
         assertEquals(expectedRoomID, room.getRoomID());
     }
 
-    /*@Test
-    public void testWallRendering() {
-        GameScreenViewModel viewModel = new GameScreenViewModel();
-        Wall theWall = new Wall(100, 100, 200, 200);
-        viewModel.addWall(theWall);
-        assertEquals(viewModel.GetWalls().size(), 1);
-    } */
     @Test
     public void testPlayerPositionResetAfterRoomChange() {
         GameScreenViewModel viewModel = new GameScreenViewModel();
@@ -114,9 +103,42 @@ public class Sprint3Tests {
         int resetY = 50;
         viewModel.resetPlayerPosition();
 
-        // Verify that the player's initial position is set correctly
         assertEquals(resetX, viewModel.getPlayerX());
         assertEquals(resetY, viewModel.getPlayerY());
+    }
+
+    @Test
+    public void testSettingCollisionChecker() {
+        PlayerMovementStrategy movementStrategy = new PlayerMovementStrategy();
+        movementStrategy.setCollisionChecker(new PlayerMovementStrategy.CollisionChecker() {
+            @Override
+            public boolean isCollision(int x, int y, int width, int height) {
+                return x % 100 == 0 && y % 100 == 0;
+            }
+        });
+
+        assertNotNull(movementStrategy);
+    }
+
+    @Test
+    public void testMoveWithCustomCollision() {
+        MovementStrategy.setScreenDims(1000, 1000);
+        PlayerMovementStrategy movementStrategy = new PlayerMovementStrategy();
+        Player player = Player.getPlayer();
+        movementStrategy.setCollisionChecker(new PlayerMovementStrategy.CollisionChecker() {
+            @Override
+            public boolean isCollision(int x, int y, int width, int height) {
+                return x % 100 == 0 && y % 100 == 0;
+            }
+        });
+
+        int initialX = player.getX();
+        int initialY = player.getY();
+
+        movementStrategy.move(player, MovementStrategy.MovementDirection.UP.RIGHT);
+
+        assertEquals(initialX + 50, player.getX());
+        assertEquals(initialY, player.getY());
     }
 }
 
