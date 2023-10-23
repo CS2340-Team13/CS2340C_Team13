@@ -30,6 +30,14 @@ public class GameScreenViewModel extends ViewModel implements Observable {
 
     private Observer roomObserver;
 
+    private int screenWidth;
+    private int screenHeight;
+
+    public void setScreenDimensions(int width, int height) {
+        this.screenWidth = width;
+        this.screenHeight = height;
+    }
+
     public void registerObserver(Observer observer) {
         this.roomObserver = observer;
     }
@@ -86,7 +94,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     }
 
     public void movePlayer(MovementStrategy.MovementDirection direction) {
-        playerMovementStrategy.move(player, direction);
+        playerMovementStrategy.move(player, direction, screenWidth, screenHeight);
         playerPositionLiveData.postValue(new Point(player.getX(), player.getY()));
     }
 

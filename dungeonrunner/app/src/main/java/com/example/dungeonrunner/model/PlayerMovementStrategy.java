@@ -3,21 +3,30 @@ package com.example.dungeonrunner.model;
 public class PlayerMovementStrategy implements MovementStrategy {
 
     private final int MOVE_DISTANCE = 50;
+    private final int PLAYER_SIZE = 50;  // Assuming this is the size of your player sprite
 
     @Override
-    public void move(Player player, MovementDirection direction) {
+    public void move(Player player, MovementDirection direction, int screenWidth, int screenHeight) {
         switch (direction) {
             case UP:
-                player.setY(player.getY() - MOVE_DISTANCE);
+                if (player.getY() - MOVE_DISTANCE >= 0) {
+                    player.setY(player.getY() - MOVE_DISTANCE);
+                }
                 break;
             case DOWN:
-                player.setY(player.getY() + MOVE_DISTANCE);
+                if (player.getY() + MOVE_DISTANCE + PLAYER_SIZE <= screenHeight) {
+                    player.setY(player.getY() + MOVE_DISTANCE);
+                }
                 break;
             case LEFT:
-                player.setX(player.getX() - MOVE_DISTANCE);
+                if (player.getX() - MOVE_DISTANCE >= 0) {
+                    player.setX(player.getX() - MOVE_DISTANCE);
+                }
                 break;
             case RIGHT:
-                player.setX(player.getX() + MOVE_DISTANCE);
+                if (player.getX() + MOVE_DISTANCE + PLAYER_SIZE <= screenWidth) {
+                    player.setX(player.getX() + MOVE_DISTANCE);
+                }
                 break;
         }
     }

@@ -78,6 +78,12 @@ public class Room extends Fragment implements Observer {
                 gameScreenViewModel.playerReachedPortal();
             }
         });
+
+        view.post(() -> {
+            int fragmentWidth = view.getWidth();
+            int fragmentHeight = view.getHeight();
+            gameScreenViewModel.setScreenDimensions(fragmentWidth, fragmentHeight);
+        });
     }
 
     private int getLayoutResIdForRoom() {
