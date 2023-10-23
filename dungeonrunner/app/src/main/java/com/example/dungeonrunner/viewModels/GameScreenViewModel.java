@@ -13,20 +13,89 @@ import com.example.dungeonrunner.R;
 import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.model.PlayerMovementStrategy;
+import com.example.dungeonrunner.model.Wall;
 
-public class GameScreenViewModel extends ViewModel {
+import java.util.ArrayList;
+
+public class GameScreenViewModel extends ViewModel implements Observable {
 
     private Player player = Player.getPlayer();
     private int score = 100;
     private boolean timerRunning = false;
     private CountDownTimer timer;
 
-    // used for updating timer easily among fragments
     private static MutableLiveData<Integer> scoreLiveData = new MutableLiveData<>();
 
     private MutableLiveData<Point> playerPositionLiveData = new MutableLiveData<>(new Point(player.getX(), player.getY()));
+    private MutableLiveData<ArrayList<Wall>> wallsLiveData = new MutableLiveData<>();
 
-    private MovementStrategy playerMovementStrategy = new PlayerMovementStrategy();
+    public MutableLiveData<ArrayList<Wall>> getWallsLiveData() {
+        return wallsLiveData;
+    }
+
+
+    private PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy();
+
+    private ArrayList<Wall> walls = new ArrayList<Wall>();
+
+    private Observer roomObserver;
+
+    public void registerObserver(Observer observer) {
+        this.roomObserver = observer;
+    }
+
+    public void unregisterObserver() {
+        this.roomObserver = null;
+    }
+
+    public void notifyObserver() {
+        if (roomObserver != null) {
+            roomObserver.update();
+        }
+    }
+
+    public void addWall(Wall wall) {
+        walls.add(wall);
+        wallsLiveData.postValue(new ArrayList<>(walls));
+    }
+
+
+    public void generateWallInTheMiddle(int screenW, int screenH) {
+        int wallWidth = 32;
+        int wallHeight = 400;
+
+        int startX = (screenW - wallWidth) / 2;
+        int startY = (screenH - wallHeight) / 2;
+
+        Wall wall = new Wall(startX, startY, wallWidth, wallHeight);
+        addWall(wall);
+    }
+
+    private boolean isCollidingWithWall(int newX, int newY) {
+        for (Wall wall : walls) {
+            if (wall.intersects(newX, newY, player.getWidth(), player.getHeight())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    public void configureMovement(int screenWidth, int screenHeight, int playerWidth, int playerHeight) {
+        MovementStrategy.setScreenDims(screenWidth, screenHeight);
+        playerMovementStrategy.setPlayerDims(playerWidth, playerHeight);
+        playerMovementStrategy.setCollisionChecker(new PlayerMovementStrategy.CollisionChecker() {
+            @Override
+            public boolean isCollision(int x, int y, int width, int height) {
+                return isCollidingWithWall(x, y);
+            }
+        });
+
+        player.setWidth(playerWidth);
+        player.setHeight(playerHeight);
+        generateWallInTheMiddle(screenWidth, screenHeight);
+    }
 
 
     public int getCharacterImageResource() {
@@ -53,14 +122,6 @@ public class GameScreenViewModel extends ViewModel {
             health = 50;
         }
         return health;
-    }
-
-    public String getPlayerName() {
-        return player.getPlayerName();
-    }
-
-    public String getGameDifficulty() {
-        return player.getGameDifficulty();
     }
 
 
@@ -130,5 +191,9 @@ public class GameScreenViewModel extends ViewModel {
 
     public MutableLiveData<Point> getPlayerPositionLiveData() {
         return playerPositionLiveData;
+    }
+
+    public void playerReachedPortal() {
+        notifyObserver();
     }
 }

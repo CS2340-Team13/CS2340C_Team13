@@ -24,8 +24,8 @@
         tools:layout="@layout/fragment_config_screen">
 
         <action
-            android:id="@+id/action_ConfigScreen_to_Room1"
-            app:destination="@id/Room1" />
+            android:id="@+id/action_ConfigScreen_to_Room"
+            app:destination="@id/Room" />
 
     </fragment>
 
@@ -44,46 +44,18 @@
 
 
     <fragment
-        android:id="@+id/Room1"
-        android:name="com.example.dungeonrunner.views.Room1"
+        android:id="@+id/Room"
+        android:name="com.example.dungeonrunner.views.Room"
         android:label="fragment_room1"
         tools:layout="@layout/fragment_room1">
 
         <action
-            android:id="@+id/action_Room1_to_Room2"
-            app:destination="@id/Room2" />
-
-    </fragment>
-
-
-    <fragment
-        android:id="@+id/Room2"
-        android:name="com.example.dungeonrunner.views.Room2"
-        android:label="fragment_room2"
-        tools:layout="@layout/fragment_room2">
-
-        <action
-            android:id="@+id/action_Room2_to_Room3"
-            app:destination="@id/Room3" />
-        <action
-            android:id="@+id/action_Room2_to_Room1"
-            app:destination="@id/Room1" />
-
-    </fragment>
-
-
-    <fragment
-        android:id="@+id/Room3"
-        android:name="com.example.dungeonrunner.views.Room3"
-        android:label="fragment_room3"
-        tools:layout="@layout/fragment_room3">
-
-        <action
-            android:id="@+id/action_Room3_to_EndScreen"
+            android:id="@+id/action_Room_to_EndScreen"
             app:destination="@id/EndScreen" />
+
         <action
-            android:id="@+id/action_Room3_to_Room2"
-            app:destination="@id/Room2" />
+            android:id="@+id/action_self"
+            app:destination="@id/Room" />
 
     </fragment>
 

@@ -1,9 +1,19 @@
 package com.example.dungeonrunner.model;
 
-public interface MovementStrategy {
+public abstract class MovementStrategy {
 
-    enum MovementDirection {
+    public static int screenWidth = 0;
+    public static int screenHeight = 0;
+
+    public enum MovementDirection {
         UP, DOWN, LEFT, RIGHT
     }
-    void move(Player player, MovementDirection direction);
+
+    public static void setScreenDims(int width, int height) {
+        screenWidth = width;
+        screenHeight = height;
+    }
+
+    public abstract void move(Player player, MovementDirection direction);
+
 }

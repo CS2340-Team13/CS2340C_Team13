@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="wall_tile_size">16dp</dimen>
+</resources>
+
+
