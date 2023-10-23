@@ -14,7 +14,7 @@ import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.model.PlayerMovementStrategy;
 
-public class GameScreenViewModel extends ViewModel {
+public class GameScreenViewModel extends ViewModel implements Observable {
 
     private Player player = Player.getPlayer();
     private int score = 100;
@@ -27,6 +27,22 @@ public class GameScreenViewModel extends ViewModel {
     private MutableLiveData<Point> playerPositionLiveData = new MutableLiveData<>(new Point(player.getX(), player.getY()));
 
     private MovementStrategy playerMovementStrategy = new PlayerMovementStrategy();
+
+    private Observer roomObserver;
+
+    public void registerObserver(Observer observer) {
+        this.roomObserver = observer;
+    }
+
+    public void unregisterObserver() {
+        this.roomObserver = null;
+    }
+
+    public void notifyObserver() {
+        if (roomObserver != null) {
+            roomObserver.update();
+        }
+    }
 
 
     public int getCharacterImageResource() {
@@ -130,5 +146,9 @@ public class GameScreenViewModel extends ViewModel {
 
     public MutableLiveData<Point> getPlayerPositionLiveData() {
         return playerPositionLiveData;
+    }
+
+    public void playerReachedPortal() {
+        notifyObserver();
     }
 }

@@ -19,6 +19,7 @@ public class PlayerMoveHelper {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    System.out.println("KEYDOWN");
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_UP:
                             gameScreenViewModel.movePlayer(MovementStrategy.MovementDirection.UP);

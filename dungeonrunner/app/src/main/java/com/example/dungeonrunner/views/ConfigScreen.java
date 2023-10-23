@@ -89,7 +89,7 @@ public class ConfigScreen extends Fragment {
                         startX, startY);
                 if (error.equals("")) {
                     NavHostFragment.findNavController(ConfigScreen.this).navigate(
-                        R.id.action_ConfigScreen_to_Room1);
+                        R.id.action_ConfigScreen_to_Room);
                 } else {
                     editTextName.setError(error);
                 }

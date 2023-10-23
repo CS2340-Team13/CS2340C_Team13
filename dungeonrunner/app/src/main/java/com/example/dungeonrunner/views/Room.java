@@ -9,7 +9,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.widget.Button;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,43 +17,51 @@ import android.widget.TextView;
 
 import com.example.dungeonrunner.R;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
+import com.example.dungeonrunner.viewModels.Observer;
 
 
-public class Room1 extends Fragment {
+public class Room extends Fragment implements Observer {
 
     private GameScreenViewModel gameScreenViewModel;
     private TextView scoreTextView;
-    public int getNavigationAction() {
-        return R.id.action_Room1_to_Room2;
+    private int roomID = 1;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            roomID = getArguments().getInt("roomID", 1);  // If no roomID argument is provided, default to 1
+        }
     }
+
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        gameScreenViewModel = new ViewModelProvider(
-                requireActivity()).get(GameScreenViewModel.class);
+        gameScreenViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
+        gameScreenViewModel.registerObserver(this);  // Register Room as an observer
     }
+
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //gameScreenViewModel = new ViewModelProvider(this).get(GameScreenViewModel.class);
-        return inflater.inflate(R.layout.fragment_room1, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        System.out.println("ID START:" + roomID);
+        int layoutResId = getLayoutResIdForRoom();
+        return inflater.inflate(layoutResId, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         if (!gameScreenViewModel.isTimerRunning()) {
             gameScreenViewModel.startTimer();
         }
 
-        // need to set the view in focus so that the key presses are captured.
         view.setFocusableInTouchMode(true);
         view.requestFocus();
 
+        gameScreenViewModel.resetPlayerPosition();
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
         gameScreenViewModel.setPosition(playerCharacterImageView);
         PlayerMoveHelper.handleKeyEvent(view, gameScreenViewModel, playerCharacterImageView);
@@ -64,21 +71,29 @@ public class Room1 extends Fragment {
             scoreTextView.setText("Score: " + newScore);
         });
 
-        // to check if player reaches exit zone
         gameScreenViewModel.getPlayerPositionLiveData().observe(getViewLifecycleOwner(), newPosition -> {
-            checkForRoomTransition();
+            ImageView portalImageView = getView().findViewById(R.id.portalImageView);
+
+            if (viewsOverlap(playerCharacterImageView, portalImageView)) {
+                gameScreenViewModel.playerReachedPortal();
+            }
         });
     }
 
-    private void checkForRoomTransition() {
-        ImageView portalImageView = getView().findViewById(R.id.portalImageView);
-        ImageView playerCharacterImageView = getView().findViewById(R.id.playerCharacterImageView);
-
-        // if overlap of player and portal, switch room.
-        if (viewsOverlap(playerCharacterImageView, portalImageView)) {
-            NavHostFragment.findNavController(Room1.this).navigate(R.id.action_Room1_to_Room2);
+    private int getLayoutResIdForRoom() {
+        switch (roomID) {
+            case 1:
+                return R.layout.fragment_room1;
+            case 2:
+                return R.layout.fragment_room2;
+            case 3:
+                return R.layout.fragment_room3;
+            default:
+                return R.layout.fragment_room1;
         }
     }
+
+
     private static boolean viewsOverlap(View view1, View view2) {
         Rect rect1 = new Rect();
         view1.getHitRect(rect1);
@@ -86,7 +101,6 @@ public class Room1 extends Fragment {
         Rect rect2 = new Rect();
         view2.getHitRect(rect2);
 
-        // Check for sufficient overlap
         if (rect1.intersect(rect2)) {
             int overlapArea = rect1.width() * rect1.height();
             int halfView1Area = (view1.getWidth() * view1.getHeight()) / 2;
@@ -96,4 +110,17 @@ public class Room1 extends Fragment {
         return false;
     }
 
+    public void update() {
+        roomID++;
+
+        if (roomID == 4) {
+            NavHostFragment.findNavController(Room.this).navigate(R.id.action_Room_to_EndScreen);
+            return;
+        }
+
+        gameScreenViewModel.resetPlayerPosition();
+        Bundle args = new Bundle();
+        args.putInt("roomID", roomID);
+        NavHostFragment.findNavController(this).navigate(R.id.action_self, args);
+    }
 }
