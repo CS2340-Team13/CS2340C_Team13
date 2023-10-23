@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+
+import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 
 public class PlayerMoveHelper {
@@ -19,16 +21,16 @@ public class PlayerMoveHelper {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_UP:
-                            gameScreenViewModel.movePlayerUp();
+                            gameScreenViewModel.movePlayer(MovementStrategy.MovementDirection.UP);
                             break;
                         case KeyEvent.KEYCODE_DPAD_DOWN:
-                            gameScreenViewModel.movePlayerDown();
+                            gameScreenViewModel.movePlayer(MovementStrategy.MovementDirection.DOWN);
                             break;
                         case KeyEvent.KEYCODE_DPAD_LEFT:
-                            gameScreenViewModel.movePlayerLeft();
+                            gameScreenViewModel.movePlayer(MovementStrategy.MovementDirection.LEFT);
                             break;
                         case KeyEvent.KEYCODE_DPAD_RIGHT:
-                            gameScreenViewModel.movePlayerRight();
+                            gameScreenViewModel.movePlayer(MovementStrategy.MovementDirection.RIGHT);
                             break;
                     }
                 }

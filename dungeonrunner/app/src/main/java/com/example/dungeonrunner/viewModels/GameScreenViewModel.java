@@ -10,7 +10,9 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dungeonrunner.R;
+import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
+import com.example.dungeonrunner.model.PlayerMovementStrategy;
 
 public class GameScreenViewModel extends ViewModel {
 
@@ -23,6 +25,8 @@ public class GameScreenViewModel extends ViewModel {
     private static MutableLiveData<Integer> scoreLiveData = new MutableLiveData<>();
 
     private MutableLiveData<Point> playerPositionLiveData = new MutableLiveData<>(new Point(player.getX(), player.getY()));
+
+    private MovementStrategy playerMovementStrategy = new PlayerMovementStrategy();
 
 
     public int getCharacterImageResource() {
@@ -64,23 +68,9 @@ public class GameScreenViewModel extends ViewModel {
         player.setX(50);
         player.setY(50);
     }
-    public void movePlayerUp() {
-        player.moveUp();
-        playerPositionLiveData.postValue(new Point(player.getX(), player.getY()));
-    }
 
-    public void movePlayerDown() {
-        player.moveDown();
-        playerPositionLiveData.postValue(new Point(player.getX(), player.getY()));
-    }
-
-    public void movePlayerLeft() {
-        player.moveLeft();
-        playerPositionLiveData.postValue(new Point(player.getX(), player.getY()));
-    }
-
-    public void movePlayerRight() {
-        player.moveRight();
+    public void movePlayer(MovementStrategy.MovementDirection direction) {
+        playerMovementStrategy.move(player, direction);
         playerPositionLiveData.postValue(new Point(player.getX(), player.getY()));
     }
 
