@@ -198,4 +198,8 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     public void playerReachedPortal() {
         notifyObserver();
     }
+
+    public  ArrayList<Wall> GetWalls() {
+      return this.walls;
+    }
 }

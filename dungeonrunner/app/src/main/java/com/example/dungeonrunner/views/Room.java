@@ -225,4 +225,10 @@ public class Room extends Fragment implements Observer {
         args.putInt("roomID", roomID);
         NavHostFragment.findNavController(this).navigate(R.id.action_self, args);
     }
+    public int getRoomID() {
+        return this.roomID;
+    }
+    public void setGameScreenViewModel(GameScreenViewModel gm) {
+        this.gameScreenViewModel = gm;
+    }
 }
