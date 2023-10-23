@@ -5,5 +5,5 @@ public interface MovementStrategy {
     enum MovementDirection {
         UP, DOWN, LEFT, RIGHT
     }
-    void move(Player player, MovementDirection direction);
+    void move(Player player, MovementDirection direction, int screenWidth, int screenHeight);
 }
