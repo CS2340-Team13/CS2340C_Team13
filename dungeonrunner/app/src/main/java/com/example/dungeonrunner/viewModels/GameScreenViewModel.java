@@ -13,6 +13,9 @@ import com.example.dungeonrunner.R;
 import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.model.PlayerMovementStrategy;
+import com.example.dungeonrunner.model.Wall;
+
+import java.util.ArrayList;
 
 public class GameScreenViewModel extends ViewModel implements Observable {
 
@@ -21,22 +24,21 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     private boolean timerRunning = false;
     private CountDownTimer timer;
 
-    // used for updating timer easily among fragments
     private static MutableLiveData<Integer> scoreLiveData = new MutableLiveData<>();
 
     private MutableLiveData<Point> playerPositionLiveData = new MutableLiveData<>(new Point(player.getX(), player.getY()));
+    private MutableLiveData<ArrayList<Wall>> wallsLiveData = new MutableLiveData<>();
 
-    private MovementStrategy playerMovementStrategy = new PlayerMovementStrategy();
+    public MutableLiveData<ArrayList<Wall>> getWallsLiveData() {
+        return wallsLiveData;
+    }
+
+
+    private PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy();
+
+    private ArrayList<Wall> walls = new ArrayList<Wall>();
 
     private Observer roomObserver;
-
-    private int screenWidth;
-    private int screenHeight;
-
-    public void setScreenDimensions(int width, int height) {
-        this.screenWidth = width;
-        this.screenHeight = height;
-    }
 
     public void registerObserver(Observer observer) {
         this.roomObserver = observer;
@@ -50,6 +52,49 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         if (roomObserver != null) {
             roomObserver.update();
         }
+    }
+
+    public void addWall(Wall wall) {
+        walls.add(wall);
+        wallsLiveData.postValue(new ArrayList<>(walls));
+    }
+
+
+    public void generateWallInTheMiddle(int screenW, int screenH) {
+        int wallWidth = 32;
+        int wallHeight = 400;
+
+        int startX = (screenW - wallWidth) / 2;
+        int startY = (screenH - wallHeight) / 2;
+
+        Wall wall = new Wall(startX, startY, wallWidth, wallHeight);
+        addWall(wall);
+    }
+
+    private boolean isCollidingWithWall(int newX, int newY) {
+        for (Wall wall : walls) {
+            if (wall.intersects(newX, newY, player.getWidth(), player.getHeight())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    public void configureMovement(int screenWidth, int screenHeight, int playerWidth, int playerHeight) {
+        MovementStrategy.setScreenDims(screenWidth, screenHeight);
+        playerMovementStrategy.setPlayerDims(playerWidth, playerHeight);
+        playerMovementStrategy.setCollisionChecker(new PlayerMovementStrategy.CollisionChecker() {
+            @Override
+            public boolean isCollision(int x, int y, int width, int height) {
+                return isCollidingWithWall(x, y);
+            }
+        });
+
+        player.setWidth(playerWidth);
+        player.setHeight(playerHeight);
+        generateWallInTheMiddle(screenWidth, screenHeight);
     }
 
 
@@ -79,14 +124,6 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         return health;
     }
 
-    public String getPlayerName() {
-        return player.getPlayerName();
-    }
-
-    public String getGameDifficulty() {
-        return player.getGameDifficulty();
-    }
-
 
     public void resetPlayerPosition() {
         player.setX(50);
@@ -94,7 +131,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     }
 
     public void movePlayer(MovementStrategy.MovementDirection direction) {
-        playerMovementStrategy.move(player, direction, screenWidth, screenHeight);
+        playerMovementStrategy.move(player, direction);
         playerPositionLiveData.postValue(new Point(player.getX(), player.getY()));
     }
 

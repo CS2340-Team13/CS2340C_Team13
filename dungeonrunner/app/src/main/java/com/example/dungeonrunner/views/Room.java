@@ -2,6 +2,8 @@ package com.example.dungeonrunner.views;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -16,8 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dungeonrunner.R;
+import com.example.dungeonrunner.model.Wall;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 import com.example.dungeonrunner.viewModels.Observer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Room extends Fragment implements Observer {
@@ -79,12 +85,90 @@ public class Room extends Fragment implements Observer {
             }
         });
 
+        gameScreenViewModel.getWallsLiveData().observe(this, newWallsList -> {
+            renderWalls(newWallsList);
+        });
+
+
         view.post(() -> {
-            int fragmentWidth = view.getWidth();
-            int fragmentHeight = view.getHeight();
-            gameScreenViewModel.setScreenDimensions(fragmentWidth, fragmentHeight);
+            int screenWidth = view.getWidth();
+            int screenHeight = view.getHeight();
+            int playerWidth = playerCharacterImageView.getWidth();
+            int playerHeight = playerCharacterImageView.getHeight();
+            gameScreenViewModel.configureMovement(screenWidth, screenHeight, playerWidth, playerHeight);
         });
     }
+
+    private List<View> wallViews = new ArrayList<>();
+
+    private void renderWalls(List<Wall> walls) {
+        View rootView = getView();
+        if (rootView == null) return;
+
+        ConstraintLayout parentLayout = rootView.findViewById(R.id.roomLayout);
+        if (parentLayout == null) return;
+
+        // Remove previously added wall views.
+        for (View wallView : wallViews) {
+            parentLayout.removeView(wallView);
+        }
+        wallViews.clear();
+
+        for (Wall wall : walls) {
+            List<View> wallTiles = addWallToLayout(wall, parentLayout);
+            wallViews.addAll(wallTiles);
+        }
+    }
+
+
+
+    private List<View> addWallToLayout(Wall wall, ConstraintLayout parentLayout) {
+        int wallImageRes = R.drawable.wall;
+        int tileSize = getResources().getDimensionPixelSize(R.dimen.wall_tile_size);
+
+        int tilesWide = (int) Math.ceil((double) wall.getWidth() / tileSize);
+        int tilesHigh = (int) Math.ceil((double) wall.getHeight() / tileSize);
+
+        // Adjusting the wall's dimensions
+        int adjustedWidth = tilesWide * tileSize;
+        int adjustedHeight = tilesHigh * tileSize;
+
+        List<View> addedTiles = new ArrayList<>();
+
+        for (int i = 0; i < tilesWide; i++) {
+            for (int j = 0; j < tilesHigh; j++) {
+
+                ImageView wallTileImageView = new ImageView(getContext());
+                wallTileImageView.setImageResource(wallImageRes);
+                wallTileImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                int tileWidth = ((i == tilesWide - 1) && adjustedWidth % tileSize != 0) ? adjustedWidth % tileSize : tileSize;
+                int tileHeight = ((j == tilesHigh - 1) && adjustedHeight % tileSize != 0) ? adjustedHeight % tileSize : tileSize;
+
+                ConstraintLayout.LayoutParams tileLayoutParams = new ConstraintLayout.LayoutParams(tileWidth, tileHeight);
+                tileLayoutParams.leftToLeft = ConstraintSet.PARENT_ID;
+                tileLayoutParams.topToTop = ConstraintSet.PARENT_ID;
+                tileLayoutParams.setMargins(wall.getX() + i * tileSize, wall.getY() + j * tileSize, 0, 0);
+
+                wallTileImageView.setLayoutParams(tileLayoutParams);
+                wallTileImageView.setId(View.generateViewId());
+
+                parentLayout.addView(wallTileImageView);
+                addedTiles.add(wallTileImageView);
+            }
+        }
+
+        // Update the wall's boundaries
+        wall.setWidth(adjustedWidth);
+        wall.setHeight(adjustedHeight);
+
+        return addedTiles;
+    }
+
+
+
+
+
 
     private int getLayoutResIdForRoom() {
         switch (roomID) {

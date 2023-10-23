@@ -7,6 +7,8 @@ public class Player {
     private String gameDifficulty;
     private int x;
     private int y;
+    private int width;
+    private int height;
     private static volatile Player player;
 
 
@@ -63,6 +65,22 @@ public class Player {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
     }
 
 }

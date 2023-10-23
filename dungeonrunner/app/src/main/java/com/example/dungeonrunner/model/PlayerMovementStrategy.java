@@ -3,21 +3,21 @@ package com.example.dungeonrunner.model;
 public class PlayerMovementStrategy extends MovementStrategy {
 
     private static final int MOVE_DISTANCE = 50;
-    private static final int PLAYER_SIZE = 50;
 
     private static int playerWidth;
     private static int playerHeight;
-
 
     public interface CollisionChecker {
         boolean isCollision(int x, int y, int width, int height);
     }
 
-    private CollisionChecker collisionChecker;
+    private CollisionChecker collisionChecker; // Declare the variable
 
-    public void setCollisionChecker(CollisionChecker checker) {
+    public void setCollisionChecker(CollisionChecker checker) { // Setter method
         this.collisionChecker = checker;
     }
+
+
 
 
     public static void setPlayerDims(int width, int height) {
@@ -45,12 +45,10 @@ public class PlayerMovementStrategy extends MovementStrategy {
                 proposedX += MOVE_DISTANCE;
                 break;
         }
-
         boolean willCollide = false;
         if (collisionChecker != null) {
             willCollide = collisionChecker.isCollision(proposedX, proposedY, playerWidth, playerHeight);
         }
-
         if (!willCollide) {
             if (proposedY >= 0 && proposedY <= screenHeight - playerHeight) {
                 player.setY(proposedY);
@@ -61,7 +59,4 @@ public class PlayerMovementStrategy extends MovementStrategy {
         }
     }
 
-    public int getMOVE_DISTANCE() {return MOVE_DISTANCE;}
-
-    public int getPLAYER_SIZE() {return PLAYER_SIZE;}
 }
