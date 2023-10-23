@@ -2,8 +2,8 @@ package com.example.dungeonrunner.model;
 
 public abstract class MovementStrategy {
 
-    public static int screenWidth = 0;
-    public static int screenHeight = 0;
+    protected static int screenWidth = 0;
+    protected static int screenHeight = 0;
 
     public enum MovementDirection {
         UP, DOWN, LEFT, RIGHT

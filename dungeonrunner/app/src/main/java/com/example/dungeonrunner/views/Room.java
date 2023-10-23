@@ -36,7 +36,7 @@ public class Room extends Fragment implements Observer {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            roomID = getArguments().getInt("roomID", 1);  // If no roomID argument is provided, default to 1
+            roomID = getArguments().getInt("roomID", 1);
         }
     }
 
@@ -44,13 +44,15 @@ public class Room extends Fragment implements Observer {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        gameScreenViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
+        gameScreenViewModel = new ViewModelProvider(
+                requireActivity()).get(GameScreenViewModel.class);
         gameScreenViewModel.registerObserver(this);  // Register Room as an observer
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         System.out.println("ID START:" + roomID);
         int layoutResId = getLayoutResIdForRoom();
         return inflater.inflate(layoutResId, container, false);
@@ -77,13 +79,14 @@ public class Room extends Fragment implements Observer {
             scoreTextView.setText("Score: " + newScore);
         });
 
-        gameScreenViewModel.getPlayerPositionLiveData().observe(getViewLifecycleOwner(), newPosition -> {
-            ImageView portalImageView = getView().findViewById(R.id.portalImageView);
+        gameScreenViewModel.getPlayerPositionLiveData().observe(
+                getViewLifecycleOwner(), newPosition -> {
+                ImageView portalImageView = getView().findViewById(R.id.portalImageView);
 
-            if (viewsOverlap(playerCharacterImageView, portalImageView)) {
-                gameScreenViewModel.playerReachedPortal();
-            }
-        });
+                if (viewsOverlap(playerCharacterImageView, portalImageView)) {
+                    gameScreenViewModel.playerReachedPortal();
+                }
+            });
 
         gameScreenViewModel.getWallsLiveData().observe(this, newWallsList -> {
             renderWalls(newWallsList);
@@ -95,7 +98,8 @@ public class Room extends Fragment implements Observer {
             int screenHeight = view.getHeight();
             int playerWidth = playerCharacterImageView.getWidth();
             int playerHeight = playerCharacterImageView.getHeight();
-            gameScreenViewModel.configureMovement(screenWidth, screenHeight, playerWidth, playerHeight);
+            gameScreenViewModel.configureMovement(screenWidth,
+                    screenHeight, playerWidth, playerHeight);
         });
     }
 
@@ -103,10 +107,14 @@ public class Room extends Fragment implements Observer {
 
     private void renderWalls(List<Wall> walls) {
         View rootView = getView();
-        if (rootView == null) return;
+        if (rootView == null) {
+            return;
+        }
 
         ConstraintLayout parentLayout = rootView.findViewById(R.id.roomLayout);
-        if (parentLayout == null) return;
+        if (parentLayout == null) {
+            return;
+        }
 
         // Remove previously added wall views.
         for (View wallView : wallViews) {
@@ -142,13 +150,17 @@ public class Room extends Fragment implements Observer {
                 wallTileImageView.setImageResource(wallImageRes);
                 wallTileImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                int tileWidth = ((i == tilesWide - 1) && adjustedWidth % tileSize != 0) ? adjustedWidth % tileSize : tileSize;
-                int tileHeight = ((j == tilesHigh - 1) && adjustedHeight % tileSize != 0) ? adjustedHeight % tileSize : tileSize;
+                int tileWidth = ((i == tilesWide - 1) && adjustedWidth % tileSize != 0)
+                        ? adjustedWidth % tileSize : tileSize;
+                int tileHeight = ((j == tilesHigh - 1) && adjustedHeight % tileSize != 0)
+                        ? adjustedHeight % tileSize : tileSize;
 
-                ConstraintLayout.LayoutParams tileLayoutParams = new ConstraintLayout.LayoutParams(tileWidth, tileHeight);
+                ConstraintLayout.LayoutParams tileLayoutParams = new ConstraintLayout.LayoutParams(
+                        tileWidth, tileHeight);
                 tileLayoutParams.leftToLeft = ConstraintSet.PARENT_ID;
                 tileLayoutParams.topToTop = ConstraintSet.PARENT_ID;
-                tileLayoutParams.setMargins(wall.getX() + i * tileSize, wall.getY() + j * tileSize, 0, 0);
+                tileLayoutParams.setMargins(wall.getX() + i * tileSize,
+                        wall.getY() + j * tileSize, 0, 0);
 
                 wallTileImageView.setLayoutParams(tileLayoutParams);
                 wallTileImageView.setId(View.generateViewId());
@@ -172,14 +184,14 @@ public class Room extends Fragment implements Observer {
 
     private int getLayoutResIdForRoom() {
         switch (roomID) {
-            case 1:
-                return R.layout.fragment_room1;
-            case 2:
-                return R.layout.fragment_room2;
-            case 3:
-                return R.layout.fragment_room3;
-            default:
-                return R.layout.fragment_room1;
+        case 1:
+            return R.layout.fragment_room1;
+        case 2:
+            return R.layout.fragment_room2;
+        case 3:
+            return R.layout.fragment_room3;
+        default:
+            return R.layout.fragment_room1;
         }
     }
 

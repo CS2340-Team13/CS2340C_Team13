@@ -26,7 +26,8 @@ public class GameScreenViewModel extends ViewModel implements Observable {
 
     private static MutableLiveData<Integer> scoreLiveData = new MutableLiveData<>();
 
-    private MutableLiveData<Point> playerPositionLiveData = new MutableLiveData<>(new Point(player.getX(), player.getY()));
+    private MutableLiveData<Point> playerPositionLiveData = new MutableLiveData<>(
+            new Point(player.getX(), player.getY()));
     private MutableLiveData<ArrayList<Wall>> wallsLiveData = new MutableLiveData<>();
 
     public MutableLiveData<ArrayList<Wall>> getWallsLiveData() {
@@ -82,7 +83,8 @@ public class GameScreenViewModel extends ViewModel implements Observable {
 
 
 
-    public void configureMovement(int screenWidth, int screenHeight, int playerWidth, int playerHeight) {
+    public void configureMovement(int screenWidth, int screenHeight,
+                                  int playerWidth, int playerHeight) {
         MovementStrategy.setScreenDims(screenWidth, screenHeight);
         playerMovementStrategy.setPlayerDims(playerWidth, playerHeight);
         playerMovementStrategy.setCollisionChecker(new PlayerMovementStrategy.CollisionChecker() {

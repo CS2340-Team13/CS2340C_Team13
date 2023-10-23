@@ -7,24 +7,16 @@ public class PlayerMovementStrategy extends MovementStrategy {
     private static int playerWidth;
     private static int playerHeight;
 
-    public interface CollisionChecker {
-        boolean isCollision(int x, int y, int width, int height);
-    }
-
     private CollisionChecker collisionChecker; // Declare the variable
-
-    public void setCollisionChecker(CollisionChecker checker) { // Setter method
-        this.collisionChecker = checker;
-    }
-
-
-
 
     public static void setPlayerDims(int width, int height) {
         playerWidth = width;
         playerHeight = height;
     }
 
+    public void setCollisionChecker(CollisionChecker checker) { // Setter method
+        this.collisionChecker = checker;
+    }
 
     @Override
     public void move(Player player, MovementDirection direction) {
@@ -32,23 +24,29 @@ public class PlayerMovementStrategy extends MovementStrategy {
         int proposedY = player.getY();
 
         switch (direction) {
-            case UP:
-                proposedY -= MOVE_DISTANCE;
-                break;
-            case DOWN:
-                proposedY += MOVE_DISTANCE;
-                break;
-            case LEFT:
-                proposedX -= MOVE_DISTANCE;
-                break;
-            case RIGHT:
-                proposedX += MOVE_DISTANCE;
-                break;
+
+        case UP:
+            proposedY -= MOVE_DISTANCE;
+            break;
+        case DOWN:
+            proposedY += MOVE_DISTANCE;
+            break;
+        case LEFT:
+            proposedX -= MOVE_DISTANCE;
+            break;
+        case RIGHT:
+            proposedX += MOVE_DISTANCE;
+            break;
+        default:
+            break;
         }
+
         boolean willCollide = false;
         if (collisionChecker != null) {
-            willCollide = collisionChecker.isCollision(proposedX, proposedY, playerWidth, playerHeight);
+            willCollide = collisionChecker.isCollision(
+                    proposedX, proposedY, playerWidth, playerHeight);
         }
+
         if (!willCollide) {
             if (proposedY >= 0 && proposedY <= screenHeight - playerHeight) {
                 player.setY(proposedY);
@@ -57,6 +55,11 @@ public class PlayerMovementStrategy extends MovementStrategy {
                 player.setX(proposedX);
             }
         }
+    }
+
+    // Inner interface should be at the end of the class
+    public interface CollisionChecker {
+        boolean isCollision(int x, int y, int width, int height);
     }
 
 }
