@@ -14,7 +14,7 @@ public class PlayerMovementStrategy implements MovementStrategy {
                 }
                 break;
             case DOWN:
-                if (player.getY() + MOVE_DISTANCE + PLAYER_SIZE <= screenHeight) {
+                if (player.getY() + MOVE_DISTANCE + PLAYER_SIZE <= screenHeight - 150) {
                     player.setY(player.getY() + MOVE_DISTANCE);
                 }
                 break;
@@ -24,7 +24,7 @@ public class PlayerMovementStrategy implements MovementStrategy {
                 }
                 break;
             case RIGHT:
-                if (player.getX() + MOVE_DISTANCE + PLAYER_SIZE <= screenWidth) {
+                if (player.getX() + MOVE_DISTANCE + PLAYER_SIZE <= screenWidth - 110) {
                     player.setX(player.getX() + MOVE_DISTANCE);
                 }
                 break;
