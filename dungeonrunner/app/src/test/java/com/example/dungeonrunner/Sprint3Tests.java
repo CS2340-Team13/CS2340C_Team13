@@ -21,6 +21,7 @@ public class Sprint3Tests {
     public void testMoveUp() {
         Player player = Player.getPlayer();
         PlayerMovementStrategy movementStrategy = new PlayerMovementStrategy();
+        movementStrategy.setScreen
         int initialY = player.getY();
         movementStrategy.move(player, MovementStrategy.MovementDirection.UP, 1000, 1000);
         int finalY = player.getY();
