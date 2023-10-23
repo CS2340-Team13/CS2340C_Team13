@@ -30,4 +30,7 @@ public class PlayerMovementStrategy implements MovementStrategy {
                 break;
         }
     }
+    public int getMOVE_DISTANCE() {return MOVE_DISTANCE;}
+
+    public int getPLAYER_SIZE() {return PLAYER_SIZE;}
 }
