@@ -36,25 +36,13 @@ public class PlayerMovementStrategy extends MovementStrategy {
                 proposedY -= MOVE_DISTANCE;
                 break;
             case DOWN:
-<<<<<<< HEAD
                 proposedY += MOVE_DISTANCE;
-=======
-                if (player.getY() + MOVE_DISTANCE + PLAYER_SIZE <= screenHeight - 150) {
-                    player.setY(player.getY() + MOVE_DISTANCE);
-                }
->>>>>>> 4612b7adea3231dbd97561c5cdae462496addc60
                 break;
             case LEFT:
                 proposedX -= MOVE_DISTANCE;
                 break;
             case RIGHT:
-<<<<<<< HEAD
                 proposedX += MOVE_DISTANCE;
-=======
-                if (player.getX() + MOVE_DISTANCE + PLAYER_SIZE <= screenWidth - 110) {
-                    player.setX(player.getX() + MOVE_DISTANCE);
-                }
->>>>>>> 4612b7adea3231dbd97561c5cdae462496addc60
                 break;
         }
         boolean willCollide = false;
