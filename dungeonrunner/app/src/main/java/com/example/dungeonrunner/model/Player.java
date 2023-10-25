@@ -31,7 +31,7 @@ public class Player {
         return selectedCharacter;
     }
 
-    public void setSelectedCharater(String selectedCharacter) {
+    public void setSelectedCharacter(String selectedCharacter) {
         this.selectedCharacter = selectedCharacter;
     }
 

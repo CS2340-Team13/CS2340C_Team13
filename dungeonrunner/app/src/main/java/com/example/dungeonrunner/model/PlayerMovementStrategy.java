@@ -1,6 +1,6 @@
 package com.example.dungeonrunner.model;
 
-public class PlayerMovementStrategy extends MovementStrategy {
+public class PlayerMovementStrategy extends MovementStrategy { // implements Observable
 
     private static final int MOVE_DISTANCE = 50;
 
@@ -55,9 +55,12 @@ public class PlayerMovementStrategy extends MovementStrategy {
                 player.setX(proposedX);
             }
         }
+
+        // Notify observer
+        // notify observer updates each enemy
+        // each enemy update checks its position against the player's position and decreases player health accordingly
     }
 
-    // Inner interface should be at the end of the class
     public interface CollisionChecker {
         boolean isCollision(int x, int y, int width, int height);
     }

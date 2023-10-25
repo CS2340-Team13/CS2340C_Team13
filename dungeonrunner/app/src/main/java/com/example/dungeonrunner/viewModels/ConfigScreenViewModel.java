@@ -24,8 +24,9 @@ public class ConfigScreenViewModel extends ViewModel {
         } else {
             gameDifficulty = "Unspecified"; // or handle this case differently
         }
+
         player.setPlayerName(playerName);
-        player.setSelectedCharater(selectedCharacter);
+        player.setSelectedCharacter(selectedCharacter);
         player.setGameDifficulty(gameDifficulty);
         player.setX(startX);
         player.setY(startY);

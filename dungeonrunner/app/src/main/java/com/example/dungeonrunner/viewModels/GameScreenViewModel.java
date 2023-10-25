@@ -45,10 +45,6 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         this.roomObserver = observer;
     }
 
-    public void unregisterObserver() {
-        this.roomObserver = null;
-    }
-
     public void notifyObserver() {
         if (roomObserver != null) {
             roomObserver.update();
