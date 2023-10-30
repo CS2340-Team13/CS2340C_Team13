@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="views.GameOverScreen">
+    tools:context="views.GameOverScreen"
+    android:background="#000000">
 
     <TextView
         android:layout_width="match_parent"
@@ -19,7 +20,8 @@
         android:layout_height="wrap_content"
         android:text="Score"
         android:gravity="center"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textColor="#FFFFFF" />
 
     <!-- Scoreboard framework with 5 lines -->
     <LinearLayout
@@ -31,31 +33,36 @@
             android:id="@+id/score1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No Score Recorded" />
+            android:text="No Score Recorded"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/score2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No Score Recorded" />
+            android:text="No Score Recorded"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/score3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No Score Recorded" />
+            android:text="No Score Recorded"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/score4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No Score Recorded" />
+            android:text="No Score Recorded"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/score5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No Score Recorded" />
+            android:text="No Score Recorded"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <Button
