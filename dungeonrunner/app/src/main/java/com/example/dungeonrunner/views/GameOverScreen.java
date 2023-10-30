@@ -20,14 +20,14 @@ import android.widget.TextView;
 
 import com.example.dungeonrunner.R;
 import com.example.dungeonrunner.model.ScoreUnit;
-import com.example.dungeonrunner.viewModels.EndScreenViewModel;
+import com.example.dungeonrunner.viewModels.GameOverScreenViewModel;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 
 import java.util.ArrayList;
 
 public class GameOverScreen extends Fragment {
 
-    private EndScreenViewModel endScreenViewModel;
+    private GameOverScreenViewModel gameOverScreenViewModel;
 
     private GameScreenViewModel gmViewModel;
 
@@ -46,7 +46,7 @@ public class GameOverScreen extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         gmViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
-        endScreenViewModel = new ViewModelProvider(requireActivity()).get(EndScreenViewModel.class);
+        gameOverScreenViewModel = new ViewModelProvider(requireActivity()).get(GameOverScreenViewModel.class);
         packageName = getContext().getPackageName();
         return inflater.inflate(R.layout.fragment_end_screen, container, false);
     }
@@ -57,7 +57,7 @@ public class GameOverScreen extends Fragment {
         Button restartButton = view.findViewById(R.id.restartButton);
 
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
-        endScreenViewModel.setPosition(playerCharacterImageView);
+        gameOverScreenViewModel.setPosition(playerCharacterImageView);
         restartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +68,7 @@ public class GameOverScreen extends Fragment {
         int score = 0;
         curScoreTextView = view.findViewById(R.id.curScore);
         curScoreTextView.setText("Your score was " + score);
-        ArrayList<ScoreUnit> results = endScreenViewModel.getResults(score);
+        ArrayList<ScoreUnit> results = gameOverScreenViewModel.getResults(score);
         for (int i = 0; i < results.size(); i++) {
             int resID = getContext().getResources().getIdentifier(scoreIDs[i], "id", packageName);
             TextView scoreRowView = view.findViewById(resID);
@@ -79,7 +79,7 @@ public class GameOverScreen extends Fragment {
 
     private void onRestartButtonClicked() {
         Log.d(TAG, "Restart Button Clicked");
-        NavController navController = NavHostFragment.findNavController(EndScreen.this);
+        NavController navController = NavHostFragment.findNavController(GameOverScreen.this);
         navController.navigate(R.id.action_EndScreen_to_StartScreen);
     }
 }
