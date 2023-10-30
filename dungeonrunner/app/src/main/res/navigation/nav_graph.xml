@@ -54,6 +54,10 @@
             app:destination="@id/EndScreen" />
 
         <action
+            android:id="@+id/action_Room_to_GameOverScreen"
+            app:destination="@id/EndScreen" />
+
+        <action
             android:id="@+id/action_self"
             app:destination="@id/Room" />
 
