@@ -42,6 +42,18 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/GameOverScreen"
+        android:name="com.example.dungeonrunner.views.GameOverScreen"
+        android:label="fragment_gameover"
+        tools:layout="@layout/fragment_game_screen">
+
+        <action
+            android:id="@+id/action_GameOverScreen_to_StartScreen"
+            app:destination="@id/StartScreen" />
+
+    </fragment>
+
 
     <fragment
         android:id="@+id/Room"
@@ -55,7 +67,7 @@
 
         <action
             android:id="@+id/action_Room_to_GameOverScreen"
-            app:destination="@id/EndScreen" />
+            app:destination="@id/GameOverScreen" />
 
         <action
             android:id="@+id/action_self"

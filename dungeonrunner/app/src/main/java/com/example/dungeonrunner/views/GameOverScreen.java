@@ -31,7 +31,7 @@ public class GameOverScreen extends Fragment {
 
     private GameScreenViewModel gmViewModel;
 
-    private static final String TAG = "endScreenLog";
+    private static final String TAG = "gameOverScreenLog";
 
     private TextView curScoreTextView;
 
@@ -48,7 +48,7 @@ public class GameOverScreen extends Fragment {
         gmViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
         gameOverScreenViewModel = new ViewModelProvider(requireActivity()).get(GameOverScreenViewModel.class);
         packageName = getContext().getPackageName();
-        return inflater.inflate(R.layout.fragment_end_screen, container, false);
+        return inflater.inflate(R.layout.fragment_gameover_screen, container, false);
     }
 
     @Override
@@ -64,7 +64,6 @@ public class GameOverScreen extends Fragment {
                 onRestartButtonClicked();
             }
         });
-
         int score = 0;
         curScoreTextView = view.findViewById(R.id.curScore);
         curScoreTextView.setText("Your score was " + score);
@@ -80,6 +79,6 @@ public class GameOverScreen extends Fragment {
     private void onRestartButtonClicked() {
         Log.d(TAG, "Restart Button Clicked");
         NavController navController = NavHostFragment.findNavController(GameOverScreen.this);
-        navController.navigate(R.id.action_EndScreen_to_StartScreen);
+        navController.navigate(R.id.action_GameOverScreen_to_StartScreen);
     }
 }

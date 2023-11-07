@@ -77,6 +77,11 @@ public class Room extends Fragment implements Observer {
         scoreTextView = view.findViewById(R.id.scoreTextView);
         gameScreenViewModel.getScoreLiveData().observe(getViewLifecycleOwner(), newScore -> {
             scoreTextView.setText("Score: " + newScore);
+            if (newScore <= 0) {
+                gameScreenViewModel.stopTimer();
+                NavHostFragment.findNavController(Room.this).navigate(R.id.action_Room_to_GameOverScreen);
+                return;
+            }
         });
 
         gameScreenViewModel.getPlayerPositionLiveData().observe(

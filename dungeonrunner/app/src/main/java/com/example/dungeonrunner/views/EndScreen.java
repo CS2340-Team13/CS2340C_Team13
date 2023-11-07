@@ -79,6 +79,7 @@ public class EndScreen extends Fragment {
 
     private void onRestartButtonClicked() {
         Log.d(TAG, "Restart Button Clicked");
+        gmViewModel.stopTimer();
         NavController navController = NavHostFragment.findNavController(EndScreen.this);
         navController.navigate(R.id.action_EndScreen_to_StartScreen);
     }
