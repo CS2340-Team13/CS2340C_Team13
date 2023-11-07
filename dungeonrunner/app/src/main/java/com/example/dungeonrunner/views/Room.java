@@ -46,7 +46,7 @@ public class Room extends Fragment implements Observer {
         super.onAttach(context);
         gameScreenViewModel = new ViewModelProvider(
                 requireActivity()).get(GameScreenViewModel.class);
-        gameScreenViewModel.registerObserver(this);  // Register Room as an observer
+        gameScreenViewModel.registerObserver(this);
     }
 
     @Nullable
