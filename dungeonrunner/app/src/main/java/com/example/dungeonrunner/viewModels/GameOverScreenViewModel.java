@@ -16,25 +16,12 @@ public class GameOverScreenViewModel extends ViewModel {
     private Player player = Player.getPlayer();
 
     public ArrayList<ScoreUnit> getResults(int score) {
-        leaderboard.addToList(player.getPlayerName(), score);
+        leaderboard.addToList(player.getName(), score);
         leaderboard.sortList();
         return leaderboard.getResults();
     }
-    public int getCharacterImageResource() {
-        String selectedCharacter = player.getSelectedCharacter();
-        int characterImageResource = 0;
-        if (selectedCharacter.equals("character1")) {
-            characterImageResource = R.drawable.character1_image;
-        } else if (selectedCharacter.equals("character2")) {
-            characterImageResource = R.drawable.character2_image;
-        } else if (selectedCharacter.equals("character3")) {
-            characterImageResource = R.drawable.character3_image;
-        }
-        return characterImageResource;
-    }
     public void setPosition(ImageView imageView) {
 
-        int characterImageResource = getCharacterImageResource();
-        imageView.setImageResource(characterImageResource);
+        imageView.setImageResource(player.getCharacterImageResource());
     }
 }
