@@ -13,9 +13,6 @@ public abstract class MovementStrategy {
     public MovementStrategy (Character character) {
         this.character = character;
     }
-    public enum MovementDirection {
-        UP, DOWN, LEFT, RIGHT
-    }
 
     public static void setScreenDims(int width, int height) {
         screenWidth = width;

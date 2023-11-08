@@ -18,8 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dungeonrunner.R;
-import com.example.dungeonrunner.model.Player;
-import com.example.dungeonrunner.model.PlayerMovementStrategy;
 import com.example.dungeonrunner.model.Wall;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 import com.example.dungeonrunner.viewModels.Observer;
@@ -83,7 +81,6 @@ public class Room extends Fragment implements Observer {
             if (newScore <= 0) {
                 gameScreenViewModel.stopTimer();
                 NavHostFragment.findNavController(Room.this).navigate(R.id.action_Room_to_GameOverScreen);
-                return;
             }
         });
 

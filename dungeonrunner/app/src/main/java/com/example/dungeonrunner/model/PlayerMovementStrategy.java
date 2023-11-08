@@ -14,7 +14,6 @@ public class PlayerMovementStrategy extends MovementStrategy { // implements Obs
         super(character);
     }
 
-
     public enum MovementDirection {
         UP, DOWN, LEFT, RIGHT
     }
@@ -48,8 +47,6 @@ public class PlayerMovementStrategy extends MovementStrategy { // implements Obs
             character.setX(proposedX);
             character.setY(proposedY);
         }
-
-
 
         // Notify observer
         // notify observer updates each enemy
