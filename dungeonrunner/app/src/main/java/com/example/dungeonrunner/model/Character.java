@@ -1,6 +1,6 @@
 package com.example.dungeonrunner.model;
 
-public class Entity {
+public class Character {
     protected int characterImageResource;
     protected String name;
     protected int x;

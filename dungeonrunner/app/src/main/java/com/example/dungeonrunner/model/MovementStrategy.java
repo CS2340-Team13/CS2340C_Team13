@@ -2,7 +2,7 @@ package com.example.dungeonrunner.model;
 
 public abstract class MovementStrategy {
 
-    protected Entity entity;
+    protected Character character;
     protected static int screenWidth = 0;
     protected static int screenHeight = 0;
     protected int playerWidth;
@@ -10,18 +10,11 @@ public abstract class MovementStrategy {
 
     public static CollisionChecker wallCollisionChecker;
 
-    public interface CollisionChecker {
-        boolean isCollision(int x, int y, int width, int height);
-    }
-    public MovementStrategy (Entity entity) {
-        this.entity = entity;
+    public MovementStrategy (Character character) {
+        this.character = character;
     }
     public enum MovementDirection {
         UP, DOWN, LEFT, RIGHT
-    }
-
-    public static void setCollisionChecker(CollisionChecker checker) { // Setter method
-        wallCollisionChecker = checker;
     }
 
     public static void setScreenDims(int width, int height) {
@@ -34,11 +27,11 @@ public abstract class MovementStrategy {
         playerHeight = height;
     }
 
-    public abstract void move(Entity player, MovementDirection direction);
+    public abstract void move();
 
     public boolean willCollide(int proposedX, int proposedY) {
         boolean wallCollision = wallCollisionChecker.isCollision(
-                proposedX, proposedY, playerWidth, playerHeight);
+                proposedX, proposedY, this.character);
         boolean upperBoundaryCollision = proposedY > screenHeight - playerHeight;
         boolean lowerBoundaryCollision = proposedY < 0;
         boolean leftBoundaryCollision = proposedX < 0;
@@ -46,5 +39,13 @@ public abstract class MovementStrategy {
 
         return wallCollision || upperBoundaryCollision || lowerBoundaryCollision
                 || leftBoundaryCollision || rightBoundaryCollision;
+    }
+
+    public static void setCollisionChecker(CollisionChecker checker) { // Setter method
+        wallCollisionChecker = checker;
+    }
+
+    public interface CollisionChecker {
+        boolean isCollision(int x, int y, Character character);
     }
 }

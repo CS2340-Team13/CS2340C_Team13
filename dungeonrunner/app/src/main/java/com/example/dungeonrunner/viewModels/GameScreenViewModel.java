@@ -10,7 +10,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dungeonrunner.R;
-import com.example.dungeonrunner.model.Entity;
+import com.example.dungeonrunner.model.Character;
 import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.model.PlayerMovementStrategy;
@@ -27,7 +27,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
 
     private static MutableLiveData<Integer> scoreLiveData = new MutableLiveData<>();
 
-    private MutableLiveData<Point> playerPositionLiveData = new MutableLiveData<>(
+    public MutableLiveData<Point> playerPositionLiveData = new MutableLiveData<>(
             new Point(player.getX(), player.getY()));
     private MutableLiveData<ArrayList<Wall>> wallsLiveData = new MutableLiveData<>();
 
@@ -36,7 +36,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     }
 
 
-    private PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
+    public PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
 
     private ArrayList<Wall> walls = new ArrayList<Wall>();
 
@@ -69,9 +69,9 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         addWall(wall);
     }
 
-    private boolean isCollidingWithWall(int newX, int newY) {
+    private boolean isCollidingWithWall(int newX, int newY, Character entity) {
         for (Wall wall : walls) {
-            if (wall.intersects(newX, newY, player.getWidth(), player.getHeight())) {
+            if (wall.intersects(newX, newY, entity.getWidth(), entity.getHeight())) {
                 return true;
             }
         }
@@ -81,7 +81,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
 
     public void configureMovementStrategy(int screenWidth, int screenHeight) {
         MovementStrategy.setScreenDims(screenWidth, screenHeight);
-        MovementStrategy.setCollisionChecker((x, y, width, height) -> isCollidingWithWall(x, y));
+        MovementStrategy.setCollisionChecker((x, y, entity) -> isCollidingWithWall(x, y, entity));
         generateWallInTheMiddle(screenWidth, screenHeight);
     }
 
@@ -97,20 +97,8 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         player.setY(0);
     }
 
-    public void movePlayer(MovementStrategy.MovementDirection direction) {
-        playerMovementStrategy.move(player, direction);
-        playerPositionLiveData.postValue(new Point(player.getX(), player.getY()));
-    }
 
-    public int getPlayerX() {
-        return player.getX();
-    }
-
-    public int getPlayerY() {
-        return player.getY();
-    }
-
-    public void plot(ImageView imageView, Entity entity) {
+    public void plot(ImageView imageView, Character entity) {
 
         imageView.setImageResource(entity.getCharacterImageResource());
         ConstraintSet constraintSet = new ConstraintSet();
@@ -159,7 +147,9 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         return playerPositionLiveData;
     }
 
-    public void playerReachedPortal() {
+    public void playerReachedPortal(ImageView playerCharacterImageView) {
+        resetPlayerPosition();
+        plot(playerCharacterImageView, player);
         notifyObserver();
     }
 

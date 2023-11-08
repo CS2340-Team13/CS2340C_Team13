@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dungeonrunner.R;
+import com.example.dungeonrunner.model.Player;
+import com.example.dungeonrunner.model.PlayerMovementStrategy;
 import com.example.dungeonrunner.model.Wall;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 import com.example.dungeonrunner.viewModels.Observer;
@@ -30,7 +32,9 @@ public class Room extends Fragment implements Observer {
 
     private GameScreenViewModel gameScreenViewModel;
     private TextView scoreTextView;
+    private boolean playerInPortal;
     private int roomID = 1;
+    private List<View> wallViews = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +75,7 @@ public class Room extends Fragment implements Observer {
 
         gameScreenViewModel.resetPlayerPosition();
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
-        PlayerMoveHelper.handleKeyEvent(view, gameScreenViewModel, playerCharacterImageView);
+        gameScreenViewModel.playerMovementStrategy.handleKeyEvent(view, gameScreenViewModel, playerCharacterImageView);
 
         scoreTextView = view.findViewById(R.id.scoreTextView);
         gameScreenViewModel.getScoreLiveData().observe(getViewLifecycleOwner(), newScore -> {
@@ -88,7 +92,12 @@ public class Room extends Fragment implements Observer {
                 ImageView portalImageView = getView().findViewById(R.id.portalImageView);
 
                 if (viewsOverlap(playerCharacterImageView, portalImageView)) {
-                    gameScreenViewModel.playerReachedPortal();
+                    if (!playerInPortal) {
+                        playerInPortal = true;
+                        gameScreenViewModel.playerReachedPortal(playerCharacterImageView);
+                    }
+                } else {
+                    playerInPortal = false;
                 }
             });
 
@@ -108,8 +117,6 @@ public class Room extends Fragment implements Observer {
             gameScreenViewModel.configurePlayerMovement(playerWidth, playerHeight);
         });
     }
-
-    private List<View> wallViews = new ArrayList<>();
 
 
     private int getLayoutResIdForRoom() {
@@ -145,13 +152,12 @@ public class Room extends Fragment implements Observer {
 
     public void update() {
         roomID++;
-
-        if (roomID == 4) {
+        System.out.println("RoomID: " + roomID);
+        if (roomID >= 4) {
             NavHostFragment.findNavController(Room.this).navigate(R.id.action_Room_to_EndScreen);
             return;
         }
 
-        gameScreenViewModel.resetPlayerPosition();
         Bundle args = new Bundle();
         args.putInt("roomID", roomID);
         NavHostFragment.findNavController(this).navigate(R.id.action_self, args);

@@ -3,7 +3,7 @@ package com.example.dungeonrunner.model;
 
 import com.example.dungeonrunner.R;
 
-public class Player extends Entity {
+public class Player extends Character {
     private String selectedCharacter;
     private static volatile Player player;
 
