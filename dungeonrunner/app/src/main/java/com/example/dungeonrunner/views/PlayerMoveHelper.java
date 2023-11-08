@@ -3,17 +3,15 @@ package com.example.dungeonrunner.views;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.dungeonrunner.model.MovementStrategy;
+import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 
 public class PlayerMoveHelper {
 
-    private PlayerMoveHelper() {
-        throw new AssertionError("Cannot instantiate utility class: PlayerMovementHelper");
-    }
+    private static Player player = Player.getPlayer();
+
     public static void handleKeyEvent(View view, GameScreenViewModel gameScreenViewModel,
                                       ImageView playerCharacterImageView) {
         view.setOnKeyListener(new View.OnKeyListener() {
@@ -40,23 +38,10 @@ public class PlayerMoveHelper {
                     }
                 }
 
-                gameScreenViewModel.setPosition(playerCharacterImageView);
+                gameScreenViewModel.plot(playerCharacterImageView, player);
                 return true;
             }
         });
-    }
-
-    public static void updatePlayerPositionOnScreen(
-            ImageView playerCharacterImageView, GameScreenViewModel gameScreenViewModel) {
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone((ConstraintLayout) playerCharacterImageView.getParent());
-        constraintSet.connect(playerCharacterImageView.getId(), ConstraintSet.START,
-                ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.START,
-                gameScreenViewModel.getPlayerX());
-        constraintSet.connect(playerCharacterImageView.getId(), ConstraintSet.TOP,
-                ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.TOP,
-                gameScreenViewModel.getPlayerY());
-        constraintSet.applyTo((ConstraintLayout) playerCharacterImageView.getParent());
     }
 }
 

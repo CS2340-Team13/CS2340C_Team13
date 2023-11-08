@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dungeonrunner.R;
+import com.example.dungeonrunner.model.Entity;
 import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.model.PlayerMovementStrategy;
@@ -35,7 +36,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     }
 
 
-    private PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy();
+    private PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
 
     private ArrayList<Wall> walls = new ArrayList<Wall>();
 
@@ -78,54 +79,22 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     }
 
 
-
-    public void configureMovement(int screenWidth, int screenHeight,
-                                  int playerWidth, int playerHeight) {
+    public void configureMovementStrategy(int screenWidth, int screenHeight) {
         MovementStrategy.setScreenDims(screenWidth, screenHeight);
-        playerMovementStrategy.setPlayerDims(playerWidth, playerHeight);
-        playerMovementStrategy.setCollisionChecker(new PlayerMovementStrategy.CollisionChecker() {
-            @Override
-            public boolean isCollision(int x, int y, int width, int height) {
-                return isCollidingWithWall(x, y);
-            }
-        });
-
-        player.setWidth(playerWidth);
-        player.setHeight(playerHeight);
+        MovementStrategy.setCollisionChecker((x, y, width, height) -> isCollidingWithWall(x, y));
         generateWallInTheMiddle(screenWidth, screenHeight);
     }
 
-
-    public int getCharacterImageResource() {
-        String selectedCharacter = player.getSelectedCharacter();
-        int characterImageResource = 0;
-        if (selectedCharacter.equals("character1")) {
-            characterImageResource = R.drawable.character1_image;
-        } else if (selectedCharacter.equals("character2")) {
-            characterImageResource = R.drawable.character2_image;
-        } else if (selectedCharacter.equals("character3")) {
-            characterImageResource = R.drawable.character3_image;
-        }
-        return characterImageResource;
-    }
-
-    public int getHealth() {
-        String gameDifficulty = player.getGameDifficulty();
-        int health = 100;
-        if (gameDifficulty.equals("Easy")) {
-            health = 100;
-        } else if (gameDifficulty.equals("Medium")) {
-            health = 75;
-        } else if (gameDifficulty.equals("Hard")) {
-            health = 50;
-        }
-        return health;
+    public void configurePlayerMovement(int playerWidth, int playerHeight) {
+        playerMovementStrategy.setPlayerDims(playerWidth, playerHeight);
+        player.setWidth(playerWidth);
+        player.setHeight(playerHeight);
     }
 
 
     public void resetPlayerPosition() {
-        player.setX(50);
-        player.setY(50);
+        player.setX(0);
+        player.setY(0);
     }
 
     public void movePlayer(MovementStrategy.MovementDirection direction) {
@@ -141,16 +110,15 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         return player.getY();
     }
 
-    public void setPosition(ImageView imageView) {
+    public void plot(ImageView imageView, Entity entity) {
 
-        int characterImageResource = getCharacterImageResource();
-        imageView.setImageResource(characterImageResource);
+        imageView.setImageResource(entity.getCharacterImageResource());
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone((ConstraintLayout) imageView.getParent());
         constraintSet.connect(imageView.getId(), ConstraintSet.START,
-                ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.START, player.getX());
+                ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.START, entity.getX());
         constraintSet.connect(imageView.getId(), ConstraintSet.TOP,
-                ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.TOP, player.getY());
+                ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.TOP, entity.getY());
         constraintSet.applyTo((ConstraintLayout) imageView.getParent());
     }
 

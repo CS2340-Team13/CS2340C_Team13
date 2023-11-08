@@ -2,24 +2,14 @@ package com.example.dungeonrunner.model;
 
 public class PlayerMovementStrategy extends MovementStrategy { // implements Observable
 
-    private static final int MOVE_DISTANCE = 50;
+    private static final int MOVE_DISTANCE = 25;
 
-    private static int playerWidth;
-    private static int playerHeight;
-
-    private CollisionChecker collisionChecker; // Declare the variable
-
-    public static void setPlayerDims(int width, int height) {
-        playerWidth = width;
-        playerHeight = height;
-    }
-
-    public void setCollisionChecker(CollisionChecker checker) { // Setter method
-        this.collisionChecker = checker;
+    public PlayerMovementStrategy(Entity entity) {
+        super(entity);
     }
 
     @Override
-    public void move(Player player, MovementDirection direction) {
+    public void move(Entity player, MovementDirection direction) {
         int proposedX = player.getX();
         int proposedY = player.getY();
 
@@ -41,28 +31,15 @@ public class PlayerMovementStrategy extends MovementStrategy { // implements Obs
             break;
         }
 
-        boolean willCollide = false;
-        if (collisionChecker != null) {
-            willCollide = collisionChecker.isCollision(
-                    proposedX, proposedY, playerWidth, playerHeight);
+        if (!willCollide(proposedX, proposedY)) {
+            player.setX(proposedX);
+            player.setY(proposedY);
         }
 
-        if (!willCollide) {
-            if (proposedY >= 0 && proposedY <= screenHeight - playerHeight) {
-                player.setY(proposedY);
-            }
-            if (proposedX >= 0 && proposedX <= screenWidth - playerWidth) {
-                player.setX(proposedX);
-            }
-        }
 
         // Notify observer
         // notify observer updates each enemy
         // each enemy update checks its position against the player's position and decreases player health accordingly
-    }
-
-    public interface CollisionChecker {
-        boolean isCollision(int x, int y, int width, int height);
     }
 
 }
