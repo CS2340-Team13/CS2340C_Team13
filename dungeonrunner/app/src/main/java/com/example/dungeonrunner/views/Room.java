@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ import com.example.dungeonrunner.viewModels.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Room extends Fragment implements Observer {
@@ -35,6 +38,8 @@ public class Room extends Fragment implements Observer {
     private List<View> wallViews = new ArrayList<>();
     public ImageView enemy1ImageView;
     public  ImageView enemy2ImageView;
+    private Timer timer = new Timer();
+    private Handler handler = new Handler();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +82,7 @@ public class Room extends Fragment implements Observer {
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
         gameScreenViewModel.playerMovementStrategy.handleKeyEvent(view, gameScreenViewModel, playerCharacterImageView);
 
+
         scoreTextView = view.findViewById(R.id.scoreTextView);
         gameScreenViewModel.getScoreLiveData().observe(getViewLifecycleOwner(), newScore -> {
             scoreTextView.setText("Score: " + newScore);
@@ -111,11 +117,16 @@ public class Room extends Fragment implements Observer {
             int screenHeight = view.getHeight();
             int playerWidth = playerCharacterImageView.getWidth();
             int playerHeight = playerCharacterImageView.getHeight();
-            setEnemyImageViews(view);
-            gameScreenViewModel.instantiateEnemyInstances(roomID);
-            //gameScreenViewModel.updateEnemy(enemy1ImageView, enemy2ImageView, gameScreenViewModel.enemyMovementStrategy1, gameScreenViewModel.enemyMovementStrategy2);
             gameScreenViewModel.configureMovementStrategy(screenWidth, screenHeight);
             gameScreenViewModel.configurePlayerMovement(playerWidth, playerHeight);
+            gameScreenViewModel.instantiateEnemyInstances(roomID);
+            setEnemyImageViews(view);
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(() -> gameScreenViewModel.updateEnemy(enemy1ImageView, enemy2ImageView, gameScreenViewModel.enemyMovementStrategy1, gameScreenViewModel.enemyMovementStrategy2));
+                }
+            }, 0, 20);
         });
     }
 
@@ -133,19 +144,18 @@ public class Room extends Fragment implements Observer {
         }
     }
 
-    private int setEnemyImageViews(View view) {
-        switch (roomID) {
-            case 1:
-                enemy1ImageView = view.findViewById(R.id.enemy1Room1ImageView);
-                enemy2ImageView = view.findViewById(R.id.enemy2Room1ImageView);
-            case 2:
-                enemy1ImageView = view.findViewById(R.id.enemy1Room2ImageView);
-                enemy2ImageView = view.findViewById(R.id.enemy2Room2ImageView);
-            case 3:
-                enemy1ImageView = view.findViewById(R.id.enemy1Room3ImageView);
-                enemy2ImageView = view.findViewById(R.id.enemy2Room3ImageView);
-            default:
-                return R.layout.fragment_room1;
+    private void setEnemyImageViews(View view) {
+        if (roomID == 1) {
+            enemy1ImageView = view.findViewById(R.id.enemy1Room1ImageView);
+            enemy2ImageView = view.findViewById(R.id.enemy2Room1ImageView);
+        }
+        if (roomID == 2) {
+            enemy1ImageView = view.findViewById(R.id.enemy1Room2ImageView);
+            enemy2ImageView = view.findViewById(R.id.enemy2Room2ImageView);
+        }
+        if (roomID == 3) {
+            enemy1ImageView = view.findViewById(R.id.enemy1Room3ImageView);
+            enemy2ImageView = view.findViewById(R.id.enemy2Room3ImageView);
         }
     }
 

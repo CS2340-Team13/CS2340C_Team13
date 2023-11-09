@@ -27,6 +27,7 @@ public abstract class MovementStrategy {
     public abstract void move();
 
     public boolean willCollide(int proposedX, int proposedY) {
+        if (wallCollisionChecker == null) System.out.println("error");
         boolean wallCollision = wallCollisionChecker.isCollision(
                 proposedX, proposedY, this.character);
         boolean upperBoundaryCollision = proposedY > screenHeight - playerHeight;

@@ -42,8 +42,8 @@ public class GameScreenViewModel extends ViewModel implements Observable {
 
 
     public PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
-    public EnemyMovementStrategy enemyMovementStrategy1 = new EnemyMovementStrategy(enemy1);
-    public EnemyMovementStrategy enemyMovementStrategy2 = new EnemyMovementStrategy(enemy2);
+    public EnemyMovementStrategy enemyMovementStrategy1;
+    public EnemyMovementStrategy enemyMovementStrategy2;
 
 
     private ArrayList<Wall> walls = new ArrayList<Wall>();
@@ -106,16 +106,16 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     }
     public void instantiateEnemyInstances(int roomID){
         if (roomID == 1) {
-            enemy1 = EF.makeEnemy("enemy1", 50,50,45,45);
-            enemy2 = EF.makeEnemy("enemy2", 50,50,45,45);
+            enemy1 = EF.makeEnemy("enemy1", 1650,750,45,45);
+            enemy2 = EF.makeEnemy("enemy2", 1650,750,45,45);
         }
         if (roomID == 2) {
-            enemy1 = EF.makeEnemy("enemy2", 50,50,45,45);
-            enemy2 = EF.makeEnemy("enemy3", 50,50,45,45);
+            enemy1 = EF.makeEnemy("enemy2", 1650,750,45,45);
+            enemy2 = EF.makeEnemy("enemy3", 1650,750,45,45);
         }
         if (roomID == 3) {
-            enemy1 = EF.makeEnemy("enemy3", 50,50,45,45);
-            enemy2 = EF.makeEnemy("enemy4", 50,50,45,45);
+            enemy1 = EF.makeEnemy("enemy3", 1650,750,45,45);
+            enemy2 = EF.makeEnemy("enemy4", 1650,750,45,45);
         }
         enemyMovementStrategy1 = new EnemyMovementStrategy(enemy1);
         enemyMovementStrategy2 = new EnemyMovementStrategy(enemy2);
