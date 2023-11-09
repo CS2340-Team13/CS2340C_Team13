@@ -11,9 +11,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.dungeonrunner.R;
 import com.example.dungeonrunner.model.Character;
+import com.example.dungeonrunner.model.EnemyFactory;
 import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.model.PlayerMovementStrategy;
+import com.example.dungeonrunner.model.EnemyMovementStrategy;
 import com.example.dungeonrunner.model.Wall;
 
 import java.util.ArrayList;
@@ -21,9 +23,12 @@ import java.util.ArrayList;
 public class GameScreenViewModel extends ViewModel implements Observable {
 
     private Player player = Player.getPlayer();
+    private Character enemy1;
+    private Character enemy2;
     private int score = 100;
     private boolean timerRunning = false;
     private CountDownTimer timer;
+    private EnemyFactory EF;
 
     private static MutableLiveData<Integer> scoreLiveData = new MutableLiveData<>();
 
@@ -37,6 +42,9 @@ public class GameScreenViewModel extends ViewModel implements Observable {
 
 
     public PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
+    public EnemyMovementStrategy enemyMovementStrategy1 = new EnemyMovementStrategy(enemy1);
+    public EnemyMovementStrategy enemyMovementStrategy2 = new EnemyMovementStrategy(enemy2);
+
 
     private ArrayList<Wall> walls = new ArrayList<Wall>();
 
@@ -96,6 +104,22 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         player.setX(0);
         player.setY(0);
     }
+    public void instantiateEnemyInstances(int roomID){
+        if (roomID == 1) {
+            enemy1 = EF.makeEnemy("enemy1", 50,50,45,45);
+            enemy2 = EF.makeEnemy("enemy2", 50,50,45,45);
+        }
+        if (roomID == 2) {
+            enemy1 = EF.makeEnemy("enemy2", 50,50,45,45);
+            enemy2 = EF.makeEnemy("enemy3", 50,50,45,45);
+        }
+        if (roomID == 3) {
+            enemy1 = EF.makeEnemy("enemy3", 50,50,45,45);
+            enemy2 = EF.makeEnemy("enemy4", 50,50,45,45);
+        }
+        enemyMovementStrategy1 = new EnemyMovementStrategy(enemy1);
+        enemyMovementStrategy2 = new EnemyMovementStrategy(enemy2);
+    }
 
 
     public void plot(ImageView imageView, Character entity) {
@@ -151,6 +175,14 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         resetPlayerPosition();
         plot(playerCharacterImageView, player);
         notifyObserver();
+    }
+
+    //Every second, plot (enemy1ImageView, enemy1), plot (enemy2ImageView, enemy2)
+    public void updateEnemy(ImageView E1IV, ImageView E2IV, EnemyMovementStrategy E1, EnemyMovementStrategy E2) {
+        E1.move();
+        E2.move();
+        plot(E1IV,enemy1);
+        plot(E2IV, enemy2);
     }
 
     public  ArrayList<Wall> getWalls() {

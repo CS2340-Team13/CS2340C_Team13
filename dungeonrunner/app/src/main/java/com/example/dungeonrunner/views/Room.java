@@ -33,6 +33,8 @@ public class Room extends Fragment implements Observer {
     private boolean playerInPortal;
     private int roomID = 1;
     private List<View> wallViews = new ArrayList<>();
+    public ImageView enemy1ImageView;
+    public  ImageView enemy2ImageView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,7 +111,9 @@ public class Room extends Fragment implements Observer {
             int screenHeight = view.getHeight();
             int playerWidth = playerCharacterImageView.getWidth();
             int playerHeight = playerCharacterImageView.getHeight();
-
+            setEnemyImageViews(view);
+            gameScreenViewModel.instantiateEnemyInstances(roomID);
+            //gameScreenViewModel.updateEnemy(enemy1ImageView, enemy2ImageView, gameScreenViewModel.enemyMovementStrategy1, gameScreenViewModel.enemyMovementStrategy2);
             gameScreenViewModel.configureMovementStrategy(screenWidth, screenHeight);
             gameScreenViewModel.configurePlayerMovement(playerWidth, playerHeight);
         });
@@ -126,6 +130,22 @@ public class Room extends Fragment implements Observer {
             return R.layout.fragment_room3;
         default:
             return R.layout.fragment_room1;
+        }
+    }
+
+    private int setEnemyImageViews(View view) {
+        switch (roomID) {
+            case 1:
+                enemy1ImageView = view.findViewById(R.id.enemy1Room1ImageView);
+                enemy2ImageView = view.findViewById(R.id.enemy2Room1ImageView);
+            case 2:
+                enemy1ImageView = view.findViewById(R.id.enemy1Room2ImageView);
+                enemy2ImageView = view.findViewById(R.id.enemy2Room2ImageView);
+            case 3:
+                enemy1ImageView = view.findViewById(R.id.enemy1Room3ImageView);
+                enemy2ImageView = view.findViewById(R.id.enemy2Room3ImageView);
+            default:
+                return R.layout.fragment_room1;
         }
     }
 
