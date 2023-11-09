@@ -6,6 +6,7 @@ import com.example.dungeonrunner.R;
 public class Player extends Character {
     private String selectedCharacter;
     private static volatile Player player;
+    private int playerHealth;
 
     private Player() {
 
@@ -35,5 +36,11 @@ public class Player extends Character {
         } else if (selectedCharacter.equals("character3")) {
             this.characterImageResource = R.drawable.character3_image;
         }
+    }
+    public void setPlayerHealth(int health) {
+        this.playerHealth = health;
+    }
+    public int getPlayerHealth() {
+        return this.playerHealth;
     }
 }

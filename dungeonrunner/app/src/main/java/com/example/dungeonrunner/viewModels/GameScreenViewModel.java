@@ -9,13 +9,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.lifecycle.ViewModel;
 
-import com.example.dungeonrunner.R;
 import com.example.dungeonrunner.model.Character;
 import com.example.dungeonrunner.model.EnemyFactory;
 import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.model.PlayerMovementStrategy;
-import com.example.dungeonrunner.model.EnemyMovementStrategy;
 import com.example.dungeonrunner.model.Wall;
 
 import java.util.ArrayList;
@@ -42,8 +40,6 @@ public class GameScreenViewModel extends ViewModel implements Observable {
 
 
     public PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
-    public EnemyMovementStrategy enemyMovementStrategy1 = new EnemyMovementStrategy(enemy1);
-    public EnemyMovementStrategy enemyMovementStrategy2 = new EnemyMovementStrategy(enemy2);
 
 
     private ArrayList<Wall> walls = new ArrayList<Wall>();
@@ -117,8 +113,6 @@ public class GameScreenViewModel extends ViewModel implements Observable {
             enemy1 = EF.makeEnemy("enemy3", 50,50,45,45);
             enemy2 = EF.makeEnemy("enemy4", 50,50,45,45);
         }
-        enemyMovementStrategy1 = new EnemyMovementStrategy(enemy1);
-        enemyMovementStrategy2 = new EnemyMovementStrategy(enemy2);
     }
 
 
@@ -178,12 +172,6 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     }
 
     //Every second, plot (enemy1ImageView, enemy1), plot (enemy2ImageView, enemy2)
-    public void updateEnemy(ImageView E1IV, ImageView E2IV, EnemyMovementStrategy E1, EnemyMovementStrategy E2) {
-        E1.move();
-        E2.move();
-        plot(E1IV,enemy1);
-        plot(E2IV, enemy2);
-    }
 
     public  ArrayList<Wall> getWalls() {
         return this.walls;

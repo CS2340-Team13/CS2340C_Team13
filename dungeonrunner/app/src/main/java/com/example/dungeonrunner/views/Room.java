@@ -113,7 +113,6 @@ public class Room extends Fragment implements Observer {
             int playerHeight = playerCharacterImageView.getHeight();
             setEnemyImageViews(view);
             gameScreenViewModel.instantiateEnemyInstances(roomID);
-            //gameScreenViewModel.updateEnemy(enemy1ImageView, enemy2ImageView, gameScreenViewModel.enemyMovementStrategy1, gameScreenViewModel.enemyMovementStrategy2);
             gameScreenViewModel.configureMovementStrategy(screenWidth, screenHeight);
             gameScreenViewModel.configurePlayerMovement(playerWidth, playerHeight);
         });
