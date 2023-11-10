@@ -60,4 +60,5 @@ public class Enemy2 extends Character {
     }
 
 
+
 }
