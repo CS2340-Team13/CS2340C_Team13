@@ -1,6 +1,7 @@
 package com.example.dungeonrunner.viewModels;
 
 import android.graphics.Point;
+import android.util.Log;
 import android.widget.ImageView;
 import android.os.CountDownTimer;
 import androidx.lifecycle.MutableLiveData;
@@ -31,6 +32,8 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     private EnemyFactory EF;
 
     private static MutableLiveData<Integer> scoreLiveData = new MutableLiveData<>();
+
+    private static MutableLiveData<Integer> healthLiveData = new MutableLiveData<>(100);
 
     public MutableLiveData<Point> playerPositionLiveData = new MutableLiveData<>(
             new Point(player.getX(), player.getY()));
@@ -117,8 +120,11 @@ public class GameScreenViewModel extends ViewModel implements Observable {
             enemy1 = EF.makeEnemy("enemy3", 1650,750,45,45);
             enemy2 = EF.makeEnemy("enemy4", 1650,750,45,45);
         }
-        enemyMovementStrategy1 = new EnemyMovementStrategy(enemy1);
-        enemyMovementStrategy2 = new EnemyMovementStrategy(enemy2);
+        enemyMovementStrategy1 = new EnemyMovementStrategy(enemy1, this);
+        enemyMovementStrategy2 = new EnemyMovementStrategy(enemy2, this);
+
+        playerMovementStrategy.registerObserver(enemyMovementStrategy1);
+        playerMovementStrategy.registerObserver(enemyMovementStrategy2);
     }
 
 
@@ -167,6 +173,8 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         return scoreLiveData;
     }
 
+    public MutableLiveData<Integer> getHealthLiveData() { return healthLiveData; }
+
     public MutableLiveData<Point> getPlayerPositionLiveData() {
         return playerPositionLiveData;
     }
@@ -183,6 +191,14 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         E2.move();
         plot(E1IV,enemy1);
         plot(E2IV, enemy2);
+    }
+
+    public void reducePlayerHealth(int damage) {
+        Integer currentHealth = healthLiveData.getValue();
+        if (currentHealth != null) {
+            int newHealth = Math.max(currentHealth - damage, 0); // Prevent health from going below zero
+            healthLiveData.setValue(newHealth);
+        }
     }
 
     public  ArrayList<Wall> getWalls() {

@@ -1,17 +1,24 @@
 package com.example.dungeonrunner.model;
 
 import android.graphics.Point;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.dungeonrunner.viewModels.EnemyObserver;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
+import com.example.dungeonrunner.viewModels.Observer;
 
-public class EnemyMovementStrategy extends MovementStrategy{
+public class EnemyMovementStrategy extends MovementStrategy implements EnemyObserver {
 
+    private long lastCollisionTime = 0;
+    private static final long COLLISION_COOLDOWN = 1000; // 1 second cooldown
     private static final int MOVE_DISTANCE = 25;
+    GameScreenViewModel gameScreenViewModel;
 
-    public EnemyMovementStrategy(Character character) {
+    public EnemyMovementStrategy(Character character, GameScreenViewModel gameScreenViewModel) {
         super(character);
+        this.gameScreenViewModel = gameScreenViewModel;
     }
 
 
@@ -50,9 +57,44 @@ public class EnemyMovementStrategy extends MovementStrategy{
         // Notify observer
         // notify observer updates each enemy
         // each enemy update checks its position against the player's position and decreases player health accordingly
+
+        // to ensure when player is stationary, collision is detected.
+        Point playerPosition = new Point(Player.getPlayer().getX(), Player.getPlayer().getY());
+        update(playerPosition);
     }
     public int getMoveDistance(){
         return this.MOVE_DISTANCE;
     }
+
+
+    @Override
+    public void update(Point playerPosition) {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastCollisionTime > COLLISION_COOLDOWN) {
+            if (isCollidingWithPlayer(playerPosition)) {
+                gameScreenViewModel.reducePlayerHealth(10);
+                lastCollisionTime = currentTime;
+            }
+        }
+    }
+
+    private boolean isCollidingWithPlayer(Point playerPosition) {
+        int enemyLeft = character.getX();
+        int enemyRight = enemyLeft + character.getWidth();
+        int enemyTop = character.getY();
+        int enemyBottom = enemyTop + character.getHeight();
+
+        int playerLeft = playerPosition.x;
+        int playerRight = playerLeft + Player.getPlayer().getWidth();
+        int playerTop = playerPosition.y;
+        int playerBottom = playerTop + Player.getPlayer().getHeight();
+
+        // Check if the enemy and player rectangles overlap
+        boolean collision = enemyRight > playerLeft && enemyLeft < playerRight
+                && enemyBottom > playerTop && enemyTop < playerBottom;
+
+        return collision;
+    }
+
 }
 

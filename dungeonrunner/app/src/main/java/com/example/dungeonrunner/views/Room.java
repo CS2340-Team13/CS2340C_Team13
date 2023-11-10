@@ -33,6 +33,8 @@ public class Room extends Fragment implements Observer {
 
     private GameScreenViewModel gameScreenViewModel;
     private TextView scoreTextView;
+
+    private TextView healthTextView;
     private boolean playerInPortal;
     private int roomID = 1;
     private List<View> wallViews = new ArrayList<>();
@@ -88,6 +90,14 @@ public class Room extends Fragment implements Observer {
             scoreTextView.setText("Score: " + newScore);
             if (newScore <= 0) {
                 gameScreenViewModel.stopTimer();
+                NavHostFragment.findNavController(Room.this).navigate(R.id.action_Room_to_GameOverScreen);
+            }
+        });
+
+        healthTextView = view.findViewById(R.id.playerHealthTextView);
+        gameScreenViewModel.getHealthLiveData().observe(getViewLifecycleOwner(), newHealth -> {
+            healthTextView.setText("Health: " + newHealth);
+            if (newHealth <= 0) {
                 NavHostFragment.findNavController(Room.this).navigate(R.id.action_Room_to_GameOverScreen);
             }
         });
