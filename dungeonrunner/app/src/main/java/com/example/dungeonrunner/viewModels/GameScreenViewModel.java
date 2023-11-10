@@ -193,8 +193,19 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         plot(E2IV, enemy2);
     }
 
-    public void reducePlayerHealth(int damage) {
+    public void reducePlayerHealth() {
         Integer currentHealth = healthLiveData.getValue();
+        int damage = 0;
+
+        if (player.getPlayerHealth() == 100) {
+            // easy
+            damage = 5;
+        } else if (player.getPlayerHealth() == 75) {
+            damage = 10;
+        } else if (player.getPlayerHealth() == 50) {
+            damage = 15;
+        }
+
         if (currentHealth != null) {
             int newHealth = Math.max(currentHealth - damage, 0); // Prevent health from going below zero
             healthLiveData.setValue(newHealth);
