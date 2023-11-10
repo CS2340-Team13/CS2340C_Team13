@@ -72,7 +72,7 @@ public class EnemyMovementStrategy extends MovementStrategy implements EnemyObse
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastCollisionTime > COLLISION_COOLDOWN) {
             if (isCollidingWithPlayer(playerPosition)) {
-                gameScreenViewModel.reducePlayerHealth(10);
+                gameScreenViewModel.reducePlayerHealth();
                 lastCollisionTime = currentTime;
             }
         }
