@@ -14,19 +14,20 @@ public class ConfigScreenViewModel extends ViewModel {
         if (playerName.isEmpty() || playerName.equals("null")) {
             return "Name can't be empty or null";
         }
-        String gameDifficulty;
+        int health;
         if (difficultyId == R.id.radioButtonEasy) {
-            gameDifficulty = "Easy";
+            health = 100;
         } else if (difficultyId == R.id.radioButtonMedium) {
-            gameDifficulty = "Medium";
+            health = 75;
         } else if (difficultyId == R.id.radioButtonHard) {
-            gameDifficulty = "Hard";
+            health = 50;
         } else {
-            gameDifficulty = "Unspecified"; // or handle this case differently
+            health = 0; // or handle this case differently
         }
 
         player.setName(playerName);
         player.setSelectedCharacter(selectedCharacter);
+        player.setPlayerHealth(health);
         player.setX(startX);
         player.setY(startY);
 

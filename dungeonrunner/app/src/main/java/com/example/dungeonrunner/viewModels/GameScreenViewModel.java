@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class GameScreenViewModel extends ViewModel implements Observable {
 
-    private Player player = Player.getPlayer();
+    private static Player player = Player.getPlayer();
     private Character enemy1;
     private Character enemy2;
     private int score = 100;
@@ -33,7 +33,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
 
     private static MutableLiveData<Integer> scoreLiveData = new MutableLiveData<>();
 
-    private static MutableLiveData<Integer> healthLiveData = new MutableLiveData<>(100);
+    private static MutableLiveData<Integer> healthLiveData = new MutableLiveData<>(player.getPlayerHealth());
 
     public MutableLiveData<Point> playerPositionLiveData = new MutableLiveData<>(
             new Point(player.getX(), player.getY()));
