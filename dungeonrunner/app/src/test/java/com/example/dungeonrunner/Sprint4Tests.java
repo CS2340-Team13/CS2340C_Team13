@@ -64,7 +64,6 @@ public class Sprint4Tests {
         Character enemyA = ef.makeEnemy("enemy1", 300, 400, 5, 10);
         assertTrue(enemyA instanceof Enemy1);
     }
-
     @Test
     public void accurateEnemy2Factory() {
         EnemyFactory ef = new EnemyFactory();
