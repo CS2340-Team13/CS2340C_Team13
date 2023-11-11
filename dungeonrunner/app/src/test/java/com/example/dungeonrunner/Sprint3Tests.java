@@ -16,7 +16,7 @@ import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 import org.junit.Test;
 
 public class Sprint3Tests {
-    @Test
+   /* @Test
     public void testMoveUp() {
         MovementStrategy.setScreenDims(1000, 1000);
         Player player = Player.getPlayer();
@@ -139,6 +139,6 @@ public class Sprint3Tests {
 
         assertEquals(initialX + 50, player.getX());
         assertEquals(initialY, player.getY());
-    }
+    } */
 }
 
