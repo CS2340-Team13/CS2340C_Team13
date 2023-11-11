@@ -20,8 +20,8 @@ public class GameOverScreenViewModel extends ViewModel {
         leaderboard.sortList();
         return leaderboard.getResults();
     }
-    public void setPosition(ImageView imageView) {
 
+    public void setPosition(ImageView imageView) {
         imageView.setImageResource(player.getCharacterImageResource());
     }
 }

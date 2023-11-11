@@ -217,4 +217,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     }
     public Character getEnemy1() {return this.enemy1;}
     public Character getEnemy2() {return this.enemy2;}
+    public int getHealthData() {
+        return healthLiveData.getValue();
+    }
 }

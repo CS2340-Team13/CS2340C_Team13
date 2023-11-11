@@ -6,15 +6,24 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import android.graphics.Bitmap;
+
+import com.example.dungeonrunner.model.Character;
+import com.example.dungeonrunner.model.Enemy1;
+import com.example.dungeonrunner.model.Enemy2;
+import com.example.dungeonrunner.model.EnemyFactory;
 import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.model.PlayerMovementStrategy;
 import com.example.dungeonrunner.model.Wall;
+import com.example.dungeonrunner.viewModels.ConfigScreenViewModel;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 import com.example.dungeonrunner.views.Room;
 
 
 import org.junit.Test;
+
+import kotlin._Assertions;
 
 public class Sprint4Tests {
     @Test
@@ -47,6 +56,20 @@ public class Sprint4Tests {
         Room room = new Room();
         gm.instantiateEnemyInstances(1);
         assertNotEquals(gm.getEnemy1().getName(),gm.getEnemy2().getName());
+    }
+
+    @Test
+    public void accurateEnemy1Factory() {
+        EnemyFactory ef = new EnemyFactory();
+        Character enemyA = ef.makeEnemy("enemy1", 300, 400, 5, 10);
+        assertTrue(enemyA instanceof Enemy1);
+    }
+
+    @Test
+    public void accurateEnemy2Factory() {
+        EnemyFactory ef = new EnemyFactory();
+        Character enemyA = ef.makeEnemy("enemy2", 300, 400, 5, 10);
+        assertTrue(enemyA instanceof Enemy2);
     }
 }
 

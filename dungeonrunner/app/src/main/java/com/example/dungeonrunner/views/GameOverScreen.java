@@ -78,6 +78,7 @@ public class GameOverScreen extends Fragment {
 
     private void onRestartButtonClicked() {
         Log.d(TAG, "Restart Button Clicked");
+        gmViewModel.stopTimer();
         NavController navController = NavHostFragment.findNavController(GameOverScreen.this);
         navController.navigate(R.id.action_GameOverScreen_to_StartScreen);
     }
