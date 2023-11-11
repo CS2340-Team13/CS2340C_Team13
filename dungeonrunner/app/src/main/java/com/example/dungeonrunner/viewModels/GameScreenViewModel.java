@@ -215,4 +215,6 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     public  ArrayList<Wall> getWalls() {
         return this.walls;
     }
+    public Character getEnemy1() {return this.enemy1;}
+    public Character getEnemy2() {return this.enemy2;}
 }
