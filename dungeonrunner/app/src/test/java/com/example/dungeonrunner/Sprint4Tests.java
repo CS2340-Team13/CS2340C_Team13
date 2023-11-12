@@ -7,11 +7,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import android.graphics.Bitmap;
+import android.graphics.Point;
 
 import com.example.dungeonrunner.model.Character;
 import com.example.dungeonrunner.model.Enemy1;
 import com.example.dungeonrunner.model.Enemy2;
 import com.example.dungeonrunner.model.EnemyFactory;
+import com.example.dungeonrunner.model.EnemyMovementStrategy;
 import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.model.PlayerMovementStrategy;
@@ -26,10 +28,7 @@ import org.junit.Test;
 import kotlin._Assertions;
 
 public class Sprint4Tests {
-    @Test
-    public void gameScreenLoaded() {
 
-    }
     @Test
     public void canMakeEnemy() {
         GameScreenViewModel gm = new GameScreenViewModel();
@@ -70,5 +69,70 @@ public class Sprint4Tests {
         Character enemyA = ef.makeEnemy("enemy2", 300, 400, 5, 10);
         assertTrue(enemyA instanceof Enemy2);
     }
+
+    @Test
+    public void damageFromCollision() {
+
+        Character enemy1 = EnemyFactory.makeEnemy("enemy1", 55, 55, 30, 30);
+
+        Player player = Player.getPlayer();
+        player.setWidth(30);
+        player.setHeight(30);
+
+        player.setX(60);
+        player.setY(60);
+
+        GameScreenViewModel gm = new GameScreenViewModel();
+
+        EnemyMovementStrategy enemyMovementStrategy = new EnemyMovementStrategy(enemy1, gm);
+
+        if (enemyMovementStrategy.checkCollisionWithPlayer(new Point(player.getX(), player.getY()))) {
+            gm.reducePlayerHealth();
+        }
+
+
+        int expectedHealth = 65;
+        assertEquals(expectedHealth, player.getPlayerHealth());
+
+
+
+    }
+
+    @Test
+    public void checkCollision() {
+        Character enemy1 = EnemyFactory.makeEnemy("enemy1", 55, 55, 30, 30);
+
+        Player player = Player.getPlayer();
+        player.setWidth(30);
+        player.setHeight(30);
+
+        player.setX(60);
+        player.setY(60);
+
+        GameScreenViewModel gm = new GameScreenViewModel();
+
+        EnemyMovementStrategy enemyMovementStrategy = new EnemyMovementStrategy(enemy1, gm);
+
+        // Test when there is a collision
+        assertTrue(enemyMovementStrategy.checkCollisionWithPlayer(new Point(player.getX(), player.getY())));
+
+        enemy1.setX(100);
+        enemy1.setY(100);
+
+
+        // Test when there is no collision
+        assertFalse(enemyMovementStrategy.checkCollisionWithPlayer(new Point(player.getX(), player.getY())));
+
+        // Test edge case when the player and enemy share one side (no collision)
+        player.setX(70);
+        assertFalse(enemyMovementStrategy.checkCollisionWithPlayer(new Point(player.getX(), player.getY())));
+
+        // Test edge case when the player and enemy share one corner (no collision)
+        player.setX(70);
+        player.setY(70);
+        assertFalse(enemyMovementStrategy.checkCollisionWithPlayer(new Point(player.getX(), player.getY())));
+
+    }
+
 }
 
