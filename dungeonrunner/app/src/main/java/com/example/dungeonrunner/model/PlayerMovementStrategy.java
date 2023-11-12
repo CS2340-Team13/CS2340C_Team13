@@ -25,7 +25,7 @@ public class PlayerMovementStrategy extends MovementStrategy implements PlayerOb
         UP, DOWN, LEFT, RIGHT
     }
 
-    MovementDirection currentMovement;
+    public MovementDirection currentMovement;
 
     // List to store enemy observes
     private final List<EnemyObserver> enemyObservers = new ArrayList<>();
