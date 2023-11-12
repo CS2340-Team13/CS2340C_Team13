@@ -96,5 +96,9 @@ public class EnemyMovementStrategy extends MovementStrategy implements EnemyObse
         return collision;
     }
 
+    public boolean checkCollisionWithPlayer(Point playerPosition) {
+        return isCollidingWithPlayer(playerPosition);
+    }
+
 }
 
