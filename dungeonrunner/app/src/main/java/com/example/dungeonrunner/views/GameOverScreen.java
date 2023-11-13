@@ -20,14 +20,14 @@ import android.widget.TextView;
 
 import com.example.dungeonrunner.R;
 import com.example.dungeonrunner.model.ScoreUnit;
-import com.example.dungeonrunner.viewModels.GameOverScreenViewModel;
+import com.example.dungeonrunner.viewModels.EndScreenViewModel;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 
 import java.util.ArrayList;
 
 public class GameOverScreen extends Fragment {
 
-    private GameOverScreenViewModel gameOverScreenViewModel;
+    private EndScreenViewModel gameOverScreenViewModel;
 
     private GameScreenViewModel gmViewModel;
 
@@ -46,7 +46,7 @@ public class GameOverScreen extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         gmViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
-        gameOverScreenViewModel = new ViewModelProvider(requireActivity()).get(GameOverScreenViewModel.class);
+        gameOverScreenViewModel = new ViewModelProvider(requireActivity()).get(EndScreenViewModel.class);
         packageName = getContext().getPackageName();
         return inflater.inflate(R.layout.fragment_gameover_screen, container, false);
     }

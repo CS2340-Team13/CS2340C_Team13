@@ -157,8 +157,5 @@ public class Sprint4Tests {
         enemy.setX(100);
         assertEquals(testX, enemy.getX());
     }
-
-
-
 }
 
