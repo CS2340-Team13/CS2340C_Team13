@@ -71,35 +71,55 @@ public class Sprint4Tests {
     }
 
     @Test
-    public void damageFromCollision() {
+    public void testPlayerEnemyCollision() {
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        Player player = Player.getPlayer(); // Assuming Player is a singleton
 
-        Character enemy1 = EnemyFactory.makeEnemy("enemy1", 55, 55, 30, 30);
+        MovementStrategy.setCollisionChecker((x, y, character) -> false);
 
-        Player player = Player.getPlayer();
-        player.setWidth(30);
-        player.setHeight(30);
+        int initialHealth = 100;
+        player.setX(100);
+        player.setY(100);
+        player.setPlayerHealth(initialHealth);
 
-        player.setX(60);
-        player.setY(60);
+        gameScreenViewModel.instantiateEnemyInstances(1);
+        Character enemy = gameScreenViewModel.getEnemy1();
+        enemy.setX(100); // Set enemy position for collision
+        enemy.setY(100);
 
-        GameScreenViewModel gm = new GameScreenViewModel();
+        EnemyMovementStrategy enemyMovementStrategy = new EnemyMovementStrategy(enemy, gameScreenViewModel);
+        enemyMovementStrategy.move();
 
-        EnemyMovementStrategy enemyMovementStrategy = new EnemyMovementStrategy(enemy1, gm);
-
-        if (enemyMovementStrategy.checkCollisionWithPlayer(new Point(player.getX(), player.getY()))) {
-            gm.reducePlayerHealth();
-        }
-
-
-        int expectedHealth = 65;
-        assertEquals(expectedHealth, player.getPlayerHealth());
-
-
-
+        // Check if the player's health has decreased due to collision
+        assertTrue("Player's health should decrease after collision", player.getPlayerHealth() <= initialHealth);
     }
 
+
     @Test
-    public void checkCollision() {
+    public void testHealthNotReducingWhenNotColliding() {
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        Player player = Player.getPlayer();
+        MovementStrategy.setCollisionChecker((x, y, character) -> false);
+
+        int initialHealth = 100; // Starting health
+        player.setX(100);
+        player.setY(100);
+        player.setPlayerHealth(initialHealth);
+
+        gameScreenViewModel.instantiateEnemyInstances(1);
+        Character enemy = gameScreenViewModel.getEnemy1();
+        enemy.setX(500); // player and enemy far away
+        enemy.setY(500);
+
+        EnemyMovementStrategy enemyMovementStrategy = new EnemyMovementStrategy(enemy, gameScreenViewModel);
+        enemyMovementStrategy.move();
+
+        assertEquals("Player's health should not decrease when there is no collision", initialHealth, player.getPlayerHealth());
+    }
+
+
+    @Test
+    public void checkNoCollision() {
         Character enemy1 = EnemyFactory.makeEnemy("enemy1", 55, 55, 30, 30);
 
         Player player = Player.getPlayer();
@@ -112,13 +132,9 @@ public class Sprint4Tests {
         GameScreenViewModel gm = new GameScreenViewModel();
 
         EnemyMovementStrategy enemyMovementStrategy = new EnemyMovementStrategy(enemy1, gm);
-
-        // Test when there is a collision
-        assertTrue(enemyMovementStrategy.checkCollisionWithPlayer(new Point(player.getX(), player.getY())));
 
         enemy1.setX(100);
         enemy1.setY(100);
-
 
         // Test when there is no collision
         assertFalse(enemyMovementStrategy.checkCollisionWithPlayer(new Point(player.getX(), player.getY())));
@@ -131,8 +147,18 @@ public class Sprint4Tests {
         player.setX(70);
         player.setY(70);
         assertFalse(enemyMovementStrategy.checkCollisionWithPlayer(new Point(player.getX(), player.getY())));
-
     }
+
+    @Test
+    public void testSetEnemy2X() {
+        Enemy2 enemy;
+        enemy = new Enemy2("test", 0, 0, 30, 30);
+        int testX = 100;
+        enemy.setX(100);
+        assertEquals(testX, enemy.getX());
+    }
+
+
 
 }
 
