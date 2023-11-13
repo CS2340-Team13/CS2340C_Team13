@@ -3,11 +3,6 @@ package com.example.dungeonrunner.model;
 import com.example.dungeonrunner.R;
 
 public class Enemy3 extends Character {
-    private String name = "enemy3";
-    private int x;
-    private int y;
-    private int width;
-    private int height;
 
 
     public Enemy3 (String enemyT, int x, int y, int width, int height) {
