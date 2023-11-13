@@ -149,5 +149,16 @@ public class Sprint4Tests {
         assertFalse(enemyMovementStrategy.checkCollisionWithPlayer(new Point(player.getX(), player.getY())));
     }
 
+    @Test
+    public void testSetEnemy2X() {
+        Enemy2 enemy;
+        enemy = new Enemy2("test", 0, 0, 30, 30);
+        int testX = 100;
+        enemy.setX(100);
+        assertEquals(testX, enemy.getX());
+    }
+
+
+
 }
 
