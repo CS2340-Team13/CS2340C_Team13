@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class GameOverScreen extends Fragment {
 
-    private EndScreenViewModel gameOverScreenViewModel;
+    private EndScreenViewModel endScreenViewModel;
 
     private GameScreenViewModel gmViewModel;
 
@@ -46,7 +46,7 @@ public class GameOverScreen extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         gmViewModel = new ViewModelProvider(requireActivity()).get(GameScreenViewModel.class);
-        gameOverScreenViewModel = new ViewModelProvider(requireActivity()).get(EndScreenViewModel.class);
+        endScreenViewModel = new ViewModelProvider(requireActivity()).get(EndScreenViewModel.class);
         packageName = getContext().getPackageName();
         return inflater.inflate(R.layout.fragment_gameover_screen, container, false);
     }
@@ -57,7 +57,7 @@ public class GameOverScreen extends Fragment {
         Button restartButton = view.findViewById(R.id.restartButton);
 
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
-        gameOverScreenViewModel.setPosition(playerCharacterImageView);
+        endScreenViewModel.setPosition(playerCharacterImageView);
         restartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +67,7 @@ public class GameOverScreen extends Fragment {
         int score = 0;
         curScoreTextView = view.findViewById(R.id.curScore);
         curScoreTextView.setText("Your score was " + score);
-        ArrayList<ScoreUnit> results = gameOverScreenViewModel.getResults(score);
+        ArrayList<ScoreUnit> results = endScreenViewModel.getResults(score);
         for (int i = 0; i < results.size(); i++) {
             int resID = getContext().getResources().getIdentifier(scoreIDs[i], "id", packageName);
             TextView scoreRowView = view.findViewById(resID);
