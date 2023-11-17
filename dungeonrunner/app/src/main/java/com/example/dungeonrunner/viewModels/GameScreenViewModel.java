@@ -129,7 +129,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
 
 
     public void plot(ImageView imageView, Character entity) {
-
+        boolean isActive;
         imageView.setImageResource(entity.getCharacterImageResource());
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone((ConstraintLayout) imageView.getParent());
@@ -141,13 +141,14 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     }
 
     public void startTimer() {
-        score = 100;
+        player.setScore(100);
         timerRunning = true;
         timer = new CountDownTimer(100000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 if (timerRunning) {
-                    score--;
+                    int score = player.getScore() - 1;
+                    player.setScore(score);
                     scoreLiveData.setValue(score);
                 } else {
                     timer.cancel();

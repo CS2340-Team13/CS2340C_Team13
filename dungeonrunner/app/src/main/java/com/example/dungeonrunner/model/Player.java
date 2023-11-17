@@ -7,6 +7,7 @@ public class Player extends Character {
     private String selectedCharacter;
     private static volatile Player player;
     private int playerHealth;
+    private int score;
 
     private Player() {
 
@@ -43,4 +44,6 @@ public class Player extends Character {
     public int getPlayerHealth() {
         return this.playerHealth;
     }
+    public int getScore() { return this.score; }
+    public void setScore(int score) { this.score = score; }
 }
