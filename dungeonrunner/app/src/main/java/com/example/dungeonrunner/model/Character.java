@@ -7,6 +7,7 @@ public class Character {
     protected int y;
     protected int width;
     protected int height;
+    protected boolean active = true;
 
     public String getName() { return name; }
 
@@ -37,6 +38,10 @@ public class Character {
     public void setWidth(int width) {
         this.width = width;
     }
+
     public int getCharacterImageResource() { return characterImageResource; }
+
+    public boolean isActive() { return this.active; }
+    public void setActive(boolean active) { this.active = active; }
 
 }
