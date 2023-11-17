@@ -88,6 +88,7 @@ public class PlayerMovementStrategy extends MovementStrategy implements PlayerOb
                             currentMovement = MovementDirection.RIGHT;
                             break;
                         case KeyEvent.KEYCODE_SPACE:
+                            character.setAttacking(true);
                             attack(gameScreenViewModel, characterImageView);
                             gameScreenViewModel.plot(characterImageView, character);
                         default:
@@ -123,12 +124,13 @@ public class PlayerMovementStrategy extends MovementStrategy implements PlayerOb
                         } else if (character.getCharacterImageResource() == R.drawable.character3_attacking) {
                             character.setCharacterImageResource(R.drawable.character3_image);
                         }
+                        character.setAttacking(false);
                         t.cancel();
                     }
                 },
-                500
+                1000
         );
-
+        return;
     }
     @Override
     public void registerObserver(EnemyObserver o) {

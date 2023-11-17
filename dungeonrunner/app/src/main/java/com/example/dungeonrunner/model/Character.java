@@ -8,6 +8,7 @@ public class Character {
     protected int width;
     protected int height;
     protected boolean active = true;
+    protected boolean isAttacking = false;
 
     public String getName() { return name; }
 
@@ -44,5 +45,7 @@ public class Character {
 
     public boolean isActive() { return this.active; }
     public void setActive(boolean active) { this.active = active; }
+    public boolean isAttacking() { return this.isAttacking; }
+    public void setAttacking(boolean attacking) { this.isAttacking = attacking; }
 
 }

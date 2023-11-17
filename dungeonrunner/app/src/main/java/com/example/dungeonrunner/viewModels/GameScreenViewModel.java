@@ -129,7 +129,10 @@ public class GameScreenViewModel extends ViewModel implements Observable {
 
 
     public void plot(ImageView imageView, Character entity) {
-        boolean isActive;
+        if (!entity.isActive()) {
+            imageView.setImageResource(R.drawable.blank);
+            return;
+        }
         imageView.setImageResource(entity.getCharacterImageResource());
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone((ConstraintLayout) imageView.getParent());
