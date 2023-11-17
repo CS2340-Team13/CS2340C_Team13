@@ -83,6 +83,7 @@ public class EnemyMovementStrategy extends MovementStrategy implements EnemyObse
         int enemyRight = enemyLeft + character.getWidth();
         int enemyTop = character.getY();
         int enemyBottom = enemyTop + character.getHeight();
+        boolean isActive = character.isActive();
 
         int playerLeft = playerPosition.x;
         int playerRight = playerLeft + Player.getPlayer().getWidth();
@@ -93,7 +94,7 @@ public class EnemyMovementStrategy extends MovementStrategy implements EnemyObse
         boolean collision = enemyRight > playerLeft && enemyLeft < playerRight
                 && enemyBottom > playerTop && enemyTop < playerBottom;
 
-        return collision;
+        return isActive && collision;
     }
 
     public boolean checkCollisionWithPlayer(Point playerPosition) {
