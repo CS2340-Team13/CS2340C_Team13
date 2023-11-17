@@ -5,6 +5,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.dungeonrunner.R;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
 import com.example.dungeonrunner.viewModels.Observable;
 import com.example.dungeonrunner.viewModels.EnemyObserver;
@@ -13,6 +14,7 @@ import com.example.dungeonrunner.viewModels.PlayerObservable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 public class PlayerMovementStrategy extends MovementStrategy implements PlayerObservable { // implements Observable
     private static final int MOVE_DISTANCE = 25;
@@ -85,6 +87,9 @@ public class PlayerMovementStrategy extends MovementStrategy implements PlayerOb
                         case KeyEvent.KEYCODE_DPAD_RIGHT:
                             currentMovement = MovementDirection.RIGHT;
                             break;
+                        case KeyEvent.KEYCODE_SPACE:
+                            attack(gameScreenViewModel, characterImageView);
+                            gameScreenViewModel.plot(characterImageView, character);
                         default:
                             return true;
                     }
@@ -97,7 +102,34 @@ public class PlayerMovementStrategy extends MovementStrategy implements PlayerOb
         });
     }
 
+    private void attack(GameScreenViewModel gameScreenViewModel, ImageView characterImageView) {
+        if (character.getCharacterImageResource() == R.drawable.character1_image) {
+            character.setCharacterImageResource(R.drawable.character1_attacking);
+        } else if (character.getCharacterImageResource() == R.drawable.character2_image) {
+            character.setCharacterImageResource(R.drawable.character2_attacking);
+        } else if (character.getCharacterImageResource() == R.drawable.character3_image) {
+            character.setCharacterImageResource(R.drawable.character3_attacking);
+        }
+        gameScreenViewModel.plot(characterImageView, character);
+        Timer t = new java.util.Timer();
+        t.schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        if (character.getCharacterImageResource() == R.drawable.character1_attacking) {
+                            character.setCharacterImageResource(R.drawable.character1_image);
+                        } else if (character.getCharacterImageResource() == R.drawable.character2_attacking) {
+                            character.setCharacterImageResource(R.drawable.character2_image);
+                        } else if (character.getCharacterImageResource() == R.drawable.character3_attacking) {
+                            character.setCharacterImageResource(R.drawable.character3_image);
+                        }
+                        t.cancel();
+                    }
+                },
+                500
+        );
 
+    }
     @Override
     public void registerObserver(EnemyObserver o) {
         enemyObservers.add(o);

@@ -40,6 +40,7 @@ public class Character {
     }
 
     public int getCharacterImageResource() { return characterImageResource; }
+    public void setCharacterImageResource(int imageResource) { this.characterImageResource = imageResource; }
 
     public boolean isActive() { return this.active; }
     public void setActive(boolean active) { this.active = active; }
