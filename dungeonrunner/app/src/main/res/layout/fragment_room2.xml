@@ -24,6 +24,24 @@
         tools:layout_editor_absoluteY="453dp" />
 
     <ImageView
+        android:id="@+id/PowerUp1Room2ImageView"
+        android:layout_width="72dp"
+        android:layout_height="70dp"
+        android:src="@drawable/scoreboost"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="122dp"
+        tools:layout_editor_absoluteY="220dp" />
+
+    <ImageView
+        android:id="@+id/PowerUp2Room2ImageView"
+        android:layout_width="72dp"
+        android:layout_height="70dp"
+        android:src="@drawable/medkit"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="200dp"
+        tools:layout_editor_absoluteY="200dp" />
+
+    <ImageView
         android:id="@+id/enemy2Room2ImageView"
         android:layout_width="72dp"
         android:layout_height="70dp"
