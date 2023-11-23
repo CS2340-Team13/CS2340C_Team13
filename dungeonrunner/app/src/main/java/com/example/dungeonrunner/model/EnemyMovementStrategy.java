@@ -94,6 +94,12 @@ public class EnemyMovementStrategy extends MovementStrategy implements EnemyObse
         boolean collision = enemyRight > playerLeft && enemyLeft < playerRight
                 && enemyBottom > playerTop && enemyTop < playerBottom;
 
+        if (collision) {
+            if (Player.getPlayer().isAttacking()) {
+                character.setActive(false);
+            }
+        }
+
         return isActive && collision;
     }
 

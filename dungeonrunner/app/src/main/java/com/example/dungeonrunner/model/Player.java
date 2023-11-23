@@ -9,6 +9,7 @@ public class Player extends Character {
     private int playerHealth;
     private int score;
 
+
     private Player() {
 
     }
@@ -46,4 +47,5 @@ public class Player extends Character {
     }
     public int getScore() { return this.score; }
     public void setScore(int score) { this.score = score; }
+
 }
