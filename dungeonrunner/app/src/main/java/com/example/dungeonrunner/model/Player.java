@@ -9,6 +9,7 @@ public class Player extends Character {
     private int playerHealth;
     private int score;
 
+
     private Player() {
 
     }
@@ -38,6 +39,5 @@ public class Player extends Character {
             this.characterImageResource = R.drawable.character3_image;
         }
     }
-
 
 }
