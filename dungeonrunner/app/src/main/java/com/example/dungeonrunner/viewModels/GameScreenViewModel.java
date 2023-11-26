@@ -1,6 +1,7 @@
 package com.example.dungeonrunner.viewModels;
 
 import android.graphics.Point;
+import android.media.Image;
 import android.util.Log;
 import android.widget.ImageView;
 import android.os.CountDownTimer;
@@ -11,12 +12,16 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dungeonrunner.R;
+import com.example.dungeonrunner.model.AddHealthPowerUpDecorator;
+import com.example.dungeonrunner.model.AddScorePowerUpDecorator;
 import com.example.dungeonrunner.model.Character;
 import com.example.dungeonrunner.model.EnemyFactory;
 import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.model.PlayerMovementStrategy;
 import com.example.dungeonrunner.model.EnemyMovementStrategy;
+import com.example.dungeonrunner.model.PowerUpDecorator;
+import com.example.dungeonrunner.model.SpeedBoostPowerUpDecorator;
 import com.example.dungeonrunner.model.Wall;
 
 import java.util.ArrayList;
@@ -30,6 +35,8 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     private boolean timerRunning = false;
     private CountDownTimer timer;
     private EnemyFactory EF;
+    public Character PU1;
+    public Character PU2;
 
     private static MutableLiveData<Integer> scoreLiveData = new MutableLiveData<>();
 
@@ -127,7 +134,55 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         playerMovementStrategy.registerObserver(enemyMovementStrategy2);
     }
 
+    public void instantiatePowerUps(int roomID) {
+        if (roomID == 1) {
+            PU1 = new SpeedBoostPowerUpDecorator(player); {
+            };
+            PU1.setX(1500);
+            PU1.setY(200);
+            PU1.setHeight(50);
+            PU1.setWidth(50);
+            PU2 = new AddScorePowerUpDecorator(player) {
+            };
+            PU2.setX(400);
+            PU2.setY(400);
+            PU2.setHeight(50);
+            PU2.setWidth(50);
+        }
+        if (roomID == 2) {
+            PU1 = new AddScorePowerUpDecorator(player) {
+            };
+            PU1.setX(1500);
+            PU1.setY(200);
+            PU1.setHeight(50);
+            PU1.setWidth(50);
+            PU2 = new AddHealthPowerUpDecorator(player) {
+            };
+            PU2.setX(400);
+            PU2.setY(400);
+            PU2.setHeight(50);
+            PU2.setWidth(50);
+        }
+        if (roomID == 3) {
+            PU1 = new AddHealthPowerUpDecorator(player) {
+            };
+            PU1.setX(1500);
+            PU1.setY(200);
+            PU1.setHeight(50);
+            PU1.setWidth(50);
+            PU2 = new SpeedBoostPowerUpDecorator(player) {
+            };
+            PU2.setX(400);
+            PU2.setY(400);
+            PU2.setHeight(50);
+            PU2.setWidth(50);
+        }
+    }
 
+    public void spawnPowerUps(ImageView PU1IV, ImageView PU2IV, Character PU1, Character PU2) {
+        plot(PU1IV, PU1);
+        plot(PU2IV, PU2);
+    }
     public void plot(ImageView imageView, Character entity) {
         if (!entity.isActive()) {
             imageView.setImageResource(R.drawable.blank);
@@ -195,6 +250,11 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         E2.move();
         plot(E1IV,enemy1);
         plot(E2IV, enemy2);
+    }
+
+    public void placePowerUps(ImageView PU1IV, ImageView PU2IV, PowerUpDecorator PU1, PowerUpDecorator PU2) {
+        plot(PU1IV,PU1);
+        plot(PU2IV,PU2);
     }
 
     public void reducePlayerHealth() {

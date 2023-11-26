@@ -7,6 +7,10 @@ public class Character {
     protected int y;
     protected int width;
     protected int height;
+
+    private int playerHealth;
+    private int score;
+    protected int moveSpeed = 25;
     protected boolean active = true;
     protected boolean isAttacking = false;
 
@@ -39,6 +43,20 @@ public class Character {
     public void setWidth(int width) {
         this.width = width;
     }
+    public int getMoveSpeed() {
+        return moveSpeed;
+    }
+    public void setmoveSpeed(int move) {
+        this.moveSpeed = move;
+    }
+    public void setPlayerHealth(int health) {
+        this.playerHealth = health;
+    }
+    public int getPlayerHealth() {
+        return this.playerHealth;
+    }
+    public int getScore() { return this.score; }
+    public void setScore(int score) { this.score = score; }
 
     public int getCharacterImageResource() { return characterImageResource; }
     public void setCharacterImageResource(int imageResource) { this.characterImageResource = imageResource; }

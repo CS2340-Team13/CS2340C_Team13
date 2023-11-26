@@ -40,6 +40,8 @@ public class Room extends Fragment implements Observer {
     private List<View> wallViews = new ArrayList<>();
     public ImageView enemy1ImageView;
     public  ImageView enemy2ImageView;
+    public ImageView powerUp1ImageView;
+    public  ImageView powerUp2ImageView;
     private Timer timer = new Timer();
     private Handler handler = new Handler();
 
@@ -130,7 +132,10 @@ public class Room extends Fragment implements Observer {
             gameScreenViewModel.configureMovementStrategy(screenWidth, screenHeight);
             gameScreenViewModel.configurePlayerMovement(playerWidth, playerHeight);
             gameScreenViewModel.instantiateEnemyInstances(roomID);
+            gameScreenViewModel.instantiatePowerUps(roomID);
             setEnemyImageViews(view);
+            setPowerUpImageViews(view);
+            gameScreenViewModel.spawnPowerUps(powerUp1ImageView, powerUp2ImageView, gameScreenViewModel.PU1, gameScreenViewModel.PU2);
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -167,6 +172,20 @@ public class Room extends Fragment implements Observer {
             enemy1ImageView = view.findViewById(R.id.enemy1Room3ImageView);
             enemy2ImageView = view.findViewById(R.id.enemy2Room3ImageView);
         }
+    }
+        private void setPowerUpImageViews(View view) {
+            if (roomID == 1) {
+                powerUp1ImageView = view.findViewById(R.id.PowerUp1Room1ImageView);
+                powerUp2ImageView = view.findViewById(R.id.PowerUp2Room1ImageView);
+            }
+            if (roomID == 2) {
+                powerUp1ImageView = view.findViewById(R.id.PowerUp1Room2ImageView);
+                powerUp2ImageView = view.findViewById(R.id.PowerUp2Room2ImageView);
+            }
+            if (roomID == 3) {
+                powerUp1ImageView = view.findViewById(R.id.PowerUp1Room3ImageView);
+                powerUp2ImageView = view.findViewById(R.id.PowerUp2Room3ImageView);
+            }
     }
 
 

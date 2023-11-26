@@ -39,13 +39,5 @@ public class Player extends Character {
             this.characterImageResource = R.drawable.character3_image;
         }
     }
-    public void setPlayerHealth(int health) {
-        this.playerHealth = health;
-    }
-    public int getPlayerHealth() {
-        return this.playerHealth;
-    }
-    public int getScore() { return this.score; }
-    public void setScore(int score) { this.score = score; }
 
 }

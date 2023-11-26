@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Timer;
 
 public class PlayerMovementStrategy extends MovementStrategy implements PlayerObservable { // implements Observable
-    private static final int MOVE_DISTANCE = 25;
+    private int MOVE_DISTANCE =this.character.getMoveSpeed();
 
     public PlayerMovementStrategy(Character character) {
         super(character);
