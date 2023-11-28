@@ -75,6 +75,7 @@ public class Sprint5Tests {
         gameScreenViewModel.instantiateEnemyInstances(1);
         Character enemy = gameScreenViewModel.getEnemy1();
 
+
 //        gameScreenViewModel.registerObserver(playerMovementStrategy);
 
 
@@ -118,6 +119,14 @@ public class Sprint5Tests {
 
         assertTrue(player.isAttacking());
         assertFalse(enemyMovementStrategy.isCollidingWithPlayer(playerPosition));
+    }
+
+    @Test
+    public void enemyIsActiveStartsTrue() {
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        gameScreenViewModel.instantiateEnemyInstances(1);
+        Character enemy = gameScreenViewModel.getEnemy1();
+        assertTrue(enemy.isActive());
     }
 
 
