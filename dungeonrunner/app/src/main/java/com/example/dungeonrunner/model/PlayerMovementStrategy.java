@@ -7,9 +7,7 @@ import android.widget.ImageView;
 
 import com.example.dungeonrunner.R;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
-import com.example.dungeonrunner.viewModels.Observable;
 import com.example.dungeonrunner.viewModels.EnemyObserver;
-import com.example.dungeonrunner.viewModels.Observer;
 import com.example.dungeonrunner.viewModels.PlayerObservable;
 
 import java.util.ArrayList;
@@ -98,6 +96,7 @@ public class PlayerMovementStrategy extends MovementStrategy implements PlayerOb
                 move();
                 gameScreenViewModel.playerPositionLiveData.postValue(new Point(character.getX(), character.getY()));
                 gameScreenViewModel.plot(characterImageView, character);
+                gameScreenViewModel.checkPowerUpCollisions();
                 return true;
             }
         });
