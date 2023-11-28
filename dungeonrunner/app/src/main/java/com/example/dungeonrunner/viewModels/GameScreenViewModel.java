@@ -136,13 +136,13 @@ public class GameScreenViewModel extends ViewModel implements Observable {
 
     public void instantiatePowerUps(int roomID) {
         if (roomID == 1) {
-            PU1 = new SpeedBoostPowerUpDecorator(player); {
+            PU1 = new SpeedBoostPowerUpDecorator(player, this); {
             };
             PU1.setX(1500);
             PU1.setY(200);
             PU1.setHeight(50);
             PU1.setWidth(50);
-            PU2 = new AddScorePowerUpDecorator(player) {
+            PU2 = new AddScorePowerUpDecorator(player, this) {
             };
             PU2.setX(400);
             PU2.setY(400);
@@ -150,13 +150,13 @@ public class GameScreenViewModel extends ViewModel implements Observable {
             PU2.setWidth(50);
         }
         if (roomID == 2) {
-            PU1 = new AddScorePowerUpDecorator(player) {
+            PU1 = new AddScorePowerUpDecorator(player, this) {
             };
             PU1.setX(1500);
             PU1.setY(200);
             PU1.setHeight(50);
             PU1.setWidth(50);
-            PU2 = new AddHealthPowerUpDecorator(player) {
+            PU2 = new AddHealthPowerUpDecorator(player, this) {
             };
             PU2.setX(400);
             PU2.setY(400);
@@ -164,13 +164,13 @@ public class GameScreenViewModel extends ViewModel implements Observable {
             PU2.setWidth(50);
         }
         if (roomID == 3) {
-            PU1 = new AddHealthPowerUpDecorator(player) {
+            PU1 = new AddHealthPowerUpDecorator(player, this) {
             };
             PU1.setX(1500);
             PU1.setY(200);
             PU1.setHeight(50);
             PU1.setWidth(50);
-            PU2 = new SpeedBoostPowerUpDecorator(player) {
+            PU2 = new SpeedBoostPowerUpDecorator(player, this) {
             };
             PU2.setX(400);
             PU2.setY(400);
@@ -273,6 +273,40 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         if (currentHealth != null) {
             int newHealth = Math.max(currentHealth - damage, 0); // Prevent health from going below zero
             healthLiveData.setValue(newHealth);
+        }
+    }
+
+    public void checkPowerUpCollisions() {
+        checkCollisionWithPowerUp(PU1);
+        checkCollisionWithPowerUp(PU2);
+    }
+
+    private void checkCollisionWithPowerUp(Character powerUp) {
+        if (!powerUp.isActive()) return;
+
+        Point playerPosition = playerPositionLiveData.getValue();
+        if (playerPosition == null) return;
+
+        int playerLeft = playerPosition.x;
+        int playerRight = playerLeft + player.getWidth();
+        int playerTop = playerPosition.y;
+        int playerBottom = playerTop + player.getHeight();
+
+        int powerUpLeft = powerUp.getX();
+        int powerUpRight = powerUpLeft + powerUp.getWidth();
+        int powerUpTop = powerUp.getY();
+        int powerUpBottom = powerUpTop + powerUp.getHeight();
+
+        // Checking overlap overlap
+        if (playerRight > powerUpLeft && playerLeft < powerUpRight && playerBottom > powerUpTop && playerTop < powerUpBottom) {
+            applyPowerUp(powerUp);
+        }
+    }
+
+    private void applyPowerUp(Character powerUp) {
+        if (powerUp instanceof PowerUpDecorator) {
+            ((PowerUpDecorator) powerUp).PowerUp();
+            powerUp.setActive(false); // Deactivate the power-up after applying it
         }
     }
 

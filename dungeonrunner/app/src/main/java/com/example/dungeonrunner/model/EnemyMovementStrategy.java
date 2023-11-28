@@ -1,13 +1,9 @@
 package com.example.dungeonrunner.model;
 
 import android.graphics.Point;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.example.dungeonrunner.viewModels.EnemyObserver;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
-import com.example.dungeonrunner.viewModels.Observer;
 
 public class EnemyMovementStrategy extends MovementStrategy implements EnemyObserver {
 
