@@ -102,7 +102,7 @@ public class PlayerMovementStrategy extends MovementStrategy implements PlayerOb
         });
     }
 
-    private void attack(GameScreenViewModel gameScreenViewModel, ImageView characterImageView) {
+    public void attack(GameScreenViewModel gameScreenViewModel, ImageView characterImageView) {
         if (character.getCharacterImageResource() == R.drawable.character1_image) {
             character.setCharacterImageResource(R.drawable.character1_attacking);
         } else if (character.getCharacterImageResource() == R.drawable.character2_image) {

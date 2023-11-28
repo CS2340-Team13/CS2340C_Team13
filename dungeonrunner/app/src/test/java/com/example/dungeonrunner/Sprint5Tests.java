@@ -42,6 +42,7 @@ public class Sprint5Tests {
         Player player = Player.getPlayer();
 
 
+
         PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
 
 
@@ -54,4 +55,36 @@ public class Sprint5Tests {
         assertEquals(R.drawable.character1_attacking, player.getCharacterImageResource());
 
     }
+
+    @Test
+    public void testEnemyImageBlankAfterAttack() {
+        Room roomFragment = new Room();  // Replace with the actual class name
+        View view = roomFragment.getView(); // Get the view of the fragment
+
+
+        ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
+
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        Player player = Player.getPlayer();
+        PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
+        gameScreenViewModel.playerMovementStrategy = playerMovementStrategy;
+
+
+        gameScreenViewModel.instantiateEnemyInstances(1);
+        Character enemy = gameScreenViewModel.getEnemy1();
+
+//        gameScreenViewModel.registerObserver(playerMovementStrategy);
+
+
+        player.setAttacking(true);
+        playerMovementStrategy.attack(gameScreenViewModel, playerCharacterImageView);
+
+        // Ensure that the plot function is called
+        gameScreenViewModel.plot(roomFragment.enemy1ImageView, enemy);
+
+        // Ensure that the enemy image becomes blank after an attack
+        assertEquals(R.drawable.blank, enemy.getCharacterImageResource());
+    }
+
+
 }
