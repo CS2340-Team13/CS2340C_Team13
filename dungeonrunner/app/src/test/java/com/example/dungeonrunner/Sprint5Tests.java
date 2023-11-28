@@ -35,9 +35,11 @@ public class Sprint5Tests {
     @Test
     public void testPlayerAttack() {
         GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
-        View view;
+        Room room = new Room();
 
-        ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
+
+
+        ImageView playerCharacterImageView = room.enemy1ImageView;
 
         Player player = Player.getPlayer();
 
@@ -84,6 +86,38 @@ public class Sprint5Tests {
 
         // Ensure that the enemy image becomes blank after an attack
         assertEquals(R.drawable.blank, enemy.getCharacterImageResource());
+    }
+
+    @Test
+    public void playerAttackingStartsFalse() {
+        Player player = Player.getPlayer();
+        assertFalse(player.isAttacking());
+    }
+
+    @Test
+    public void enemyDiesIfPlayerAttacking() {
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        Player player = Player.getPlayer(); // Assuming Player is a singleton
+
+        MovementStrategy.setCollisionChecker((x, y, character) -> false);
+
+        int initialHealth = 100;
+        player.setX(100);
+        player.setY(100);
+        player.setPlayerHealth(initialHealth);
+        player.setAttacking(true);
+        Point playerPosition = new Point(Player.getPlayer().getX(), Player.getPlayer().getY());
+
+        gameScreenViewModel.instantiateEnemyInstances(1);
+        Character enemy = gameScreenViewModel.getEnemy1();
+        enemy.setX(100); // Set enemy position for collision
+        enemy.setY(105);
+
+        EnemyMovementStrategy enemyMovementStrategy = new EnemyMovementStrategy(enemy, gameScreenViewModel);
+        enemyMovementStrategy.move();
+
+        assertTrue(player.isAttacking());
+        assertFalse(enemyMovementStrategy.isCollidingWithPlayer(playerPosition));
     }
 
 
