@@ -74,7 +74,7 @@ public class EnemyMovementStrategy extends MovementStrategy implements EnemyObse
         }
     }
 
-    private boolean isCollidingWithPlayer(Point playerPosition) {
+    public boolean isCollidingWithPlayer(Point playerPosition) {
         int enemyLeft = character.getX();
         int enemyRight = enemyLeft + character.getWidth();
         int enemyTop = character.getY();
