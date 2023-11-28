@@ -98,7 +98,7 @@ public class Sprint5Tests {
     @Test
     public void enemyDiesIfPlayerAttacking() {
         GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
-        Player player = Player.getPlayer(); // Assuming Player is a singleton
+        Player player = Player.getPlayer();
 
         MovementStrategy.setCollisionChecker((x, y, character) -> false);
 
@@ -111,7 +111,7 @@ public class Sprint5Tests {
 
         gameScreenViewModel.instantiateEnemyInstances(1);
         Character enemy = gameScreenViewModel.getEnemy1();
-        enemy.setX(100); // Set enemy position for collision
+        enemy.setX(100);
         enemy.setY(105);
 
         EnemyMovementStrategy enemyMovementStrategy = new EnemyMovementStrategy(enemy, gameScreenViewModel);
@@ -128,6 +128,47 @@ public class Sprint5Tests {
         Character enemy = gameScreenViewModel.getEnemy1();
         assertTrue(enemy.isActive());
     }
+
+    @Test
+    public void enemyLivesIfNoCollision() {
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        Player player = Player.getPlayer();
+
+        MovementStrategy.setCollisionChecker((x, y, character) -> false);
+
+        int initialHealth = 100;
+        player.setX(600);
+        player.setY(600);
+        player.setPlayerHealth(initialHealth);
+        player.setAttacking(true);
+        Point playerPosition = new Point(player.getX(), player.getY());
+
+        gameScreenViewModel.instantiateEnemyInstances(1);
+        Character enemy = gameScreenViewModel.getEnemy1();
+        enemy.setX(100); // Set enemy position for collision
+        enemy.setY(100);
+
+        EnemyMovementStrategy enemyMovementStrategy = new EnemyMovementStrategy(enemy, gameScreenViewModel);
+        enemyMovementStrategy.move();
+
+        int enemyLeft = enemy.getX();
+        int enemyRight = enemyLeft + enemy.getWidth();
+        int enemyTop = enemy.getY();
+        int enemyBottom = enemyTop + enemy.getHeight();
+        boolean isActive = enemy.isActive();
+
+        int playerLeft = playerPosition.x;
+        int playerRight = playerLeft + Player.getPlayer().getWidth();
+        int playerTop = playerPosition.y;
+        int playerBottom = playerTop + Player.getPlayer().getHeight();
+
+        assertTrue(player.isAttacking());
+        assertFalse(enemyRight > playerLeft && enemyLeft < playerRight
+                && enemyBottom > playerTop && enemyTop < playerBottom);
+        assertTrue(enemy.isActive());
+    }
+
+
 
 
 }
