@@ -11,6 +11,7 @@ import android.graphics.Point;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.dungeonrunner.model.AddHealthPowerUpDecorator;
 import com.example.dungeonrunner.model.Character;
 import com.example.dungeonrunner.model.Enemy1;
 import com.example.dungeonrunner.model.Enemy2;
@@ -19,6 +20,7 @@ import com.example.dungeonrunner.model.EnemyMovementStrategy;
 import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.model.PlayerMovementStrategy;
+import com.example.dungeonrunner.model.SpeedBoostPowerUpDecorator;
 import com.example.dungeonrunner.model.Wall;
 import com.example.dungeonrunner.viewModels.ConfigScreenViewModel;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
@@ -168,6 +170,7 @@ public class Sprint5Tests {
         assertTrue(enemy.isActive());
     }
 
+   
 
 
 

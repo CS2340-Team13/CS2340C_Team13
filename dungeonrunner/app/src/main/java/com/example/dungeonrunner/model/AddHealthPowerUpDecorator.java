@@ -14,5 +14,9 @@ public class AddHealthPowerUpDecorator extends PowerUpDecorator {
         this.player.setPlayerHealth(newHealth);
         gameScreenViewModel.getHealthLiveData().postValue(newHealth);
     }
+    public void testPowerUp() {
+        int newHealth = this.gameScreenViewModel.getHealthLiveData().getValue() + 10;
+        this.player.setPlayerHealth(newHealth);
+    }
 
 }
