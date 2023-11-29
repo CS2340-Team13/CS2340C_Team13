@@ -53,7 +53,6 @@ public class Room extends Fragment implements Observer {
         }
     }
 
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -147,7 +146,6 @@ public class Room extends Fragment implements Observer {
 
     }
 
-
     private int getLayoutResIdForRoom() {
         switch (roomID) {
         case 1:
@@ -160,7 +158,6 @@ public class Room extends Fragment implements Observer {
             return R.layout.fragment_room1;
         }
     }
-
     private void setEnemyImageViews(View view) {
         if (roomID == 1) {
             enemy1ImageView = view.findViewById(R.id.enemy1Room1ImageView);
@@ -190,7 +187,6 @@ public class Room extends Fragment implements Observer {
             }
     }
 
-
     private static boolean viewsOverlap(View view1, View view2) {
         Rect rect1 = new Rect();
         view1.getHitRect(rect1);
@@ -206,7 +202,6 @@ public class Room extends Fragment implements Observer {
 
         return false;
     }
-
 
     public void update() {
         roomID++;
@@ -251,7 +246,7 @@ public class Room extends Fragment implements Observer {
         int tilesWide = (int) Math.ceil((double) wall.getWidth() / tileSize);
         int tilesHigh = (int) Math.ceil((double) wall.getHeight() / tileSize);
 
-        // Adjusting the wall's dimensions
+        // Adjusting the wall's dimensions and size
         int adjustedWidth = tilesWide * tileSize;
         int adjustedHeight = tilesHigh * tileSize;
 
