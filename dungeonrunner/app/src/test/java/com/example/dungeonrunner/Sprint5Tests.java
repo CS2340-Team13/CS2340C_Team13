@@ -21,6 +21,7 @@ import com.example.dungeonrunner.model.EnemyMovementStrategy;
 import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.model.PlayerMovementStrategy;
+import com.example.dungeonrunner.model.SpeedBoostPowerUpDecorator;
 import com.example.dungeonrunner.model.Wall;
 import com.example.dungeonrunner.viewModels.ConfigScreenViewModel;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
@@ -178,6 +179,15 @@ public class Sprint5Tests {
         // Simulate collision
         healthPowerUp.setActive(false);
         assertFalse(healthPowerUp.isActive());
+    }
+
+    @Test
+    public void testSpeedBoostPowerUpDisappearsAfterCollision() {
+        Player player = Player.getPlayer();
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        SpeedBoostPowerUpDecorator speedBoostPowerUp = new SpeedBoostPowerUpDecorator(player, gameScreenViewModel);
+        speedBoostPowerUp.setActive(false);
+        assertFalse(speedBoostPowerUp.isActive());
     }
 
 
