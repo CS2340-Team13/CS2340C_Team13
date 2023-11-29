@@ -197,9 +197,10 @@ public class Sprint5Tests {
     @Test public void AddSpeedAddsSpeed() {
         GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
         Player player = Player.getPlayer();
-        int intialMove= player.getPlayerHealth();
+        int intialSpeed= player.getMoveSpeed();
         SpeedBoostPowerUpDecorator speed = new SpeedBoostPowerUpDecorator(player, gameScreenViewModel);
-        assertEquals(intialMove, player.getPlayerHealth());
+        speed.PowerUp();
+        assertEquals(intialSpeed + 30, player.getMoveSpeed());
     }
 
 
