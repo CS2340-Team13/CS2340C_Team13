@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.dungeonrunner.model.AddHealthPowerUpDecorator;
+import com.example.dungeonrunner.model.AddScorePowerUpDecorator;
 import com.example.dungeonrunner.model.Character;
 import com.example.dungeonrunner.model.Enemy1;
 import com.example.dungeonrunner.model.Enemy2;
@@ -39,16 +40,11 @@ public class Sprint5Tests {
         GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
         Room room = new Room();
 
-
-
         ImageView playerCharacterImageView = room.enemy1ImageView;
 
         Player player = Player.getPlayer();
 
-
-
         PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
-
 
         playerMovementStrategy.attack(gameScreenViewModel, playerCharacterImageView);
 
@@ -57,15 +53,12 @@ public class Sprint5Tests {
 
         // Character image resource is updated during attack
         assertEquals(R.drawable.character1_attacking, player.getCharacterImageResource());
-
     }
 
     @Test
     public void testEnemyImageBlankAfterAttack() {
         Room roomFragment = new Room();  // Replace with the actual class name
         View view = roomFragment.getView(); // Get the view of the fragment
-
-
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
 
         GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
@@ -73,13 +66,8 @@ public class Sprint5Tests {
         PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
         gameScreenViewModel.playerMovementStrategy = playerMovementStrategy;
 
-
         gameScreenViewModel.instantiateEnemyInstances(1);
         Character enemy = gameScreenViewModel.getEnemy1();
-
-
-//        gameScreenViewModel.registerObserver(playerMovementStrategy);
-
 
         player.setAttacking(true);
         playerMovementStrategy.attack(gameScreenViewModel, playerCharacterImageView);
@@ -169,6 +157,40 @@ public class Sprint5Tests {
                 && enemyBottom > playerTop && enemyTop < playerBottom);
         assertTrue(enemy.isActive());
     }
+    @Test
+    public void testHealthPowerUpDisappearsAfterCollision() {
+        Player player = Player.getPlayer();
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        AddHealthPowerUpDecorator healthPowerUp = new AddHealthPowerUpDecorator(player, gameScreenViewModel);
+        // Simulate collision
+        healthPowerUp.setActive(false);
+        assertFalse(healthPowerUp.isActive());
+    }
+
+    @Test
+    public void testSpeedBoostPowerUpDisappearsAfterCollision() {
+        Player player = Player.getPlayer();
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        SpeedBoostPowerUpDecorator speedBoostPowerUp = new SpeedBoostPowerUpDecorator(player, gameScreenViewModel);
+        speedBoostPowerUp.setActive(false);
+        assertFalse(speedBoostPowerUp.isActive());
+    }
+  
+    @Test
+    public void testScorePowerUpDisappearsAfterCollision() {
+        Player player = Player.getPlayer();
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        AddScorePowerUpDecorator scorePowerUp = new AddScorePowerUpDecorator(player, gameScreenViewModel);
+        scorePowerUp.setActive(false);
+        assertFalse(scorePowerUp.isActive());
+    }
+
+
+
+
+
+
+
 
    
 

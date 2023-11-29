@@ -3,12 +3,16 @@ package com.example.dungeonrunner.viewModels;
 import android.graphics.Point;
 import android.media.Image;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.os.CountDownTimer;
+
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dungeonrunner.R;
@@ -60,6 +64,9 @@ public class GameScreenViewModel extends ViewModel implements Observable {
 
     private Observer roomObserver;
 
+    private ImageView powerUp1ImageView;
+    private ImageView powerUp2ImageView;
+
     public void registerObserver(Observer observer) {
         this.roomObserver = observer;
     }
@@ -79,7 +86,6 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     public void generateWallInTheMiddle(int screenW, int screenH) {
         int wallWidth = 32;
         int wallHeight = 400;
-
         int startX = (screenW - wallWidth) / 2;
         int startY = (screenH - wallHeight) / 2;
 
@@ -129,7 +135,6 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         }
         enemyMovementStrategy1 = new EnemyMovementStrategy(enemy1, this);
         enemyMovementStrategy2 = new EnemyMovementStrategy(enemy2, this);
-
         playerMovementStrategy.registerObserver(enemyMovementStrategy1);
         playerMovementStrategy.registerObserver(enemyMovementStrategy2);
     }
@@ -164,24 +169,25 @@ public class GameScreenViewModel extends ViewModel implements Observable {
             PU2.setWidth(50);
         }
         if (roomID == 3) {
-            PU1 = new AddHealthPowerUpDecorator(player, this) {
-            };
+            PU1 = new AddHealthPowerUpDecorator(player, this) {};
             PU1.setX(1500);
             PU1.setY(200);
             PU1.setHeight(50);
             PU1.setWidth(50);
-            PU2 = new SpeedBoostPowerUpDecorator(player, this) {
-            };
+            PU2 = new SpeedBoostPowerUpDecorator(player, this) {};
             PU2.setX(400);
             PU2.setY(400);
             PU2.setHeight(50);
             PU2.setWidth(50);
         }
+
     }
 
     public void spawnPowerUps(ImageView PU1IV, ImageView PU2IV, Character PU1, Character PU2) {
         plot(PU1IV, PU1);
         plot(PU2IV, PU2);
+        this.powerUp1ImageView = PU1IV;
+        this.powerUp2ImageView = PU2IV;
     }
     public void plot(ImageView imageView, Character entity) {
         if (!entity.isActive()) {
@@ -222,16 +228,12 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     public boolean isTimerRunning() {
         return timerRunning;
     }
-
-
     public void stopTimer() {
         timerRunning = false;
     }
-
     public MutableLiveData<Integer> getScoreLiveData() {
         return scoreLiveData;
     }
-
     public MutableLiveData<Integer> getHealthLiveData() { return healthLiveData; }
 
     public MutableLiveData<Point> getPlayerPositionLiveData() {
@@ -258,6 +260,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     }
 
     public void reducePlayerHealth() {
+        // retrieve current health from liveData field
         Integer currentHealth = healthLiveData.getValue();
         int damage = 0;
 
@@ -297,16 +300,23 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         int powerUpTop = powerUp.getY();
         int powerUpBottom = powerUpTop + powerUp.getHeight();
 
-        // Checking overlap overlap
+        // Checking overlap between the two entities
         if (playerRight > powerUpLeft && playerLeft < powerUpRight && playerBottom > powerUpTop && playerTop < powerUpBottom) {
             applyPowerUp(powerUp);
         }
     }
 
-    private void applyPowerUp(Character powerUp) {
+    public void applyPowerUp(Character powerUp) {
         if (powerUp instanceof PowerUpDecorator) {
             ((PowerUpDecorator) powerUp).PowerUp();
             powerUp.setActive(false); // Deactivate the power-up after applying it
+
+            // Update ImageView visibility
+            if (powerUp == PU1 && powerUp1ImageView != null) {
+                powerUp1ImageView.setVisibility(View.INVISIBLE);
+            } else if (powerUp == PU2 && powerUp2ImageView != null) {
+                powerUp2ImageView.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
