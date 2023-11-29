@@ -169,7 +169,6 @@ public class Sprint5Tests {
                 && enemyBottom > playerTop && enemyTop < playerBottom);
         assertTrue(enemy.isActive());
     }
-
     @Test
     public void testHealthPowerUpDisappearsAfterCollision() {
         Player player = Player.getPlayer();
@@ -179,6 +178,17 @@ public class Sprint5Tests {
         healthPowerUp.setActive(false);
         assertFalse(healthPowerUp.isActive());
     }
+
+    @Test
+    public void testScorePowerUpDisappearsAfterCollision() {
+        Player player = Player.getPlayer();
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        AddScorePowerUpDecorator scorePowerUp = new AddScorePowerUpDecorator(player, gameScreenViewModel);
+        scorePowerUp.setActive(false);
+        assertFalse(scorePowerUp.isActive());
+    }
+
+
 
 
 
