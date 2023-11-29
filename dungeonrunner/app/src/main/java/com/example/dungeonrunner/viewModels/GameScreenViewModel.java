@@ -114,6 +114,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         player.setX(0);
         player.setY(0);
     }
+    //creates the enemy instances according to the current room.
     public void instantiateEnemyInstances(int roomID){
         // instantiate by room
         if (roomID == 1) {
@@ -242,7 +243,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         notifyObserver();
     }
 
-    //Every second, plot (enemy1ImageView, enemy1), plot (enemy2ImageView, enemy2)
+    //Every second, moves each enemy then plots (enemy1ImageView, enemy1), plot (enemy2ImageView, enemy2)
     public void updateEnemy(ImageView E1IV, ImageView E2IV, EnemyMovementStrategy E1, EnemyMovementStrategy E2) {
         E1.move();
         E2.move();
