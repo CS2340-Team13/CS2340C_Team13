@@ -40,16 +40,11 @@ public class Sprint5Tests {
         GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
         Room room = new Room();
 
-
-
         ImageView playerCharacterImageView = room.enemy1ImageView;
 
         Player player = Player.getPlayer();
 
-
-
         PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
-
 
         playerMovementStrategy.attack(gameScreenViewModel, playerCharacterImageView);
 
@@ -58,15 +53,12 @@ public class Sprint5Tests {
 
         // Character image resource is updated during attack
         assertEquals(R.drawable.character1_attacking, player.getCharacterImageResource());
-
     }
 
     @Test
     public void testEnemyImageBlankAfterAttack() {
         Room roomFragment = new Room();  // Replace with the actual class name
         View view = roomFragment.getView(); // Get the view of the fragment
-
-
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
 
         GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
@@ -74,13 +66,8 @@ public class Sprint5Tests {
         PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
         gameScreenViewModel.playerMovementStrategy = playerMovementStrategy;
 
-
         gameScreenViewModel.instantiateEnemyInstances(1);
         Character enemy = gameScreenViewModel.getEnemy1();
-
-
-//        gameScreenViewModel.registerObserver(playerMovementStrategy);
-
 
         player.setAttacking(true);
         playerMovementStrategy.attack(gameScreenViewModel, playerCharacterImageView);
