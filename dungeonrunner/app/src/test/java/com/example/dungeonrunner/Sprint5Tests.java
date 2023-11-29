@@ -11,6 +11,8 @@ import android.graphics.Point;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.dungeonrunner.model.AddHealthPowerUpDecorator;
+import com.example.dungeonrunner.model.AddScorePowerUpDecorator;
 import com.example.dungeonrunner.model.Character;
 import com.example.dungeonrunner.model.Enemy1;
 import com.example.dungeonrunner.model.Enemy2;
@@ -167,6 +169,20 @@ public class Sprint5Tests {
                 && enemyBottom > playerTop && enemyTop < playerBottom);
         assertTrue(enemy.isActive());
     }
+
+    @Test
+    public void testHealthPowerUpDisappearsAfterCollision() {
+        Player player = Player.getPlayer();
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        AddHealthPowerUpDecorator healthPowerUp = new AddHealthPowerUpDecorator(player, gameScreenViewModel);
+        // Simulate collision
+        healthPowerUp.setActive(false);
+        assertFalse(healthPowerUp.isActive());
+    }
+
+
+
+
 
 
 

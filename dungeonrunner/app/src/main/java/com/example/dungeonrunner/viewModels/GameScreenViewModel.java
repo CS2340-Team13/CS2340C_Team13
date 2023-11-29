@@ -313,7 +313,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         }
     }
 
-    private void applyPowerUp(Character powerUp) {
+    public void applyPowerUp(Character powerUp) {
         if (powerUp instanceof PowerUpDecorator) {
             ((PowerUpDecorator) powerUp).PowerUp();
             powerUp.setActive(false); // Deactivate the power-up after applying it
