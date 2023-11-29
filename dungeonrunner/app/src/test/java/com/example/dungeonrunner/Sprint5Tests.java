@@ -203,6 +203,14 @@ public class Sprint5Tests {
         assertEquals(intialSpeed + 30, player.getMoveSpeed());
     }
 
+    @Test public void AddScoreAddsScore() {
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        Player player = Player.getPlayer();
+        int intialScore= player.getScore();
+        AddScorePowerUpDecorator score = new AddScorePowerUpDecorator(player, gameScreenViewModel);
+        score.PowerUp();
+        assertEquals(intialScore + 10, player.getScore());
+    }
 
 
 
