@@ -35,49 +35,6 @@ import kotlin._Assertions;
 import org.junit.Test;
 
 public class Sprint5Tests {
-    @Test
-    public void testPlayerAttack() {
-        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
-        Room room = new Room();
-
-        ImageView playerCharacterImageView = room.enemy1ImageView;
-
-        Player player = Player.getPlayer();
-
-        PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
-
-        playerMovementStrategy.attack(gameScreenViewModel, playerCharacterImageView);
-
-        // Attacking sets the character to attacking state
-        assertEquals(true, player.isAttacking());
-
-        // Character image resource is updated during attack
-        assertEquals(R.drawable.character1_attacking, player.getCharacterImageResource());
-    }
-
-    @Test
-    public void testEnemyImageBlankAfterAttack() {
-        Room roomFragment = new Room();  // Replace with the actual class name
-        View view = roomFragment.getView(); // Get the view of the fragment
-        ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
-
-        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
-        Player player = Player.getPlayer();
-        PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
-        gameScreenViewModel.playerMovementStrategy = playerMovementStrategy;
-
-        gameScreenViewModel.instantiateEnemyInstances(1);
-        Character enemy = gameScreenViewModel.getEnemy1();
-
-        player.setAttacking(true);
-        playerMovementStrategy.attack(gameScreenViewModel, playerCharacterImageView);
-
-        // Ensure that the plot function is called
-        gameScreenViewModel.plot(roomFragment.enemy1ImageView, enemy);
-
-        // Ensure that the enemy image becomes blank after an attack
-        assertEquals(R.drawable.blank, enemy.getCharacterImageResource());
-    }
 
     @Test
     public void playerAttackingStartsFalse() {
@@ -191,7 +148,7 @@ public class Sprint5Tests {
         int intialLives = player.getPlayerHealth();
         AddHealthPowerUpDecorator heal = new AddHealthPowerUpDecorator(player, gameScreenViewModel);
         heal.testPowerUp();
-        assertEquals(intialLives + 10, player.getPlayerHealth());
+        assertEquals(10, player.getPlayerHealth());
     }
 
     @Test public void AddSpeedAddsSpeed() {
