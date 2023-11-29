@@ -10,6 +10,6 @@ public class SpeedBoostPowerUpDecorator extends PowerUpDecorator{
         this.characterImageResource = R.drawable.speedboost;
     }
     @Override public void PowerUp(){
-        this.player.setmoveSpeed(this.player.getMoveSpeed() + 20);
+        this.player.setmoveSpeed(this.player.getMoveSpeed() + 30);
     }
 }

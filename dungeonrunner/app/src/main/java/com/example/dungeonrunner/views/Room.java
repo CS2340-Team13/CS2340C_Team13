@@ -143,6 +143,8 @@ public class Room extends Fragment implements Observer {
                 }
             }, 0, 20);
         });
+
+
     }
 
 

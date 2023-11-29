@@ -33,6 +33,7 @@ public class PlayerMovementStrategy extends MovementStrategy implements PlayerOb
 
     @Override
     public void move() {
+        MOVE_DISTANCE =this.character.getMoveSpeed();
         int proposedX = character.getX();
         int proposedY = character.getY();
 

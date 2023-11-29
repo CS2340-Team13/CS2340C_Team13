@@ -3,12 +3,16 @@ package com.example.dungeonrunner.viewModels;
 import android.graphics.Point;
 import android.media.Image;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.os.CountDownTimer;
+
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dungeonrunner.R;
@@ -59,6 +63,9 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     private ArrayList<Wall> walls = new ArrayList<Wall>();
 
     private Observer roomObserver;
+
+    private ImageView powerUp1ImageView;
+    private ImageView powerUp2ImageView;
 
     public void registerObserver(Observer observer) {
         this.roomObserver = observer;
@@ -177,11 +184,14 @@ public class GameScreenViewModel extends ViewModel implements Observable {
             PU2.setHeight(50);
             PU2.setWidth(50);
         }
+
     }
 
     public void spawnPowerUps(ImageView PU1IV, ImageView PU2IV, Character PU1, Character PU2) {
         plot(PU1IV, PU1);
         plot(PU2IV, PU2);
+        this.powerUp1ImageView = PU1IV;
+        this.powerUp2ImageView = PU2IV;
     }
     public void plot(ImageView imageView, Character entity) {
         if (!entity.isActive()) {
@@ -307,8 +317,18 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         if (powerUp instanceof PowerUpDecorator) {
             ((PowerUpDecorator) powerUp).PowerUp();
             powerUp.setActive(false); // Deactivate the power-up after applying it
+
+            // Update ImageView visibility
+            if (powerUp == PU1 && powerUp1ImageView != null) {
+                powerUp1ImageView.setVisibility(View.INVISIBLE);
+            } else if (powerUp == PU2 && powerUp2ImageView != null) {
+                powerUp2ImageView.setVisibility(View.INVISIBLE);
+            }
         }
     }
+
+
+
 
     public  ArrayList<Wall> getWalls() {
         return this.walls;
