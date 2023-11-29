@@ -52,7 +52,6 @@ public class Room extends Fragment implements Observer {
             roomID = getArguments().getInt("roomID", 1);
         }
     }
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -85,7 +84,7 @@ public class Room extends Fragment implements Observer {
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
         gameScreenViewModel.playerMovementStrategy.handleKeyEvent(view, gameScreenViewModel, playerCharacterImageView);
 
-
+        // live mutable for score data
         scoreTextView = view.findViewById(R.id.scoreTextView);
         gameScreenViewModel.getScoreLiveData().observe(getViewLifecycleOwner(), newScore -> {
             scoreTextView.setText("Score: " + newScore);
@@ -95,6 +94,7 @@ public class Room extends Fragment implements Observer {
             }
         });
 
+        // live mutable for health data
         healthTextView = view.findViewById(R.id.playerHealthTextView);
         gameScreenViewModel.getHealthLiveData().observe(getViewLifecycleOwner(), newHealth -> {
             healthTextView.setText("Health: " + newHealth);
@@ -103,6 +103,7 @@ public class Room extends Fragment implements Observer {
             }
         });
 
+        // live mutable for position data
         gameScreenViewModel.getPlayerPositionLiveData().observe(
                 getViewLifecycleOwner(), newPosition -> {
                 ImageView portalImageView = getView().findViewById(R.id.portalImageView);
@@ -123,7 +124,6 @@ public class Room extends Fragment implements Observer {
 
 
         view.post(() -> {
-
             int screenWidth = view.getWidth();
             int screenHeight = view.getHeight();
             int playerWidth = playerCharacterImageView.getWidth();

@@ -184,6 +184,16 @@ public class Sprint5Tests {
         scorePowerUp.setActive(false);
         assertFalse(scorePowerUp.isActive());
     }
+    @Test
+    public void AddHealthAddsHealth() {
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        Player player = Player.getPlayer();
+        int intialLives = player.getPlayerHealth();
+        AddHealthPowerUpDecorator heal = new AddHealthPowerUpDecorator(player, gameScreenViewModel);
+        heal.testPowerUp();
+        assertEquals(intialLives + 10, player.getPlayerHealth());
+    }
+
 
 
 

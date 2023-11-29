@@ -43,9 +43,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     public Character PU2;
 
     private static MutableLiveData<Integer> scoreLiveData = new MutableLiveData<>();
-
     private static MutableLiveData<Integer> healthLiveData = new MutableLiveData<>(player.getPlayerHealth());
-
     public MutableLiveData<Point> playerPositionLiveData = new MutableLiveData<>(
             new Point(player.getX(), player.getY()));
     private MutableLiveData<ArrayList<Wall>> wallsLiveData = new MutableLiveData<>();
@@ -54,11 +52,9 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         return wallsLiveData;
     }
 
-
     public PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
     public EnemyMovementStrategy enemyMovementStrategy1;
     public EnemyMovementStrategy enemyMovementStrategy2;
-
 
     private ArrayList<Wall> walls = new ArrayList<Wall>();
 
@@ -82,7 +78,6 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         wallsLiveData.postValue(new ArrayList<>(walls));
     }
 
-
     public void generateWallInTheMiddle(int screenW, int screenH) {
         int wallWidth = 32;
         int wallHeight = 400;
@@ -102,7 +97,6 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         return false;
     }
 
-
     public void configureMovementStrategy(int screenWidth, int screenHeight) {
         MovementStrategy.setScreenDims(screenWidth, screenHeight);
         MovementStrategy.setCollisionChecker((x, y, entity) -> isCollidingWithWall(x, y, entity));
@@ -121,6 +115,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         player.setY(0);
     }
     public void instantiateEnemyInstances(int roomID){
+        // instantiate by room
         if (roomID == 1) {
             enemy1 = EF.makeEnemy("enemy1", 1650,750,45,45);
             enemy2 = EF.makeEnemy("enemy2", 1650,750,45,45);
@@ -135,11 +130,13 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         }
         enemyMovementStrategy1 = new EnemyMovementStrategy(enemy1, this);
         enemyMovementStrategy2 = new EnemyMovementStrategy(enemy2, this);
+        // register enemies to appropriate stratergu for communication
         playerMovementStrategy.registerObserver(enemyMovementStrategy1);
         playerMovementStrategy.registerObserver(enemyMovementStrategy2);
     }
 
     public void instantiatePowerUps(int roomID) {
+        // instantiate power up by room
         if (roomID == 1) {
             PU1 = new SpeedBoostPowerUpDecorator(player, this); {
             };
@@ -180,7 +177,6 @@ public class GameScreenViewModel extends ViewModel implements Observable {
             PU2.setHeight(50);
             PU2.setWidth(50);
         }
-
     }
 
     public void spawnPowerUps(ImageView PU1IV, ImageView PU2IV, Character PU1, Character PU2) {

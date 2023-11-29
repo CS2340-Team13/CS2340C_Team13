@@ -16,6 +16,7 @@ public class AddHealthPowerUpDecorator extends PowerUpDecorator {
         this.player.setPlayerHealth(newHealth);
         gameScreenViewModel.getHealthLiveData().postValue(newHealth);
     }
+  
     //needed to complete Junit without mocking
     public void testPowerUp() {
         int newHealth = this.gameScreenViewModel.getHealthLiveData().getValue() + 10;
