@@ -21,6 +21,7 @@ import com.example.dungeonrunner.model.EnemyMovementStrategy;
 import com.example.dungeonrunner.model.MovementStrategy;
 import com.example.dungeonrunner.model.Player;
 import com.example.dungeonrunner.model.PlayerMovementStrategy;
+import com.example.dungeonrunner.model.SpeedBoostPowerUpDecorator;
 import com.example.dungeonrunner.model.Wall;
 import com.example.dungeonrunner.viewModels.ConfigScreenViewModel;
 import com.example.dungeonrunner.viewModels.GameScreenViewModel;
@@ -39,16 +40,11 @@ public class Sprint5Tests {
         GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
         Room room = new Room();
 
-
-
         ImageView playerCharacterImageView = room.enemy1ImageView;
 
         Player player = Player.getPlayer();
 
-
-
         PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
-
 
         playerMovementStrategy.attack(gameScreenViewModel, playerCharacterImageView);
 
@@ -57,15 +53,12 @@ public class Sprint5Tests {
 
         // Character image resource is updated during attack
         assertEquals(R.drawable.character1_attacking, player.getCharacterImageResource());
-
     }
 
     @Test
     public void testEnemyImageBlankAfterAttack() {
         Room roomFragment = new Room();  // Replace with the actual class name
         View view = roomFragment.getView(); // Get the view of the fragment
-
-
         ImageView playerCharacterImageView = view.findViewById(R.id.playerCharacterImageView);
 
         GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
@@ -73,13 +66,8 @@ public class Sprint5Tests {
         PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy(player);
         gameScreenViewModel.playerMovementStrategy = playerMovementStrategy;
 
-
         gameScreenViewModel.instantiateEnemyInstances(1);
         Character enemy = gameScreenViewModel.getEnemy1();
-
-
-//        gameScreenViewModel.registerObserver(playerMovementStrategy);
-
 
         player.setAttacking(true);
         playerMovementStrategy.attack(gameScreenViewModel, playerCharacterImageView);
@@ -180,6 +168,15 @@ public class Sprint5Tests {
     }
 
     @Test
+    public void testSpeedBoostPowerUpDisappearsAfterCollision() {
+        Player player = Player.getPlayer();
+        GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
+        SpeedBoostPowerUpDecorator speedBoostPowerUp = new SpeedBoostPowerUpDecorator(player, gameScreenViewModel);
+        speedBoostPowerUp.setActive(false);
+        assertFalse(speedBoostPowerUp.isActive());
+    }
+  
+    @Test
     public void testScorePowerUpDisappearsAfterCollision() {
         Player player = Player.getPlayer();
         GameScreenViewModel gameScreenViewModel = new GameScreenViewModel();
@@ -187,6 +184,7 @@ public class Sprint5Tests {
         scorePowerUp.setActive(false);
         assertFalse(scorePowerUp.isActive());
     }
+
 
 
 

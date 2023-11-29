@@ -86,7 +86,6 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     public void generateWallInTheMiddle(int screenW, int screenH) {
         int wallWidth = 32;
         int wallHeight = 400;
-
         int startX = (screenW - wallWidth) / 2;
         int startY = (screenH - wallHeight) / 2;
 
@@ -136,7 +135,6 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         }
         enemyMovementStrategy1 = new EnemyMovementStrategy(enemy1, this);
         enemyMovementStrategy2 = new EnemyMovementStrategy(enemy2, this);
-
         playerMovementStrategy.registerObserver(enemyMovementStrategy1);
         playerMovementStrategy.registerObserver(enemyMovementStrategy2);
     }
@@ -171,14 +169,12 @@ public class GameScreenViewModel extends ViewModel implements Observable {
             PU2.setWidth(50);
         }
         if (roomID == 3) {
-            PU1 = new AddHealthPowerUpDecorator(player, this) {
-            };
+            PU1 = new AddHealthPowerUpDecorator(player, this) {};
             PU1.setX(1500);
             PU1.setY(200);
             PU1.setHeight(50);
             PU1.setWidth(50);
-            PU2 = new SpeedBoostPowerUpDecorator(player, this) {
-            };
+            PU2 = new SpeedBoostPowerUpDecorator(player, this) {};
             PU2.setX(400);
             PU2.setY(400);
             PU2.setHeight(50);
@@ -232,16 +228,12 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     public boolean isTimerRunning() {
         return timerRunning;
     }
-
-
     public void stopTimer() {
         timerRunning = false;
     }
-
     public MutableLiveData<Integer> getScoreLiveData() {
         return scoreLiveData;
     }
-
     public MutableLiveData<Integer> getHealthLiveData() { return healthLiveData; }
 
     public MutableLiveData<Point> getPlayerPositionLiveData() {
@@ -268,6 +260,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
     }
 
     public void reducePlayerHealth() {
+        // retrieve current health from liveData field
         Integer currentHealth = healthLiveData.getValue();
         int damage = 0;
 
@@ -307,7 +300,7 @@ public class GameScreenViewModel extends ViewModel implements Observable {
         int powerUpTop = powerUp.getY();
         int powerUpBottom = powerUpTop + powerUp.getHeight();
 
-        // Checking overlap overlap
+        // Checking overlap between the two entities
         if (playerRight > powerUpLeft && playerLeft < powerUpRight && playerBottom > powerUpTop && playerTop < powerUpBottom) {
             applyPowerUp(powerUp);
         }
@@ -326,9 +319,6 @@ public class GameScreenViewModel extends ViewModel implements Observable {
             }
         }
     }
-
-
-
 
     public  ArrayList<Wall> getWalls() {
         return this.walls;
